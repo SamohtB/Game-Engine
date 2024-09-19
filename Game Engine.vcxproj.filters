@@ -45,6 +45,9 @@
     <ClCompile Include="SwapChain.cpp">
       <Filter>Engine\GraphicsEngine\SwapChain</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="SwapChain.h">
       <Filter>Engine\GraphicsEngine\SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
