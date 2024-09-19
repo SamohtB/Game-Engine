@@ -48,6 +48,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -69,6 +72,9 @@
       <Filter>Engine\GraphicsEngine\SwapChain</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad.h">
       <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>
