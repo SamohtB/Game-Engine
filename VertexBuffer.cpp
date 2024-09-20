@@ -5,7 +5,7 @@ VertexBuffer::VertexBuffer() : m_layout(0), m_buffer(0) {}
 
 VertexBuffer::~VertexBuffer() {}
 
-bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
+bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, size_t size_byte_shader)
 {
 	if(m_buffer)
 	{

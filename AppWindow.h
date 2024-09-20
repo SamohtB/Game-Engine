@@ -4,6 +4,7 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "VertexShader.h"
 
 class AppWindow : public Window
 {
@@ -15,6 +16,7 @@ public:
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
 
-	SwapChain* m_swap_chain;
-	VertexBuffer* m_vb;
+	SwapChain* m_swap_chain = nullptr;
+	VertexBuffer* m_vb = nullptr;
+	VertexShader* m_vs = nullptr;
 };

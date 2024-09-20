@@ -1,6 +1,7 @@
 #include "DeviceContext.h"
 #include "SwapChain.h"
 #include "VertexBuffer.h"
+#include "VertexShader.h"
 
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context) :m_device_context(device_context) {}
 
@@ -11,6 +12,11 @@ void DeviceContext::clearRenderTargetColor(SwapChain* swap_chain, float red, flo
 	FLOAT clear_color[] = { red,green,blue,alpha };
 	m_device_context->ClearRenderTargetView(swap_chain->m_rtv, clear_color);
 	m_device_context->OMSetRenderTargets(1, &swap_chain->m_rtv, NULL);
+}
+
+void DeviceContext::setVertexShader(VertexShader* vertex_shader)
+{
+	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
 }
 
 void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)
@@ -25,6 +31,12 @@ void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)
 void DeviceContext::drawTriangleList(UINT vertex_count, UINT start_vertex_index)
 {
 	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_device_context->Draw(vertex_count, start_vertex_index);
+}
+
+void DeviceContext::drawTriangleStrip(UINT vertex_count, UINT start_vertex_index)
+{
+	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	m_device_context->Draw(vertex_count, start_vertex_index);
 }
 

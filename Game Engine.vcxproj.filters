@@ -22,6 +22,9 @@
     <Filter Include="Engine\GraphicsEngine\SwapChain">
       <UniqueIdentifier>{c62db71b-d37d-41af-a0af-be9cc5115ddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GraphicsEngine\VertexShader">
+      <UniqueIdentifier>{046ec123-2045-47cc-b29f-70d6fa9b7304}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="SwapChain.cpp">
       <Filter>Engine\GraphicsEngine\SwapChain</Filter>
     </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>Engine\GraphicsEngine\VertexShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -65,9 +71,15 @@
     <ClInclude Include="SwapChain.h">
       <Filter>Engine\GraphicsEngine\SwapChain</Filter>
     </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Engine\GraphicsEngine\VertexShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx">
+      <Filter>App</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
       <Filter>App</Filter>
     </FxCompile>
   </ItemGroup>
