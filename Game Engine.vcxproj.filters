@@ -25,6 +25,9 @@
     <Filter Include="Engine\GraphicsEngine\VertexShader">
       <UniqueIdentifier>{046ec123-2045-47cc-b29f-70d6fa9b7304}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GraphicsEngine\PixelShader">
+      <UniqueIdentifier>{a58811ae-0f34-452c-9c0f-d782d0b30a89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="VertexShader.cpp">
       <Filter>Engine\GraphicsEngine\VertexShader</Filter>
     </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>Engine\GraphicsEngine\PixelShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -74,12 +80,15 @@
     <ClInclude Include="VertexShader.h">
       <Filter>Engine\GraphicsEngine\VertexShader</Filter>
     </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Engine\GraphicsEngine\PixelShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader.fx">
+    <FxCompile Include="VertexShader.hlsl">
       <Filter>App</Filter>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="PixelShader.hlsl">
       <Filter>App</Filter>
     </FxCompile>
   </ItemGroup>
