@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "Window.h"
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
@@ -6,6 +8,10 @@
 #include "VertexBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+
+#include "GameObject.h"
+#include "Quad.h"
+#include "Triangle.h"
 
 class AppWindow : public Window
 {
@@ -18,7 +24,10 @@ public:
 	virtual void onDestroy() override;
 
 	SwapChain* m_swap_chain = nullptr;
-	VertexBuffer* m_vb = nullptr;
-	VertexShader* m_vs = nullptr;
-	PixelShader* m_ps = nullptr;
+
+	std::vector<GameObject*> objectList;
+
+	//VertexBuffer* m_vb = nullptr;
+	//VertexShader* m_vs = nullptr;
+	//PixelShader* m_ps = nullptr;
 };
