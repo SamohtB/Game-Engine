@@ -24,24 +24,40 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	vertex list[] =
+	vertex rainbow_square[] =
 	{
-		//X - Y - Z
-		{-0.5f,-0.5f,0.0f,	1, 0, 0}, // POS1
-		{-0.5f,0.5f,0.0f,	0, 1, 0}, // POS2
-		{ 0.5f,-0.5f,0.0f,	0, 0, 1},
-		{ 0.5f,0.5f,0.0f,	1, 1, 0}
+		{-0.5f,-0.5f,0.0f,	0, 0, 1},
+		{-0.5f,0.5f,0.0f,	1, 1, 0},	
+		{ 0.5f,-0.5f,0.0f,	0, 1, 0},
+		{ 0.5f,0.5f,0.0f,	1, 0, 0}
+	};
+
+	vertex rainbow_triagle[] =
+	{
+
+		{-0.5f,-0.5f,0.0f,	1, 0, 0},
+		{-0.5f,0.5f,0.0f,	1, 1, 0},
+		{ 0.5f,-0.5f,0.0f,	0, 1, 0},
+		{ 0.5f,0.5f,0.0f,	0, 0, 1}
+	};
+
+	vertex square_green[] =
+	{
+		{-0.75f,-0.75f,0.0f,	0, 1, 0},
+		{-0.75f,0.0f,0.0f,	0, 1, 0},
+		{ -0.5f,-0.75f,0.0f,	0, 1, 0},
+		{ -0.5f,0.0f,0.0f,	0, 1, 0}
 	};
 
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
-	UINT size_list = ARRAYSIZE(list);
+	UINT size_list = ARRAYSIZE(rainbow_square);
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
-	m_vb->load(list, sizeof(vertex), size_list, shader_byte_code, size_shader);
+	m_vb->load(rainbow_square, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
 	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
 
