@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "DeviceContext.h"
 
 class GraphicsEngine;
 class DeviceContext;

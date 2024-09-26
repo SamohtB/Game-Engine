@@ -6,7 +6,9 @@ GameObject::GameObject(vertex* data)
 	createShaders(data);
 }
 
-GameObject::~GameObject() 
+GameObject::~GameObject() {}
+
+void GameObject::release()
 {
 	this->vertexBuffer->release();
 	this->vertexShader->release();
@@ -30,5 +32,24 @@ void GameObject::createShaders(vertex* data)
 
 	pixelShader = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
 
+	constant cc;
+	cc.m_angle = 0;
+
+	constantBuffer = GraphicsEngine::get()->createConstantBuffer();
+	constantBuffer->load(&cc, sizeof(constant));
+
 	GraphicsEngine::get()->releaseCompiledShader();
+}
+
+void GameObject::update(DeviceContext* context, void* buffer)
+{
+	constantBuffer->update(context, buffer);
+
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(vertexShader, constantBuffer);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(pixelShader, constantBuffer);
+
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(vertexShader);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(pixelShader);
+
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(vertexBuffer);
 }
