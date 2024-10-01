@@ -6,13 +6,29 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
-
 #include <d3dcompiler.h>
 
+GraphicsEngine* GraphicsEngine::sharedInstance = nullptr;
 
 GraphicsEngine::GraphicsEngine() {}
 
-GraphicsEngine::~GraphicsEngine() {}
+GraphicsEngine::~GraphicsEngine() 
+{
+	if (m_vs)m_vs->Release();
+	if (m_ps)m_ps->Release();
+
+	if (m_vsblob)m_vsblob->Release();
+	if (m_psblob)m_psblob->Release();
+
+	m_dxgi_device->Release();
+	m_dxgi_adapter->Release();
+	m_dxgi_factory->Release();
+
+	m_imm_device_context->release();
+
+
+	m_d3d_device->Release();
+}
 
 bool GraphicsEngine::init()
 {
@@ -58,26 +74,6 @@ bool GraphicsEngine::init()
 	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
 	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
 	
-	return true;
-}
-
-bool GraphicsEngine::release()
-{
-	if (m_vs)m_vs->Release();
-	if (m_ps)m_ps->Release();
-
-	if (m_vsblob)m_vsblob->Release();
-	if (m_psblob)m_psblob->Release();
-
-	m_dxgi_device->Release();
-	m_dxgi_adapter->Release();
-	m_dxgi_factory->Release();
-
-	m_imm_device_context->release();
-
-
-	m_d3d_device->Release();
-
 	return true;
 }
 
@@ -151,10 +147,19 @@ void GraphicsEngine::releaseCompiledShader()
 	}
 }
 
-GraphicsEngine* GraphicsEngine::get()
+GraphicsEngine* GraphicsEngine::getInstance()
 {
-	static GraphicsEngine engine;
-	return &engine;
+	return sharedInstance;
+}
+
+void GraphicsEngine::initialize()
+{
+	sharedInstance = new GraphicsEngine();
+}
+
+void GraphicsEngine::destroy()
+{
+	delete sharedInstance;
 }
 
 SwapChain* GraphicsEngine::createSwapChain()

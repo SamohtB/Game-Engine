@@ -2,5 +2,5 @@
 
 void Quad::draw()
 {
-	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(this->vertexBuffer->getSizeVertexList(), 0);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->drawTriangleStrip(this->vertexBuffer->getSizeVertexList(), 0);
 }

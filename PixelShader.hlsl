@@ -13,4 +13,6 @@ cbuffer constant : register(b0)
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
     return float4(lerp(input.color, input.color1, (sin(m_angle) + 1.0f) / 2.0f), 1.0f);
+    //return float4(input.color, 1.0f);
+
 }

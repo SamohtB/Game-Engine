@@ -2,5 +2,5 @@
 
 void Triangle::draw()
 {
-	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleList(this->vertexBuffer->getSizeVertexList(), 0);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->drawTriangleList(this->vertexBuffer->getSizeVertexList(), 0);
 }

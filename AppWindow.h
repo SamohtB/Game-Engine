@@ -23,9 +23,13 @@ public:
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
 
-	SwapChain* m_swap_chain = nullptr;
+	void initializeEngine();
+	
 
+private:
 	std::vector<GameObject*> objectList;
+
+	SwapChain* m_swap_chain = nullptr;
 
 	unsigned long m_old_time = 0;
 	float m_delta_time = 0;
