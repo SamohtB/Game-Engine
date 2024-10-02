@@ -44,7 +44,10 @@ void GameObject::createShaders(vertex* data)
 void GameObject::update(DeviceContext* context, void* buffer)
 {
 	constantBuffer->update(context, buffer);
+}
 
+void GameObject::draw()
+{
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(vertexShader, constantBuffer);
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setConstantBuffer(pixelShader, constantBuffer);
 

@@ -34,8 +34,8 @@ public:
 	GameObject(vertex* data);
 	~GameObject();
 	
-	virtual void draw() = 0;
 	virtual void update(DeviceContext* context, void* buffer);
+	virtual void draw();
 	void release();
 
 protected:
