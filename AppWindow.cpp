@@ -14,35 +14,23 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	vertex left_square[] =
-	{
-		{-0.75f, -0.33f, 0.0f,  -0.75f, -0.67f, 0.0f,	1, 0, 0,	0, 0, 1},
-		{-0.75f,  0.33f, 0.0f,  -0.75f,  0.67f, 0.0f,	1, 1, 0,	0, 1, 0},
-		{-0.4f, -0.33f, 0.0f,   -0.4f,  -0.67f, 0.0f,	0, 1, 0,	1, 1, 0},
-		{-0.4f,  0.33f, 0.0f,	-0.4f,   0.67f, 0.0f,	0, 0, 1,	1, 0, 0}
-	};
-
-	objectList.push_back((GameObject*) new Quad(left_square));
+	cc.directionalLightDir = { 1.0f, 1.0f, 1.0f, 1.0f };
+	cc.directionalLightColor = { 1.0f, 0.68f, 0.8f, 1.0f };
+	cc.directionalLightAmbientColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+	cc.lightParameters = { 0.5f, 64.0f, 0.5f, 2.0f };  // x = ambientStr, y = specPhong, z = specStr, w = dirLightIntensity
+	cc.cameraPos = { 0.0f, 0.0f, 5.0f, 0.0f};
 
 	vertex middle_square[] =
 	{
-		{-0.25f, -0.33f, 0.0f,    -0.25f, -0.67f, 0.0f,		1, 0, 0,	0, 0, 1},
-		{-0.25f,  0.33f, 0.0f,    -0.25f,  0.67f, 0.0f,		1, 1, 0,	0, 1, 0},
-		{0.25f,  -0.33f, 0.0f,     0.25f, -0.67f, 0.0f,		0, 1, 0,	1, 1, 0},
-		{0.25f,   0.33f, 0.0f,     0.25f,  0.67f, 0.0f,		0, 0, 1,	1, 0, 0}
+		{-0.25f, -0.33f, 0.0f,  1, 1, 1},
+		{-0.25f,  0.33f, 0.0f,  1, 1, 1},
+		{0.25f,  -0.33f, 0.0f,  1, 1, 1},
+		{0.25f,   0.33f, 0.0f,  1, 1, 1}
 	};
 
-	objectList.push_back((GameObject*) new Quad(middle_square));
-
-	vertex right_square[] =
-	{
-		{0.4f, -0.33f, 0.0f,    0.4f,	-0.67f, 0.0f,	0, 1, 0,	1, 1, 0},
-		{0.4f,  0.33f, 0.0f,    0.4f,	 0.67f, 0.0f,	0, 0, 1,	1, 0, 0},
-		{0.75f, -0.33f, 0.0f,   0.75f,	-0.67f, 0.0f,	1, 0, 0,	0, 0, 1},
-		{0.75f,  0.33f, 0.0f,   0.75f,	 0.67f, 0.0f,	1, 1, 0,	0, 1, 0},
-	};
-	
-	objectList.push_back((GameObject*) new Quad(right_square));
+	Quad* obj = new Quad();
+	obj->createShaders(middle_square, &cc);
+	objectList.push_back((GameObject*) obj);
 }
 
 void AppWindow::onUpdate()
@@ -53,17 +41,6 @@ void AppWindow::onUpdate()
 	/* Render Target Viewport */
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
-
-	unsigned long new_time = 0;
-	if (m_old_time)
-	{
-		new_time = ::GetTickCount() - m_old_time;
-	}
-	m_delta_time = new_time / 1000.0f;
-	m_old_time = ::GetTickCount();
-	m_angle += 1.57f * m_delta_time;
-	constant cc;
-	cc.m_angle = m_angle;
 
 	for (int i = 0; i < objectList.size(); i++)
 	{

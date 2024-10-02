@@ -11,17 +11,24 @@ struct vec3
 	float x, y, z;
 };
 
+struct vec4
+{
+	float x, y, z, w;
+};
+
 struct vertex
 {
 	vec3 position;
-	vec3 position1;
 	vec3 color;
-	vec3 color1;
 };
 
 struct alignas(16) constant
 {
-	float m_angle;
+	vec4 directionalLightDir;
+	vec4 directionalLightColor;
+	vec4 directionalLightAmbientColor;
+	vec4 lightParameters;
+	vec4 cameraPos;
 };
 
 class GraphicsEngine;
@@ -31,11 +38,13 @@ class GameObject
 {
 
 public:
-	GameObject(vertex* data);
+	GameObject();
 	~GameObject();
 	
 	virtual void update(DeviceContext* context, void* buffer);
 	virtual void draw();
+
+	void createShaders(vertex* data, constant* cc);
 	void release();
 
 protected:
@@ -43,8 +52,4 @@ protected:
 	ConstantBuffer* constantBuffer = nullptr;
 	VertexShader* vertexShader = nullptr;
 	PixelShader* pixelShader = nullptr;
-
-private:
-	void createShaders(vertex* data);
-
 };

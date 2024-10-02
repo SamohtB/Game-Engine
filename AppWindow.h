@@ -35,7 +35,5 @@ private:
 	float m_delta_time = 0;
 	float m_angle = 0;
 
-	//VertexBuffer* m_vb = nullptr;
-	//VertexShader* m_vs = nullptr;
-	//PixelShader* m_ps = nullptr;
+	constant cc;
 };

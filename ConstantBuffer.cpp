@@ -3,6 +3,7 @@
 #include "DeviceContext.h"
 
 ConstantBuffer::ConstantBuffer() {}
+
 ConstantBuffer::~ConstantBuffer() {}
 
 bool ConstantBuffer::load(void* buffer, UINT size_buffer)
@@ -33,7 +34,14 @@ bool ConstantBuffer::load(void* buffer, UINT size_buffer)
 
 void ConstantBuffer::update(DeviceContext* context, void* buffer)
 {
-	context->m_device_context->UpdateSubresource(this->m_buffer, NULL, NULL, buffer, NULL, NULL);
+	//D3D11_MAPPED_SUBRESOURCE mappedResource;
+	//if (SUCCEEDED(context->m_device_context->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
+	//{
+	//	memcpy(mappedResource.pData, buffer, sizeof(ConstantBuffer));
+	//	context->m_device_context->Unmap(m_buffer, 0);
+	//}
+
+	context->m_device_context->UpdateSubresource(m_buffer, 0, NULL, buffer, 0, 0);
 }
 
 bool ConstantBuffer::release()

@@ -7,7 +7,7 @@ class DeviceContext;
 class Quad : public GameObject
 {
 public:
-	Quad(vertex* data) : GameObject(data) {}
+	Quad() : GameObject() {}
 	~Quad() {}
 
 	void draw() override;

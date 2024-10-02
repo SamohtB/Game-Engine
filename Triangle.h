@@ -7,7 +7,7 @@ class DeviceContext;
 class Triangle : public GameObject
 {
 public:
-	Triangle(vertex* data) : GameObject(data) {}
+	Triangle() : GameObject() {}
 	~Triangle() {}
 
 	void draw() override;
