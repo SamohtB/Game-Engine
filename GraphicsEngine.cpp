@@ -155,6 +155,7 @@ GraphicsEngine* GraphicsEngine::getInstance()
 void GraphicsEngine::initialize()
 {
 	sharedInstance = new GraphicsEngine();
+	sharedInstance->init();
 }
 
 void GraphicsEngine::destroy()

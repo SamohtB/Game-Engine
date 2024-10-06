@@ -15,8 +15,6 @@ public:
 	static void initialize();
 	static void destroy();
 
-	bool init();
-
 	SwapChain* createSwapChain();
 	DeviceContext* getImmediateDeviceContext();
 	VertexBuffer* createVertexBuffer();
@@ -33,6 +31,8 @@ private:
 	~GraphicsEngine();
 	GraphicsEngine(GraphicsEngine const&) {}
 	GraphicsEngine& operator=(GraphicsEngine const&) {}
+
+	bool init();
 
 	static GraphicsEngine* sharedInstance;
 
