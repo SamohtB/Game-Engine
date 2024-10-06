@@ -15,15 +15,23 @@ struct VS_OUTPUT
 
 cbuffer constant : register(b0)
 {
-    float m_angle;
+    float deltaTime;
 };
+
+float Repeat(float value, float length)
+{
+    return value - length * floor(value / length);
+}
 
 VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output = (VS_OUTPUT) 0;
 	
-    output.position = lerp(input.position, input.position1, (sin(m_angle) + 1.0f) / 2.0f);
-    //output.position = input.position;
+    float speedFactor = ((cos(deltaTime * 0.5f) + 1.0f) / 2.0f);
+    float lerpFactor = (sin(deltaTime + (deltaTime * speedFactor)) + 1.0f) * 0.5f;
+    //float lerpFactor = (sin(deltaTime) + 1.0f) * 0.5f;
+    
+    output.position = lerp(input.position, input.position1, lerpFactor);
     output.color = input.color;
     output.color1 = input.color1;
     return output;

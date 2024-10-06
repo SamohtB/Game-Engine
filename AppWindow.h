@@ -2,7 +2,10 @@
 #include <vector>
 
 #include "Window.h"
+
 #include "GraphicsEngine.h"
+#include "EngineTime.h"
+
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
@@ -31,11 +34,6 @@ private:
 
 	SwapChain* m_swap_chain = nullptr;
 
-	unsigned long m_old_time = 0;
-	float m_delta_time = 0;
-	float m_angle = 0;
-
-	//VertexBuffer* m_vb = nullptr;
-	//VertexShader* m_vs = nullptr;
-	//PixelShader* m_ps = nullptr;
+	constant cc;
+	float elapsedTime = 0.0f;
 };

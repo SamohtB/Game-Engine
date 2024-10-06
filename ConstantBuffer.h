@@ -14,7 +14,7 @@ public:
 	bool release();
 
 private:
-	ID3D11Buffer* m_buffer;
+	ID3D11Buffer* m_buffer = nullptr;
 
 	friend class DeviceContext;
 };

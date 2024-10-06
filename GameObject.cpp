@@ -1,10 +1,7 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(vertex* data)
-{
-	createShaders(data);
-}
+GameObject::GameObject() {}
 
 GameObject::~GameObject() {}
 
@@ -15,7 +12,7 @@ void GameObject::release()
 	this->pixelShader->release();
 }
 
-void GameObject::createShaders(vertex* data)
+void GameObject::setShaders(vertex* data, constant* cc)
 {
 	vertexBuffer = GraphicsEngine::getInstance()->createVertexBuffer();
 	UINT size_list = sizeof(data);
@@ -32,11 +29,8 @@ void GameObject::createShaders(vertex* data)
 
 	pixelShader = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
 
-	constant cc;
-	cc.m_angle = 0;
-
 	constantBuffer = GraphicsEngine::getInstance()->createConstantBuffer();
-	constantBuffer->load(&cc, sizeof(constant));
+	constantBuffer->load(cc, sizeof(constant));
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 }

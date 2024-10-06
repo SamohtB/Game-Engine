@@ -1,5 +1,6 @@
 #include "AppWindow.h"
 #include <Windows.h>
+#include <algorithm>
 
 AppWindow::AppWindow() {}
 
@@ -9,40 +10,37 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 	initializeEngine();
+	EngineTime::initialize();
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
-
+	
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	vertex left_square[] =
+	vertex looped_quad[] =
 	{
-		{-0.75f, -0.33f, 0.0f,  -0.75f, -0.67f, 0.0f,	1, 0, 0,	0, 0, 1},
-		{-0.75f,  0.33f, 0.0f,  -0.75f,  0.67f, 0.0f,	1, 1, 0,	0, 1, 0},
-		{-0.4f, -0.33f, 0.0f,   -0.4f,  -0.67f, 0.0f,	0, 1, 0,	1, 1, 0},
-		{-0.4f,  0.33f, 0.0f,	-0.4f,   0.67f, 0.0f,	0, 0, 1,	1, 0, 0}
+		{-0.7f, -0.9f, 0.0f,    -0.32f, -0.11f, 0.0f,		0.9f, 0.54f, 0.9f,	0.6f, 0.9f, 0.54f},
+		{-0.8f,  0.2f, 0.0f,    -0.11f,  0.78f, 0.0f,		0.9f, 0.54f, 0.9f,	0.6f, 0.9f, 0.54f},
+		{0.3f,  -0.3f, 0.0f,     0.75f, -0.73f, 0.0f,		0.9f, 0.54f, 0.9f,	0.6f, 0.9f, 0.54f},
+		{0.0f,   0.2f, 0.0f,     0.88f,  0.77f, 0.0f,		0.9f, 0.54f, 0.9f,	0.6f, 0.9f, 0.54f}
 	};
 
-	objectList.push_back((GameObject*) new Quad(left_square));
+	Quad* quad = new Quad();
+	quad->setShaders(looped_quad, &cc);
 
-	vertex middle_square[] =
-	{
-		{-0.25f, -0.33f, 0.0f,    -0.25f, -0.67f, 0.0f,		1, 0, 0,	0, 0, 1},
-		{-0.25f,  0.33f, 0.0f,    -0.25f,  0.67f, 0.0f,		1, 1, 0,	0, 1, 0},
-		{0.25f,  -0.33f, 0.0f,     0.25f, -0.67f, 0.0f,		0, 1, 0,	1, 1, 0},
-		{0.25f,   0.33f, 0.0f,     0.25f,  0.67f, 0.0f,		0, 0, 1,	1, 0, 0}
-	};
+	objectList.push_back((GameObject*) quad);
 
-	objectList.push_back((GameObject*) new Quad(middle_square));
+	//vertex folding_quad[] =
+	//{
+	//	{-0.8f, -1.0f, 0.0f, -0.5f, -0.5f, 0.0f,	1.f, 1.f, 0.f,	1.f, 1.f, 0.f}, // top left
+	//	{-1.0f,  0.0f, 0.0f, -0.1f,  0.7f, 0.0f,	1.f, 1.f, 1.f,	0.f, 0.f, 1.f}, //top right
+	//	{ 1.0f, -0.2f, 0.0f,  0.2f, -0.5f, 0.0f, 	0.f, 0.f, 1.f,	1.f, 0.f, 0.f}, //bottom left
+	//	{-0.8f, -1.0f, 0.0f,  0.7f,  0.7f, 0.0f,	0.f, 0.f, 0.f,	0.f, 1.f, 0.f},	//topleft
+	//};
 
-	vertex right_square[] =
-	{
-		{0.4f, -0.33f, 0.0f,    0.4f,	-0.67f, 0.0f,	0, 1, 0,	1, 1, 0},
-		{0.4f,  0.33f, 0.0f,    0.4f,	 0.67f, 0.0f,	0, 0, 1,	1, 0, 0},
-		{0.75f, -0.33f, 0.0f,   0.75f,	-0.67f, 0.0f,	1, 0, 0,	0, 0, 1},
-		{0.75f,  0.33f, 0.0f,   0.75f,	 0.67f, 0.0f,	1, 1, 0,	0, 1, 0},
-	};
-	
-	objectList.push_back((GameObject*) new Quad(right_square));
+	//Quad* quad = new Quad();
+	//quad->setShaders(folding_quad, &cc);
+
+	//objectList.push_back((GameObject*)quad);
 }
 
 void AppWindow::onUpdate()
@@ -54,16 +52,8 @@ void AppWindow::onUpdate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
-	unsigned long new_time = 0;
-	if (m_old_time)
-	{
-		new_time = ::GetTickCount() - m_old_time;
-	}
-	m_delta_time = new_time / 1000.0f;
-	m_old_time = ::GetTickCount();
-	m_angle += 1.57f * m_delta_time;
-	constant cc;
-	cc.m_angle = m_angle;
+	elapsedTime += static_cast<float>(EngineTime::getDeltaTime());
+	cc.deltaTime = elapsedTime;
 
 	for (int i = 0; i < objectList.size(); i++)
 	{

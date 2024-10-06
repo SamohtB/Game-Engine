@@ -21,7 +21,7 @@ struct vertex
 
 struct alignas(16) constant
 {
-	float m_angle;
+	float deltaTime;
 };
 
 class GraphicsEngine;
@@ -31,20 +31,17 @@ class GameObject
 {
 
 public:
-	GameObject(vertex* data);
+	GameObject();
 	~GameObject();
 	
 	virtual void update(DeviceContext* context, void* buffer);
 	virtual void draw();
 	void release();
 
+	void setShaders(vertex* data, constant* cc);
 protected:
 	VertexBuffer* vertexBuffer = nullptr;
 	ConstantBuffer* constantBuffer = nullptr;
 	VertexShader* vertexShader = nullptr;
 	PixelShader* pixelShader = nullptr;
-
-private:
-	void createShaders(vertex* data);
-
 };
