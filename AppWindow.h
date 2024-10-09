@@ -13,8 +13,7 @@
 #include "PixelShader.h"
 
 #include "GameObject.h"
-#include "Quad.h"
-#include "Triangle.h"
+#include "Quads.h"
 
 class AppWindow : public Window
 {
@@ -26,7 +25,6 @@ public:
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
 
-	void initializeEngine();
 	
 
 private:

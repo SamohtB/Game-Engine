@@ -75,12 +75,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>App\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Quad.cpp">
-      <Filter>App\Objects\ObjectClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>App\Objects\ObjectClasses</Filter>
-    </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>Engine\EngineTime</Filter>
     </ClCompile>
@@ -116,14 +110,11 @@
     <ClInclude Include="GameObject.h">
       <Filter>App\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Quad.h">
-      <Filter>App\Objects\ObjectClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>App\Objects\ObjectClasses</Filter>
-    </ClInclude>
     <ClInclude Include="EngineTime.h">
       <Filter>Engine\EngineTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Quads.h">
+      <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

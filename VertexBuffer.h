@@ -14,8 +14,8 @@ public:
 	bool release();
 
 private:
-	UINT m_size_vertex;
-	UINT m_size_list;
+	UINT m_size_vertex = 0;
+	UINT m_size_list = 0;
 
 	ID3D11Buffer* m_buffer = nullptr;
 	ID3D11InputLayout* m_layout = nullptr;

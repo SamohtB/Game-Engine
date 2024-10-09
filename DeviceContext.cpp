@@ -45,17 +45,14 @@ void DeviceContext::setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer*
 	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
 }
 
-void DeviceContext::drawTriangleList(UINT vertex_count, UINT start_vertex_index)
+void DeviceContext::draw(UINT vertex_count, UINT start_vertex_index, D3D11_PRIMITIVE_TOPOLOGY topology)
 {
-	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_device_context->Draw(vertex_count, start_vertex_index);
-}
-
-void DeviceContext::drawTriangleStrip(UINT vertex_count, UINT start_vertex_index)
-{
-	//m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	m_device_context->Draw(vertex_count, start_vertex_index);
+	if (topology != current_topology)
+    {
+        m_device_context->IASetPrimitiveTopology(topology);
+        current_topology = topology;
+    }
+    m_device_context->Draw(vertex_count, start_vertex_index);
 }
 
 void DeviceContext::setViewportSize(UINT width, UINT height)
