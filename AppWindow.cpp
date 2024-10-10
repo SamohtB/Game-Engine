@@ -24,6 +24,8 @@ void AppWindow::onCreate()
 	Circle* circle = new Circle(0.05f, XMFLOAT3(1.f, 1.f, 1.f));
 	circle->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 	circle->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	circle->setDirection(1, 1);
+	circle->setSpeed(1.0f);
 	objectList.push_back(circle);
 }
 

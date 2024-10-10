@@ -1,10 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-#ifndef PI
-#define PI 3.14159265359f
-#endif
-
 class Circle : public GameObject
 {
 public:
@@ -13,8 +9,13 @@ public:
 
 	void update(float deltaTime) override; 
 
+	void setDirection(float x, float y);
+	void setSpeed(float speed);
+
 private:
 	std::vector<vertex> GenerateCircleVertices(float radius, int segmentCount);
 
 	XMFLOAT3 color = {};
+	XMFLOAT2 direction;
+	float moveSpeed = 1.0f;
 };

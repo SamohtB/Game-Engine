@@ -16,7 +16,7 @@ std::vector<vertex> Circle::GenerateCircleVertices(float radius, int segmentCoun
 		this->color,
 	};
 
-	float angleStep = 2.0f * PI / segmentCount;
+	float angleStep = XM_2PI / segmentCount;
 
 	for (int i = 0; i < segmentCount; ++i)
 	{
@@ -50,5 +50,20 @@ std::vector<vertex> Circle::GenerateCircleVertices(float radius, int segmentCoun
 
 void Circle::update(float deltaTime)
 {
+	this->position.x += this->direction.x * this->moveSpeed * deltaTime;
+	this->position.y += this->direction.y * this->moveSpeed * deltaTime;
+
 	GameObject::update(deltaTime);
+}
+
+void Circle::setDirection(float x, float y)
+{
+	XMVECTOR dir = XMVectorSet(x, y, 0.0f, 0.0f);
+	dir = XMVector2Normalize(dir);
+	XMStoreFloat2(&this->direction, dir);
+}
+
+void Circle::setSpeed(float speed)
+{
+	this->moveSpeed = speed;
 }

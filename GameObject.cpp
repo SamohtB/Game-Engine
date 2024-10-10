@@ -50,9 +50,9 @@ void GameObject::update(float deltaTime)
 	XMMATRIX projectionMatrix = XMMatrixOrthographicLH(this->windowWidth, this->windowHeight, nearPlane, farPlane);
 
 	constant cbData;
-	cbData.m_world = XMMatrixTranspose(worldMatrix);
-	cbData.m_view = XMMatrixTranspose(viewMatrix);
-	cbData.m_projection_matrix = XMMatrixTranspose(projectionMatrix);
+	cbData.m_world = worldMatrix;
+	cbData.m_view = viewMatrix;
+	cbData.m_projection_matrix = projectionMatrix;
 	cbData.elapsedTime = deltaTime;
 
 	updateConstantBuffer(context, &cbData);
