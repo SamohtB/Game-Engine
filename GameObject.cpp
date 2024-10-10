@@ -52,7 +52,7 @@ void GameObject::initialize(const wchar_t* vsPath, const char* vsEntry, const wc
 	pixelShader = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
 
 	constantBuffer = GraphicsEngine::getInstance()->createConstantBuffer();
-	constant initialConstant = { 0.0f };
+	constant initialConstant;
 	constantBuffer->load(&initialConstant, sizeof(constant));
 
 	GraphicsEngine::getInstance()->releaseCompiledShader();

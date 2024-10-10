@@ -37,7 +37,10 @@
     <Filter Include="App\Objects\ObjectClasses">
       <UniqueIdentifier>{eca068d0-84b1-4f10-b0a5-9030ce19a4e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\EngineTime">
+    <Filter Include="Engine\Math">
+      <UniqueIdentifier>{fcc4412d-b8c6-40aa-9468-f0e1a47ed38a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GraphicsEngine\EngineTime">
       <UniqueIdentifier>{b3a705c7-ea02-4d30-a120-09977982a288}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -76,7 +79,7 @@
       <Filter>App\Objects</Filter>
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
-      <Filter>Engine\EngineTime</Filter>
+      <Filter>Engine\GraphicsEngine\EngineTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,10 +114,16 @@
       <Filter>App\Objects</Filter>
     </ClInclude>
     <ClInclude Include="EngineTime.h">
-      <Filter>Engine\EngineTime</Filter>
+      <Filter>Engine\GraphicsEngine\EngineTime</Filter>
     </ClInclude>
     <ClInclude Include="Quads.h">
       <Filter>App\Objects\ObjectClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>Engine\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

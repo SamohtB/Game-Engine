@@ -7,19 +7,17 @@ struct PS_INPUT
 
 cbuffer constant : register(b0)
 {
-    float deltaTime;
+    row_major float4x4 m_world;
+    row_major float4x4 m_view;
+    row_major float4x4 m_projection;
+    float elapsedTime;
 };
-
-float Repeat(float value, float length)
-{
-    return value - length * floor(value / length);
-}
 
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
     //float speedFactor = ((cos(deltaTime * 0.5f) + 1.0f) / 2.0f);
     //float lerpFactor = (sin(deltaTime + (deltaTime * speedFactor)) + 1.0f) * 0.5f;
-    float lerpFactor = (sin(deltaTime) + 1.0f) * 0.5f;
+    float lerpFactor = (sin(elapsedTime) + 1.0f) * 0.5f;
     
     return float4(lerp(input.color, input.color1, lerpFactor), 1.0f);
 }

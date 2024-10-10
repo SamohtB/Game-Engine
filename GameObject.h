@@ -5,25 +5,24 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Matrix4x4.h"
 
 #include <vector>
 
-struct vec3
-{
-	float x, y, z;
-};
-
 struct vertex
 {
-	vec3 position;
-	vec3 position1;
-	vec3 color;
-	vec3 color1;
+	Vector3D position;
+	Vector3D position1;
+	Vector3D color;
+	Vector3D color1;
 };
 
 struct alignas(16) constant
 {
-	float deltaTime;
+	Matrix4x4 m_world;
+	Matrix4x4 m_view;
+	Matrix4x4 m_projection_matrix;
+	float elapsedTime;
 };
 
 class GraphicsEngine;

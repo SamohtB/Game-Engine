@@ -21,17 +21,20 @@ public:
 	AppWindow();
 	~AppWindow();
 
+	void updateGameObjects();
+
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
-
-	
 
 private:
 	std::vector<GameObject*> objectList;
 
 	SwapChain* m_swap_chain = nullptr;
 
-	constant cc;
+	LONG m_window_width = 0;
+	LONG m_window_height = 0;
+	float m_ticks_translate = 0.0f;
+	float m_ticks_scale = 0.0f;
 	float elapsedTime = 0.0f;
 };
