@@ -6,6 +6,15 @@ Circle::Circle(float radius, XMFLOAT3 color, int segments)
     this->vertices = GenerateCircleVertices(radius, segments);
 }
 
+void Circle::initialize(float x, float y)
+{
+	this->position = XMFLOAT3(0, 0, 0);
+	this->rotation = XMFLOAT3(0, 0, 0);
+	this->scale = XMFLOAT3(1, 1, 1);
+
+	this->setDirection(x, y);
+}
+
 std::vector<vertex> Circle::GenerateCircleVertices(float radius, int segmentCount)
 {
 	std::vector<vertex> vertices;
@@ -66,4 +75,10 @@ void Circle::setDirection(float x, float y)
 void Circle::setSpeed(float speed)
 {
 	this->moveSpeed = speed;
+}
+
+bool Circle::checkCollision()
+{
+
+	return true;
 }

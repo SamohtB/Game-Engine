@@ -43,6 +43,9 @@ public:
 	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
 	void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
 
+	bool isActive();
+	void setActive(bool value);
+
 	void setPosition(float x, float y, float z);
 	void setRotation(float pitch, float yaw, float roll);
 	void setScale(float x, float y, float z);
@@ -59,6 +62,8 @@ protected:
 	float windowHeight = 0;
 	float nearPlane = -4.0f;
 	float farPlane = 4.0f;
+
+	bool active = false;
 
 	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 

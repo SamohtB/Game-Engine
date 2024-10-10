@@ -108,6 +108,16 @@ void GameObject::setWindowParameters(float width, float height)
 	this->windowHeight = height;
 }
 
+bool GameObject::isActive()
+{
+	return this->active;
+}
+
+void GameObject::setActive(bool value)
+{
+	this->active = value;
+}
+
 void GameObject::release()
 {
 	if (vertexBuffer)

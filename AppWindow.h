@@ -12,9 +12,7 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
-#include "GameObject.h"
-#include "Quads.h"
-#include "Circle.h"
+#include "CircleManager.h"
 
 class AppWindow : public Window
 {
@@ -34,7 +32,11 @@ private:
 	std::vector<GameObject*> objectList;
 
 	SwapChain* m_swap_chain = nullptr;
+	CircleManager* circleManager = nullptr;
 
+	bool backspacePressed = false;
+	bool deletePressed = false;
+	bool spacePressed = false;
 	LONG m_window_width = 0;
 	LONG m_window_height = 0;
 	float m_ticks_translate = 0.0f;

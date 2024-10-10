@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "EngineTime.h"
+#include <iostream>
 
 Window::Window() {}
 
@@ -7,13 +8,6 @@ Window::~Window(){}
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	static bool isEscapePressed = false;
-	static bool isBackspacePressed = false;
-	static bool isDeletePressed = false;
-	static bool isSpacePressed = false;
-
-	Window* win = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-
 	switch (msg)
 	{
 	case WM_CREATE:
@@ -35,39 +29,50 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 	case WM_KEYDOWN:
 	{
-		switch (wparam)
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+		if (!window->isKeyPressed(wparam)) // Check if the key is already pressed
 		{
-		case VK_ESCAPE:
-			win->onDestroy();
-			::PostQuitMessage(1);
-			break;
-		case VK_BACK:
-			win->isBackspacePressed = true;
-			break;
-		case VK_DELETE:
-			win->isDeletePressed = true;
-			break;
-		case VK_SPACE:
-			win->isSpacePressed = true;
-			break;
+			switch (wparam)
+			{
+			case VK_ESCAPE:
+				window->onDestroy();
+				::PostQuitMessage(1);
+				break;
+			case VK_BACK:
+				window->setBackspace(true);
+				break;
+			case VK_DELETE:
+				window->setDelete(true);
+				break;
+			case VK_SPACE:
+				window->setSpace(true);
+				break;
+			}
+			window->setKeyPressed(wparam, true); // Mark the key as pressed
 		}
+
 		break;
 	}
 
 	case WM_KEYUP:
 	{
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
 		switch (wparam)
 		{
 		case VK_BACK:
-			win->isBackspacePressed = false;
+			window->setBackspace(false);
 			break;
 		case VK_DELETE:
-			win->isDeletePressed = false;
+			window->setDelete(false);
 			break;
 		case VK_SPACE:
-			win->isSpacePressed = false;
+			window->setSpace(false);
 			break;
 		}
+
+		window->setKeyPressed(wparam, false);
 		break;
 	}
 
@@ -75,6 +80,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		return ::DefWindowProc(hwnd, msg, wparam, lparam);
 	}
 
+}
+
+bool Window::isKeyPressed(WPARAM key)
+{
+	auto it = keyStates.find(key);
+	return it != keyStates.end() && it->second;
+}
+
+void Window::setKeyPressed(WPARAM key, bool pressed)
+{
+	keyStates[key] = pressed;
 }
 
 bool Window::init()
@@ -159,7 +175,6 @@ RECT Window::getClientWindowRect()
 	::GetClientRect(this->m_hwnd, &rc);
 	return rc;
 }
-
 
 
 void Window::onCreate() {}
