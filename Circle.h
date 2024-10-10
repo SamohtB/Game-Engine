@@ -8,39 +8,13 @@
 class Circle : public GameObject
 {
 public:
-	Circle(float radius, Vector3D color)
-	{
-        this->color = color;
-        this->vertices = GenerateCircleVertices(radius, 8);
-	}
-	~Circle() {};
+	Circle(float radius, XMFLOAT3 color, int segments = 32);
+	~Circle() {}
+
+	void update(float deltaTime) override; 
 
 private:
-    Vector3D color = {};
+	std::vector<vertex> GenerateCircleVertices(float radius, int segmentCount);
 
-private:
-    std::vector<vertex> GenerateCircleVertices(float radius, int segmentCount)
-    {
-        std::vector<vertex> vertices(segmentCount);
-
-        float angleStep = 2 * PI / segmentCount;
-
-        for (int i = 0; i < segmentCount; ++i)
-        {
-            float angle = i * angleStep;
-            float x = radius * cosf(angle);
-            float y = radius * sinf(angle);
-
-            vertices[i].position = Vector3D(x, y, 0.0f);
-            vertices[i].position1 = Vector3D(x, y, 0.0f);
-            vertices[i].color = this->color;
-            vertices[i].color1 = this->color;
-        }
-
-        vertex firstElement = vertices[0];
-        vertices.push_back(firstElement);
-
-        return vertices;
-    }
-
+	XMFLOAT3 color = {};
 };

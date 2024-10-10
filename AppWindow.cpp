@@ -21,26 +21,8 @@ void AppWindow::onCreate()
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
-	/*FoldingQuad* folding_quad = new FoldingQuad();
-	folding_quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	folding_quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	objectList.push_back(static_cast<GameObject*>(folding_quad));*/
-
-	/*LoopedQuad* looped_quad = new LoopedQuad();
-	looped_quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	looped_quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	objectList.push_back(static_cast<GameObject*>(looped_quad));*/
-
-	//Quad* quad = new Quad();
-	//quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	//quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	//objectList.push_back(static_cast<GameObject*>(quad));
-
-	Circle* circle = new Circle(0.5f, Vector3D(1.f, 1.f, 1.f));
-	circle->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	Circle* circle = new Circle(0.05f, XMFLOAT3(1.f, 1.f, 1.f));
+	circle->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 	circle->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	objectList.push_back(circle);
 }
@@ -54,9 +36,13 @@ void AppWindow::onUpdate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
 
+	/* Inputs */
 	handleKeyInputs();
+
+	/* Updates */
 	updateGameObjects();
 
+	/* Draws */
 	for (int i = 0; i < objectList.size(); i++)
 	{
 		objectList[i]->draw();
@@ -78,28 +64,15 @@ void AppWindow::onDestroy()
 
 void AppWindow::updateGameObjects()
 {
-	constant cc;
 	float deltaTime = static_cast<float>(EngineTime::getDeltaTime());
 
-	elapsedTime += deltaTime;
-	cc.elapsedTime = elapsedTime;
-
-	this->m_ticks_translate += deltaTime / 4.0f;
-
-	if (m_ticks_translate > 1.0f)
-	{
-		m_ticks_translate = 0.0f;
-	}
-
-	this->m_ticks_scale += deltaTime * 1.0f;
-
-	cc.m_world.setIdentity();
-	cc.m_view.setIdentity();
-	cc.m_projection_matrix.setOrthogonalProjectionMatrix(this->m_window_width / 200.0f, this->m_window_height / 200.0f, -4.0f, 4.0f);
+	float viewWidth = this->m_window_width / 200.0f;
+	float viewHeight = this->m_window_height / 200.0f;
 
 	for (int i = 0; i < objectList.size(); i++)
 	{
-		objectList[i]->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
+		objectList[i]->setWindowParameters(viewWidth, viewHeight);
+		objectList[i]->update(deltaTime);
 	}
 }
 
