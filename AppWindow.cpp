@@ -73,14 +73,26 @@ void AppWindow::updateGameObjects()
 
 	this->m_ticks_scale += deltaTime * 1.0f;
 
+	cc.m_world.setScale(Vector3D(1, 1, 1));
+
 	Matrix4x4 temp;
+	temp.setIdentity();
+	temp.setRotationZ(this->m_ticks_scale);
+	cc.m_world *= temp;
+	
+	temp.setIdentity();
+	temp.setRotationY(this->m_ticks_scale);
+	cc.m_world *= temp;
+
+	temp.setIdentity();
+	temp.setRotationX(this->m_ticks_scale);
+	cc.m_world *= temp;
 
 	/*cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5f, 0.5f, 0), Vector3D(1.5f, 1.5f, 0), (sin(m_ticks_scale) + 1.0f) / 2.0f));
 	temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_ticks_translate));*/
 	
-	temp.setTranslation(Vector3D(0.f, 0.f, -3));
-	cc.m_world.setScale(Vector3D(1, 1, 1));
-	cc.m_world *= temp;
+	/*translate.setTranslation(Vector3D(0.f, 0.f, -3));*/
+	
 	cc.m_view.setIdentity();
 	cc.m_projection_matrix.setOrthogonalProjectionMatrix(this->m_window_width / 400.0f, this->m_window_height / 400.0f, -4.0f, 4.0f);
 
