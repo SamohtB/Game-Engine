@@ -1,6 +1,7 @@
 #include "AppWindow.h"
 #include <Windows.h>
 #include <algorithm>
+#include <iostream>
 
 AppWindow::AppWindow() {}
 
@@ -32,22 +33,28 @@ void AppWindow::onCreate()
 
 	objectList.push_back(static_cast<GameObject*>(looped_quad));*/
 
-	Quad* quad = new Quad();
-	quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	//Quad* quad = new Quad();
+	//quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	//quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	objectList.push_back(static_cast<GameObject*>(quad));
+	//objectList.push_back(static_cast<GameObject*>(quad));
+
+	Circle* circle = new Circle(0.5f, Vector3D(1.f, 1.f, 1.f));
+	circle->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	circle->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	objectList.push_back(circle);
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.f, 0.f, 0.f, 1);
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
 
+	handleKeyInputs();
 	updateGameObjects();
 
 	for (int i = 0; i < objectList.size(); i++)
@@ -86,13 +93,7 @@ void AppWindow::updateGameObjects()
 
 	this->m_ticks_scale += deltaTime * 1.0f;
 
-	Matrix4x4 temp;
-
-	cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5f, 0.5f, 0), Vector3D(1.5f, 1.5f, 0), (sin(m_ticks_scale) + 1.0f) / 2.0f));
-	temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_ticks_translate));
-
-	cc.m_world *= temp;
-
+	cc.m_world.setIdentity();
 	cc.m_view.setIdentity();
 	cc.m_projection_matrix.setOrthogonalProjectionMatrix(this->m_window_width / 200.0f, this->m_window_height / 200.0f, -4.0f, 4.0f);
 
@@ -101,3 +102,8 @@ void AppWindow::updateGameObjects()
 		objectList[i]->update(GraphicsEngine::getInstance()->getImmediateDeviceContext(), &cc);
 	}
 }
+
+void AppWindow::handleKeyInputs()
+{
+}
+

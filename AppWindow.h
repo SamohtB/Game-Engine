@@ -14,6 +14,7 @@
 
 #include "GameObject.h"
 #include "Quads.h"
+#include "Circle.h"
 
 class AppWindow : public Window
 {
@@ -26,6 +27,8 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+
+	void handleKeyInputs();
 
 private:
 	std::vector<GameObject*> objectList;

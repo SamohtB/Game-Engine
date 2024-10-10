@@ -7,6 +7,13 @@ Window::~Window(){}
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	static bool isEscapePressed = false;
+	static bool isBackspacePressed = false;
+	static bool isDeletePressed = false;
+	static bool isSpacePressed = false;
+
+	Window* win = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
 	switch (msg)
 	{
 	case WM_CREATE:
@@ -26,9 +33,48 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		break;
 	}
 
+	case WM_KEYDOWN:
+	{
+		switch (wparam)
+		{
+		case VK_ESCAPE:
+			win->onDestroy();
+			::PostQuitMessage(1);
+			break;
+		case VK_BACK:
+			win->isBackspacePressed = true;
+			break;
+		case VK_DELETE:
+			win->isDeletePressed = true;
+			break;
+		case VK_SPACE:
+			win->isSpacePressed = true;
+			break;
+		}
+		break;
+	}
+
+	case WM_KEYUP:
+	{
+		switch (wparam)
+		{
+		case VK_BACK:
+			win->isBackspacePressed = false;
+			break;
+		case VK_DELETE:
+			win->isDeletePressed = false;
+			break;
+		case VK_SPACE:
+			win->isSpacePressed = false;
+			break;
+		}
+		break;
+	}
+
 	default:
 		return ::DefWindowProc(hwnd, msg, wparam, lparam);
 	}
+
 }
 
 bool Window::init()
@@ -113,6 +159,8 @@ RECT Window::getClientWindowRect()
 	::GetClientRect(this->m_hwnd, &rc);
 	return rc;
 }
+
+
 
 void Window::onCreate() {}
 
