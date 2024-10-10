@@ -23,6 +23,11 @@ void GameObject::release()
 		constantBuffer->release();
 		constantBuffer = nullptr;
 	}
+	if (indexBuffer)
+	{
+		indexBuffer->release();
+		indexBuffer = nullptr;
+	}
 	if (vertexShader)
 	{
 		vertexShader->release();
@@ -38,9 +43,13 @@ void GameObject::release()
 void GameObject::initialize(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry)
 {
 	vertexBuffer = GraphicsEngine::getInstance()->createVertexBuffer();
-
 	UINT vertexSize = sizeof(vertex);
 	UINT vertexCount = static_cast<UINT>(vertices.size());
+
+	indexBuffer = GraphicsEngine::getInstance()->createIndexBuffer();
+	UINT size_index_list = static_cast<UINT>(index_list.size());
+	indexBuffer->load(this->index_list.data(), size_index_list *sizeof(unsigned int));
+
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
@@ -74,8 +83,9 @@ void GameObject::draw()
 	context->setPixelShader(pixelShader);
 
 	context->setVertexBuffer(vertexBuffer);
+	context->setIndexBuffer(indexBuffer);
 
-	context->draw(this->vertexBuffer->getSizeVertexList(), 0, m_topology);
+	context->draw(this->indexBuffer->getSizeIndexList(), 0, 0, m_topology);
 }
 
 void GameObject::setTopology(D3D11_PRIMITIVE_TOPOLOGY topology)

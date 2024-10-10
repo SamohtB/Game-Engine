@@ -43,6 +43,9 @@
     <Filter Include="Engine\GraphicsEngine\EngineTime">
       <UniqueIdentifier>{b3a705c7-ea02-4d30-a120-09977982a288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GraphicsEngine\IndexBuffer">
+      <UniqueIdentifier>{c938d109-fedd-4ebb-a290-d0ec40db89be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>Engine\GraphicsEngine\EngineTime</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="Matrix4x4.h">
       <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

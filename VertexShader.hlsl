@@ -1,7 +1,6 @@
 struct VS_INPUT
 {
-    float4 position : POSITION;
-    float4 position1 : POSITION1;
+    float3 position : POSITION;
     float3 color : COLOR;
     float3 color1 : COLOR1;
 };
@@ -24,13 +23,9 @@ cbuffer constant : register(b0)
 VS_OUTPUT vsmain(VS_INPUT input)
 {
     VS_OUTPUT output = (VS_OUTPUT) 0;
-	
-    //float speedFactor = ((cos(deltaTime * 0.5f) + 1.0f) / 2.0f);
-    //float lerpFactor = (sin(deltaTime + (deltaTime * speedFactor)) + 1.0f) * 0.5f;
-    //float lerpFactor = (sin(deltaTime) + 1.0f) * 0.5f;
-    //output.position = lerp(input.position, input.position1, lerpFactor);
-    
-    float4 worldPosition = mul(input.position, m_world);
+ 
+    float4 pos = float4(input.position, 1.0f);
+    float4 worldPosition = mul(pos, m_world);
     float4 viewPosition = mul(worldPosition, m_view);
     output.position = mul(viewPosition, m_projection);
     

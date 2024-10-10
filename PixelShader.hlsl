@@ -15,8 +15,6 @@ cbuffer constant : register(b0)
 
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
-    //float speedFactor = ((cos(deltaTime * 0.5f) + 1.0f) / 2.0f);
-    //float lerpFactor = (sin(deltaTime + (deltaTime * speedFactor)) + 1.0f) * 0.5f;
     float lerpFactor = (sin(elapsedTime) + 1.0f) * 0.5f;
     
     return float4(lerp(input.color, input.color1, lerpFactor), 1.0f);

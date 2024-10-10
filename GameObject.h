@@ -3,6 +3,7 @@
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
 #include "ConstantBuffer.h"
+#include "IndexBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Matrix4x4.h"
@@ -12,7 +13,6 @@
 struct vertex
 {
 	Vector3D position;
-	Vector3D position1;
 	Vector3D color;
 	Vector3D color1;
 };
@@ -43,10 +43,12 @@ public:
 	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
 protected:
 	std::vector<vertex> vertices;
+	std::vector<unsigned int> index_list;
 	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 	VertexBuffer* vertexBuffer = nullptr;
 	ConstantBuffer* constantBuffer = nullptr;
+	IndexBuffer* indexBuffer = nullptr;
 	VertexShader* vertexShader = nullptr;
 	PixelShader* pixelShader = nullptr;
 };

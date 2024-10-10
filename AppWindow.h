@@ -14,6 +14,7 @@
 
 #include "GameObject.h"
 #include "Quads.h"
+#include "Cube.h"
 
 class AppWindow : public Window
 {

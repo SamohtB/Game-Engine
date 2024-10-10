@@ -18,7 +18,12 @@ bool VertexShader::init(const void* shader_byte_code, size_t byte_code_size)
 
 void VertexShader::release()
 {
-	m_vs->Release();
+	if (m_vs)
+	{
+		m_vs->Release();
+		m_vs = nullptr;
+	}
+	
 	delete this;
 }
 	

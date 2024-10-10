@@ -20,23 +20,10 @@ void AppWindow::onCreate()
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
-	/*FoldingQuad* folding_quad = new FoldingQuad();
-	folding_quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	folding_quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	objectList.push_back(static_cast<GameObject*>(folding_quad));*/
-
-	/*LoopedQuad* looped_quad = new LoopedQuad();
-	looped_quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	looped_quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	objectList.push_back(static_cast<GameObject*>(looped_quad));*/
-
-	Quad* quad = new Quad();
-	quad->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	quad->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-	objectList.push_back(static_cast<GameObject*>(quad));
+	Cube* cube = new Cube();
+	cube->initialize(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	cube->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	objectList.push_back(cube);
 }
 
 void AppWindow::onUpdate()
@@ -88,13 +75,14 @@ void AppWindow::updateGameObjects()
 
 	Matrix4x4 temp;
 
-	cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5f, 0.5f, 0), Vector3D(1.5f, 1.5f, 0), (sin(m_ticks_scale) + 1.0f) / 2.0f));
-	temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_ticks_translate));
-
+	/*cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5f, 0.5f, 0), Vector3D(1.5f, 1.5f, 0), (sin(m_ticks_scale) + 1.0f) / 2.0f));
+	temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_ticks_translate));*/
+	
+	temp.setTranslation(Vector3D(0.f, 0.f, -3));
+	cc.m_world.setScale(Vector3D(1, 1, 1));
 	cc.m_world *= temp;
-
 	cc.m_view.setIdentity();
-	cc.m_projection_matrix.setOrthogonalProjectionMatrix(this->m_window_width / 200.0f, this->m_window_height / 200.0f, -4.0f, 4.0f);
+	cc.m_projection_matrix.setOrthogonalProjectionMatrix(this->m_window_width / 400.0f, this->m_window_height / 400.0f, -4.0f, 4.0f);
 
 	for (int i = 0; i < objectList.size(); i++)
 	{
