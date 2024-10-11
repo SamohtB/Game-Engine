@@ -61,7 +61,7 @@ Circle* CircleManager::spawnCircle()
 			if (!circle->isActive())
 			{
 				circle->setActive(true);
-				circle->initialize(this->dis(gen), dis(gen));
+				circle->initialize(dis(gen), dis(gen), dis(gen), dis(gen));
 				this->activeCircles.push(circle);
 				return circle;
 			}

@@ -22,9 +22,9 @@ void AppWindow::onCreate()
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
 	this->circleManager = new CircleManager();
-	this->circleManager->setSpeed(0.25f);
+	this->circleManager->setSpeed(0.5f);
 	this->circleManager->CreateCirclePool(100);
-	this->circleManager->spawnBatch(3);
+	this->circleManager->spawnBatch(5);
 }
 
 void AppWindow::onUpdate()

@@ -1,4 +1,5 @@
 #include "Circle.h"
+#include <iostream>
 
 Circle::Circle(float radius, XMFLOAT3 color, int segments)
 {
@@ -6,13 +7,10 @@ Circle::Circle(float radius, XMFLOAT3 color, int segments)
     this->vertices = GenerateCircleVertices(radius, segments);
 }
 
-void Circle::initialize(float x, float y)
+void Circle::initialize(float posX, float posY, float dirX, float dirY)
 {
-	this->position = XMFLOAT3(0, 0, 0);
-	this->rotation = XMFLOAT3(0, 0, 0);
-	this->scale = XMFLOAT3(1, 1, 1);
-
-	this->setDirection(x, y);
+	this->position = XMFLOAT3(posX, posY, 0);
+	this->setDirection(dirX, dirY);
 }
 
 std::vector<vertex> Circle::GenerateCircleVertices(float radius, int segmentCount)
@@ -62,6 +60,8 @@ void Circle::update(float deltaTime)
 	this->position.x += this->direction.x * this->moveSpeed * deltaTime;
 	this->position.y += this->direction.y * this->moveSpeed * deltaTime;
 
+	handleCollision();
+
 	GameObject::update(deltaTime);
 }
 
@@ -77,8 +77,50 @@ void Circle::setSpeed(float speed)
 	this->moveSpeed = speed;
 }
 
-bool Circle::checkCollision()
+void Circle::handleCollision()
 {
+	XMVECTOR pos = XMLoadFloat3(&this->position); 
+	XMVECTOR dir = XMLoadFloat2(&this->direction);
 
-	return true;
+	float radius = 0.05f;
+	bool isColliding = false;
+
+	if (XMVectorGetY(pos) + radius > 1.8f)
+	{
+		float penetration = (XMVectorGetY(pos) + radius) - 1.8f;
+		pos = XMVectorSubtract(pos, XMVectorSet(0, penetration, 0, 0));
+		dir = XMVectorSetY(dir, -XMVectorGetY(dir));
+		isColliding = true;
+	}
+	
+	else if (XMVectorGetY(pos) - radius < -1.8f)
+	{
+		float penetration = -1.8f - (XMVectorGetY(pos) - radius);
+		pos = XMVectorAdd(pos, XMVectorSet(0, penetration, 0, 0));
+		dir = XMVectorSetY(dir, -XMVectorGetY(dir));
+		isColliding = true;
+	}
+
+	
+	if (XMVectorGetX(pos) - radius < -2.5f)
+	{
+		float penetration = -2.5f - (XMVectorGetX(pos) - radius);
+		pos = XMVectorAdd(pos, XMVectorSet(penetration, 0, 0, 0));
+		dir = XMVectorSetX(dir, -XMVectorGetX(dir));
+		isColliding = true;
+	}
+
+	else if (XMVectorGetX(pos) + radius > 2.5f)
+	{
+		float penetration = (XMVectorGetX(pos) + radius) - 2.5f;
+		pos = XMVectorSubtract(pos, XMVectorSet(penetration, 0, 0, 0));
+		dir = XMVectorSetX(dir, -XMVectorGetX(dir));
+		isColliding = true;
+	}
+
+	if (isColliding)
+	{
+		XMStoreFloat3(&this->position, pos);
+		XMStoreFloat2(&this->direction, dir);
+	}
 }

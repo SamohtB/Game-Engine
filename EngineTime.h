@@ -23,7 +23,7 @@ private:
 	std::chrono::system_clock::time_point end;
 
 	double deltaTime = 0.0;
-	
+
 	static void LogFrameStart();
 	static void LogFrameEnd();
 
