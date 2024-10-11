@@ -19,7 +19,7 @@ void CircleManager::CreateCirclePool(int amount)
 {
 	for (int i = 0; i < amount; i++)
 	{
-		Circle* circle = new Circle(0.05f, XMFLOAT3(1.f, 1.f, 1.f));
+		Circle* circle = new Circle(this->radius, XMFLOAT3(1.f, 1.f, 1.f));
 		circle->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 		circle->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 		circle->setSpeed(this->speed);
@@ -98,6 +98,11 @@ void CircleManager::setWindowParameters(float width, float height)
 void CircleManager::setSpeed(float speed)
 {
 	this->speed = speed;
+}
+
+void CircleManager::setRadius(float radius)
+{
+	this->radius = speed;
 }
 
 void CircleManager::update(float deltaTime)

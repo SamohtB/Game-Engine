@@ -115,7 +115,7 @@ bool Window::init()
 		return false;
 	}
 
-	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "MyWindowClass", "DirectX Application", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL, NULL, this);
+	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX, "MyWindowClass", "DirectX Application", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL, NULL, this);
 
 	//Create Window
 	if (!m_hwnd)
@@ -145,6 +145,18 @@ bool Window::broadcast()
 
 	Sleep(1);
 	EngineTime::LogFrameEnd();
+
+	frameCount++;
+	totalTime += EngineTime::sharedInstance->deltaTime;
+
+	if (totalTime >= updateInterval)
+	{
+		double averageFPS = frameCount / totalTime;
+		std::cout << "Average FPS: " << averageFPS << std::endl;
+
+		frameCount = 0;
+		totalTime = 0.0;
+	}
 
 	return true;
 }

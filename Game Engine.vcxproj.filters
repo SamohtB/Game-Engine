@@ -81,6 +81,12 @@
     <ClCompile Include="EngineTime.cpp">
       <Filter>Engine\GraphicsEngine\EngineTime</Filter>
     </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>App\Objects\ObjectClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleManager.cpp">
+      <Filter>App\Objects\ObjectClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -119,11 +125,11 @@
     <ClInclude Include="Quads.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3D.h">
-      <Filter>Engine\Math</Filter>
+    <ClInclude Include="Circle.h">
+      <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix4x4.h">
-      <Filter>Engine\Math</Filter>
+    <ClInclude Include="CircleManager.h">
+      <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

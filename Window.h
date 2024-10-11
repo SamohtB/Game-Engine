@@ -39,4 +39,8 @@ private:
 	bool isBackspacePressed = false;
 	bool isDeletePressed = false;
 	bool isSpacePressed = false;
+
+	int frameCount = 0;
+	double totalTime = 0.0;
+	double updateInterval = 1.0;
 };

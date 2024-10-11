@@ -21,6 +21,7 @@ public:
 	Circle* spawnCircle();
 	void spawnBatch(int amount);
 
+	void setRadius(float radius);
 	void setSpeed(float speed);
 	void setWindowParameters(float width, float height);
 
@@ -32,6 +33,7 @@ private:
 	std::stack<Circle*> activeCircles;
 	std::vector<Circle*> circlePool;
 
+	float radius = 0.05f;
 	float speed = 0.5f;
 	float windowWidth = 0;
 	float windowHeight = 0;

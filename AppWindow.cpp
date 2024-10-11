@@ -14,6 +14,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::initialize();
 	EngineTime::initialize();
 
+	EngineTime::setFrameTime(60);
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	
 	RECT rc = this->getClientWindowRect();
@@ -58,7 +59,7 @@ void AppWindow::onDestroy()
 
 void AppWindow::updateGameObjects()
 {
-	float deltaTime = static_cast<float>(EngineTime::getDeltaTime());
+	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
 
 	float viewWidth = this->m_window_width / 200.0f;
 	float viewHeight = this->m_window_height / 200.0f;
