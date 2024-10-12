@@ -10,5 +10,5 @@ public:
 	Quad() : GameObject() {}
 	~Quad() {}
 
-	void draw() override;
+	void initialize(float width, float height, vec3 initialPosition, vec3 color);
 };

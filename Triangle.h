@@ -9,6 +9,4 @@ class Triangle : public GameObject
 public:
 	Triangle() : GameObject() {}
 	~Triangle() {}
-
-	void draw() override;
 };

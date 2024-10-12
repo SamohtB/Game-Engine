@@ -25,11 +25,13 @@ public:
 
 	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawTriangleStrip(UINT vertex_count, UINT start_vertex_index);
+	void draw(UINT vertex_count, UINT start_vertex_index, D3D11_PRIMITIVE_TOPOLOGY topology);
 
 	bool release();
 	
 private:
 	ID3D11DeviceContext* m_device_context;
+	D3D11_PRIMITIVE_TOPOLOGY current_topology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
 
 	friend class ConstantBuffer;
 };

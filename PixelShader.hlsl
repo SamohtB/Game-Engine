@@ -40,5 +40,5 @@ float4 psmain(PS_INPUT input) : SV_TARGET
     float3 directionalLight = CalculateDirectionalLight(normal);
     float3 litColor = directionalLight * input.color;
     
-    return float4(litColor, 1.0f);
+    return float4(input.color, 1.0f);
 }

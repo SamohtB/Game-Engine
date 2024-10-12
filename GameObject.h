@@ -6,6 +6,8 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
+#include <vector>
+
 struct vec3
 {
 	float x, y, z;
@@ -41,13 +43,20 @@ public:
 	GameObject();
 	~GameObject();
 	
-	virtual void update(DeviceContext* context, void* buffer);
+	void updateConstantBuffer(void* buffer);
+	virtual void update(float deltaTime) {};
 	virtual void draw();
-
-	void createShaders(vertex* data, constant* cc);
 	void release();
 
+	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
+	void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
+
 protected:
+	std::vector<vertex> m_vertices;
+	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	vec3 m_position;
+
 	VertexBuffer* vertexBuffer = nullptr;
 	ConstantBuffer* constantBuffer = nullptr;
 	VertexShader* vertexShader = nullptr;
