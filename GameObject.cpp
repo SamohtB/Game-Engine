@@ -1,6 +1,5 @@
 #include "GameObject.h"
 
-
 GameObject::GameObject() {}
 
 GameObject::~GameObject() 
@@ -35,18 +34,18 @@ void GameObject::release()
 void GameObject::loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry)
 {
 	vertexBuffer = GraphicsEngine::getInstance()->createVertexBuffer();
-	UINT size_list = sizeof(this->m_vertices);
+
+	UINT vertexSize = sizeof(vertex);
+	UINT vertexCount = static_cast<UINT>(this->m_vertices.size());
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
-	GraphicsEngine::getInstance()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
+	GraphicsEngine::getInstance()->compileVertexShader(vsPath, vsEntry, &shader_byte_code, &size_shader);
 	vertexShader = GraphicsEngine::getInstance()->createVertexShader(shader_byte_code, size_shader);
-	vertexBuffer->load(this->m_vertices.data(), sizeof(vertex), size_list, shader_byte_code, size_shader);
+	vertexBuffer->load(this->m_vertices.data(), vertexSize, vertexCount, shader_byte_code, size_shader);
 
-	GraphicsEngine::getInstance()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-
+	GraphicsEngine::getInstance()->compilePixelShader(psPath, psEntry, &shader_byte_code, &size_shader);
 	pixelShader = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);	
 
 	constantBuffer = GraphicsEngine::getInstance()->createConstantBuffer();

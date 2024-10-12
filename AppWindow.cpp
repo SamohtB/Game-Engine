@@ -20,14 +20,35 @@ void AppWindow::onCreate()
 	cc.lightParameters = { 0.5f, 64.0f, 0.5f, 2.0f };  // x = ambientStr, y = specPhong, z = specStr, w = dirLightIntensity
 	cc.cameraPos = { 0.0f, 0.0f, 5.0f, 0.0f};
 
-	vec3 initialPos = { 0, 0, 0 };
-	vec3 colorQuad = { 1, 1, 1 };
-
 	Quad* obj = new Quad();
-	obj->initialize(0.25f, 0.33f, initialPos, colorQuad);
+	
+	/* background quad */
+	obj->setParameters(0.9f, 0.9f, { 0.f, 0.f, 0.f }, { 0.3f, 0.3f, 0.3f });
+	obj->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "unlit");
+	obj->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	objectList.push_back((GameObject*)obj);
+
+	/* top left quad */
+	obj = new Quad();
+	obj->setParameters(0.15f, 0.15f, { 0.7f, 0.7f, 0.f }, { 1.f, 0.f, 0.f });
 	obj->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 	obj->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	objectList.push_back((GameObject*) obj);
+	objectList.push_back((GameObject*)obj);
+
+	/* center quad */
+	obj = new Quad();
+	obj->setParameters(0.15f, 0.15f, { 0.f, 0.f, 0.f }, { 0.f, 1.f, 0.f });
+	obj->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	obj->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	objectList.push_back((GameObject*)obj);
+
+	/* bottom right quad */
+	obj = new Quad();
+	obj->setParameters(0.15f, 0.15f, { -0.7f, -0.7f, 0.f }, { 0.f, 0.f, 1.f });
+	obj->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	obj->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	objectList.push_back((GameObject*)obj);
+
 }
 
 void AppWindow::onUpdate()

@@ -7,6 +7,7 @@
 #include "PixelShader.h"
 
 #include <vector>
+#include <string>
 
 struct vec3
 {
@@ -54,8 +55,6 @@ public:
 protected:
 	std::vector<vertex> m_vertices;
 	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-
-	vec3 m_position;
 
 	VertexBuffer* vertexBuffer = nullptr;
 	ConstantBuffer* constantBuffer = nullptr;

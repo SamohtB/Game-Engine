@@ -1,6 +1,7 @@
 #include "Quad.h"
+#include <iostream>
 
-void Quad::initialize(float width, float height, vec3 initialPosition, vec3 color)
+void Quad::setParameters(float width, float height, vec3 initialPosition, vec3 color)
 {
 	vertex bot_left = { initialPosition.x - width, initialPosition.y - height, 0.0f, color.x, color.y, color.z };
 	vertex top_left = { initialPosition.x - width, initialPosition.y + height, 0.0f, color.x, color.y, color.z };
