@@ -1,5 +1,6 @@
 #include "AppWindow.h"
 #include <Windows.h>
+#include <math.h>
 
 AppWindow::AppWindow() {}
 
@@ -14,11 +15,27 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	cc.directionalLightDir = { 1.0f, 1.0f, 1.0f, 1.0f };
-	cc.directionalLightColor = { 1.0f, 0.68f, 0.8f, 1.0f };
-	cc.directionalLightAmbientColor = { 0.1f, 0.1f, 0.1f, 1.0f };
-	cc.lightParameters = { 0.5f, 64.0f, 0.5f, 2.0f };  // x = ambientStr, y = specPhong, z = specStr, w = dirLightIntensity
-	cc.cameraPos = { 0.0f, 0.0f, 5.0f, 0.0f};
+	// Updating the constant buffer with white spotlight parameters
+	cc.light_position = { 0.0f, 5.0f, 5.0f };
+	cc.light_intensity = 2.0f;
+	cc.light_direction = { 0.0f, -5.0f, -5.0f };
+
+	float length = sqrt(cc.light_direction.x * cc.light_direction.x +
+		cc.light_direction.y * cc.light_direction.y +
+		cc.light_direction.z * cc.light_direction.z);
+	cc.light_direction.x /= length;
+	cc.light_direction.y /= length;
+	cc.light_direction.z /= length;
+
+	cc.spec_phong = 64.0f;                       
+	cc.light_color = { 1.0f, 1.0f, 1.0f };             
+	cc.spec_strength = 0.5f;                          
+	cc.light_ambient_color = { 0.1f, 0.1f, 0.1f };     
+	cc.light_ambient_strength = 0.5f;                  
+	cc.range = 100.0f;                                  
+	cc.inner_angle = 30.0f * (3.14159f / 180.0f);
+	cc.outer_angle = 60.0f * (3.14159f / 180.0f);
+	cc.attenuation = 0.1f;                             
 
 	Quad* obj = new Quad();
 	

@@ -27,11 +27,22 @@ struct vertex
 
 struct alignas(16) constant
 {
-	vec4 directionalLightDir;
-	vec4 directionalLightColor;
-	vec4 directionalLightAmbientColor;
-	vec4 lightParameters;
-	vec4 cameraPos;
+	vec3 light_position;
+	float light_intensity;
+
+	vec3 light_direction;
+	float spec_phong;
+
+	vec3 light_color;
+	float spec_strength;
+
+	vec3 light_ambient_color;
+	float light_ambient_strength;
+	
+	float range;
+	float outer_angle;
+	float inner_angle;
+	float attenuation;
 };
 
 class GraphicsEngine;
