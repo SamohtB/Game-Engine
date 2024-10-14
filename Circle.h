@@ -1,15 +1,15 @@
 #pragma once
-#include "GameObject.h"
+#include "Object2D.h"
 #include <algorithm>
 
-class Circle : public GameObject
+class Circle : public Object2D
 {
 public:
 	Circle(float radius, XMFLOAT3 color, int segments = 32);
 	~Circle() {}
 
 	void initialize(float posX, float posY, float dirX, float dirY);
-	void update(float deltaTime) override; 
+	void update(float deltaTime) override;
 
 	void setDirection(float x, float y);
 	void setSpeed(float speed);

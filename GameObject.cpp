@@ -19,6 +19,7 @@ void GameObject::loadShaders(const wchar_t* vsPath, const char* vsEntry, const w
 
 	UINT vertexSize = sizeof(vertex);
 	UINT vertexCount = static_cast<UINT>(vertices.size());
+
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
@@ -70,7 +71,7 @@ void GameObject::draw()
 
 	context->setVertexBuffer(vertexBuffer);
 
-	context->draw(this->vertexBuffer->getSizeVertexList(), 0, m_topology);
+	//context->draw(this->vertexBuffer->getSizeVertexList(), 0, m_topology);
 }
 
 void GameObject::setTopology(D3D11_PRIMITIVE_TOPOLOGY topology)

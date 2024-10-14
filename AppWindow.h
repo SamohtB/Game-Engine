@@ -13,6 +13,7 @@
 #include "PixelShader.h"
 
 #include "CircleManager.h"
+#include "Cube.h"
 
 class AppWindow : public Window
 {
@@ -24,6 +25,7 @@ public:
 
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
+	void drawGameObjects();
 	virtual void onDestroy() override;
 
 	void handleKeyInputs();

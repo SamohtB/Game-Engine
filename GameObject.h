@@ -2,6 +2,7 @@
 #include "GraphicsEngine.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
@@ -37,11 +38,11 @@ public:
 	
 	virtual void update(float deltaTime);
 	virtual void draw();
-	void release();
+	virtual void release();
 
 	void setWindowParameters(float width, float height);
 	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
-	void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
+	virtual void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
 
 	bool isActive();
 	void setActive(bool value);

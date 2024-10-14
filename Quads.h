@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Object2D.h"
 
 class Quad : public GameObject
 {

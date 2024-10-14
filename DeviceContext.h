@@ -3,6 +3,7 @@
 
 class SwapChain;
 class VertexBuffer;
+class IndexBuffer;
 class ConstantBuffer;
 class VertexShader;
 class PixelShader;
@@ -15,6 +16,7 @@ public:
 
 	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
+	void setIndexBuffer(IndexBuffer* index_buffer);
 	void setViewportSize(UINT width, UINT height);
 
 	void setVertexShader(VertexShader* vertex_shader);
@@ -24,6 +26,7 @@ public:
 	void setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
 
 	void draw(UINT vertex_count, UINT start_vertex_index, D3D11_PRIMITIVE_TOPOLOGY topology);
+	void drawIndexed(UINT index_count, UINT start_vertex_index, UINT start_index_location, D3D11_PRIMITIVE_TOPOLOGY topology);
 
 	bool release();
 	

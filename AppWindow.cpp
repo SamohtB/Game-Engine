@@ -23,16 +23,21 @@ void AppWindow::onCreate()
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
 	this->circleManager = new CircleManager();
-	this->circleManager->setSpeed(0.5f);
-	this->circleManager->CreateCirclePool(100);
-	this->circleManager->spawnBatch(5);
+	//this->circleManager->setSpeed(0.5f);
+	//this->circleManager->CreateCirclePool(100);
+	//this->circleManager->spawnBatch(5);
+
+	Cube* cube = new Cube();
+	cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	cube->setTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	objectList.push_back(cube);
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.f, 0.f, 0.f, 1);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.3f, 0.2f, 0.4f, 1);
 	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
@@ -44,9 +49,19 @@ void AppWindow::onUpdate()
 	updateGameObjects();
 
 	/* Draws */
-	this->circleManager->draw();
+	drawGameObjects();
 
 	m_swap_chain->present(true);
+}
+
+void AppWindow::drawGameObjects()
+{
+	this->circleManager->draw();
+
+	for (GameObject* object : this->objectList)
+	{
+		object->draw();
+	}
 }
 
 void AppWindow::onDestroy()
@@ -66,6 +81,12 @@ void AppWindow::updateGameObjects()
 
 	this->circleManager->setWindowParameters(viewWidth, viewHeight);
 	this->circleManager->update(deltaTime);
+
+	for (GameObject* object : this->objectList)
+	{
+		object->setWindowParameters(viewWidth, viewHeight);
+		object->update(deltaTime);
+	}
 }
 
 void AppWindow::handleKeyInputs()
