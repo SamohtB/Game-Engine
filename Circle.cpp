@@ -61,8 +61,6 @@ void Circle::update(float deltaTime)
 	this->position.y += this->direction.y * this->moveSpeed * deltaTime;
 
 	handleCollision();
-
-	GameObject::update(deltaTime);
 }
 
 void Circle::setDirection(float x, float y)

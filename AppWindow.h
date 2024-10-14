@@ -21,14 +21,15 @@ public:
 	AppWindow();
 	~AppWindow();
 
-	void updateGameObjects();
-
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
-	void drawGameObjects();
 	virtual void onDestroy() override;
 
 	void handleKeyInputs();
+	void updateGameObjects();
+	void drawGameObjects();
+
+	constant calculateConstants(float deltaTime);
 
 private:
 	std::vector<GameObject*> objectList;

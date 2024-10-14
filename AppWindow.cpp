@@ -29,7 +29,7 @@ void AppWindow::onCreate()
 
 	Cube* cube = new Cube();
 	cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	cube->setTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	cube->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	objectList.push_back(cube);
 }
 
@@ -76,17 +76,47 @@ void AppWindow::updateGameObjects()
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
 
-	float viewWidth = this->m_window_width / 200.0f;
-	float viewHeight = this->m_window_height / 200.0f;
+	DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
 
-	this->circleManager->setWindowParameters(viewWidth, viewHeight);
+	constant cc = calculateConstants(deltaTime);
+	
 	this->circleManager->update(deltaTime);
+	this->circleManager->setConstants(context, &cc);
 
 	for (GameObject* object : this->objectList)
 	{
-		object->setWindowParameters(viewWidth, viewHeight);
 		object->update(deltaTime);
+		object->setConstants(context, &cc);
 	}
+}
+
+constant AppWindow::calculateConstants(float deltaTime)
+{
+	constant stant;
+	float viewWidth = this->m_window_width / 200.0f;
+	float viewHeight = this->m_window_height / 200.0f;
+	this->m_ticks_scale += deltaTime;
+
+	stant.m_world = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+
+	stant.m_world *= XMMatrixRotationZ(this->m_ticks_scale);
+	stant.m_world *= XMMatrixRotationY(this->m_ticks_scale);
+	stant.m_world *= XMMatrixRotationX(this->m_ticks_scale);
+
+	stant.m_view = XMMatrixIdentity();
+
+	stant.m_projection_matrix = XMMatrixOrthographicOffCenterLH(
+		-viewWidth,
+		 viewWidth,
+		-viewHeight,
+		viewHeight,
+		-4.0f,
+		4.0f
+	);
+
+	stant.elapsedTime = deltaTime;
+
+	return stant;
 }
 
 void AppWindow::handleKeyInputs()

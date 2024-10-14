@@ -14,6 +14,7 @@ public:
 
 	void update(float deltaTime);
 	void draw();
+	void setConstants(DeviceContext* context, void* buffer);
 	void CreateCirclePool(int amount);
 
 	void clearCircles();

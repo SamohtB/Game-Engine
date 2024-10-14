@@ -40,7 +40,7 @@ public:
 	virtual void draw();
 	virtual void release();
 
-	void setWindowParameters(float width, float height);
+	void setConstants(DeviceContext* context, void* buffer);
 	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
 	virtual void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
 
@@ -59,11 +59,6 @@ protected:
 	XMFLOAT3 rotation;
 	XMFLOAT3 scale;
 
-	float windowWidth = 0;
-	float windowHeight = 0;
-	float nearPlane = -4.0f;
-	float farPlane = 4.0f;
-
 	bool active = false;
 
 	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -72,7 +67,4 @@ protected:
 	ConstantBuffer* constantBuffer = nullptr;
 	VertexShader* vertexShader = nullptr;
 	PixelShader* pixelShader = nullptr;
-
-private:
-	void updateConstantBuffer(DeviceContext* context, void* buffer);
 };

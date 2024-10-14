@@ -37,26 +37,11 @@ void GameObject::loadShaders(const wchar_t* vsPath, const char* vsEntry, const w
 	GraphicsEngine::getInstance()->releaseCompiledShader();
 }
 
-void GameObject::updateConstantBuffer(DeviceContext* context, void* buffer)
+void GameObject::update(float deltaTime) {}
+
+void GameObject::setConstants(DeviceContext* context, void* buffer)
 {
 	constantBuffer->update(context, buffer);
-}
-
-void GameObject::update(float deltaTime)
-{
-	DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
-
-	XMMATRIX worldMatrix = getWorldMatrix();
-	XMMATRIX viewMatrix = XMMatrixIdentity();
-	XMMATRIX projectionMatrix = XMMatrixOrthographicLH(this->windowWidth, this->windowHeight, nearPlane, farPlane);
-
-	constant cbData;
-	cbData.m_world = worldMatrix;
-	cbData.m_view = viewMatrix;
-	cbData.m_projection_matrix = projectionMatrix;
-	cbData.elapsedTime = deltaTime;
-
-	updateConstantBuffer(context, &cbData);
 }
 
 void GameObject::draw()
@@ -70,8 +55,6 @@ void GameObject::draw()
 	context->setPixelShader(pixelShader);
 
 	context->setVertexBuffer(vertexBuffer);
-
-	//context->draw(this->vertexBuffer->getSizeVertexList(), 0, m_topology);
 }
 
 void GameObject::setTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
@@ -101,12 +84,6 @@ XMMATRIX GameObject::getWorldMatrix() const
 	XMMATRIX matTranslation = XMMatrixTranslation(position.x, position.y, position.z);
 
 	return matScale * matRotation * matTranslation;
-}
-
-void GameObject::setWindowParameters(float width, float height)
-{
-	this->windowWidth = width;
-	this->windowHeight = height;
 }
 
 bool GameObject::isActive()

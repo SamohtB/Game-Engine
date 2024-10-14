@@ -111,8 +111,18 @@ void CircleManager::update(float deltaTime)
 	{
 		if (circle->isActive())
 		{
-			circle->setWindowParameters(this->windowWidth, this->windowHeight);
 			circle->update(deltaTime);
+		}
+	}
+}
+
+void CircleManager::setConstants(DeviceContext* context, void* buffer)
+{
+	for (Circle* circle : circlePool)
+	{
+		if (circle->isActive())
+		{
+			circle->setConstants(context, buffer);
 		}
 	}
 }
