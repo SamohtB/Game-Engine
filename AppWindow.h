@@ -12,7 +12,7 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
-#include "CircleManager.h"
+#include "GameObjectManager.h"
 #include "Cube.h"
 
 class AppWindow : public Window
@@ -29,13 +29,10 @@ public:
 	void updateGameObjects();
 	void drawGameObjects();
 
-	constant calculateConstants(float deltaTime);
-
 private:
-	std::vector<GameObject*> objectList;
+	GameObjectManager* gameObjectManager = nullptr;
 
 	SwapChain* m_swap_chain = nullptr;
-	CircleManager* circleManager = nullptr;
 
 	bool backspacePressed = false;
 	bool deletePressed = false;

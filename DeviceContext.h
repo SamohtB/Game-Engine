@@ -25,8 +25,8 @@ public:
 	void setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
 	void setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
 
-	void draw(UINT vertex_count, UINT start_vertex_index, D3D11_PRIMITIVE_TOPOLOGY topology);
-	void drawIndexed(UINT index_count, UINT start_vertex_index, UINT start_index_location, D3D11_PRIMITIVE_TOPOLOGY topology);
+	void drawTriangle(UINT vertex_count, UINT start_vertex_index);
+	void drawIndexedTriangle(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 
 	bool release();
 	

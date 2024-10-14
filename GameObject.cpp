@@ -3,85 +3,65 @@
 
 GameObject::GameObject() 
 {
-	this->position = XMFLOAT3(0, 0, 0);
-	this->rotation = XMFLOAT3(0, 0, 0);
-	this->scale = XMFLOAT3(1, 1, 1);
+	this->local_position = XMFLOAT3(0, 0, 0);
+	this->local_rotation = XMFLOAT3(0, 0, 0);
+	this->local_scale = XMFLOAT3(1, 1, 1);
 }
 
-GameObject::~GameObject() 
-{
-	release();
-}
-
-void GameObject::loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry)
-{
-	vertexBuffer = GraphicsEngine::getInstance()->createVertexBuffer();
-
-	UINT vertexSize = sizeof(vertex);
-	UINT vertexCount = static_cast<UINT>(vertices.size());
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-
-	GraphicsEngine::getInstance()->compileVertexShader(vsPath, vsEntry, &shader_byte_code, &size_shader);
-	vertexShader = GraphicsEngine::getInstance()->createVertexShader(shader_byte_code, size_shader);
-	vertexBuffer->load(vertices.data(), vertexSize, vertexCount, shader_byte_code, size_shader);
-
-	GraphicsEngine::getInstance()->compilePixelShader(psPath, psEntry, &shader_byte_code, &size_shader);
-	pixelShader = GraphicsEngine::getInstance()->createPixelShader(shader_byte_code, size_shader);
-
-	constantBuffer = GraphicsEngine::getInstance()->createConstantBuffer();
-	constant initialConstant;
-	constantBuffer->load(&initialConstant, sizeof(constant));
-
-	GraphicsEngine::getInstance()->releaseCompiledShader();
-}
+GameObject::~GameObject() {}
 
 void GameObject::update(float deltaTime) {}
 
-void GameObject::setConstants(DeviceContext* context, void* buffer)
-{
-	constantBuffer->update(context, buffer);
-}
-
-void GameObject::draw()
-{
-	DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
-
-	context->setConstantBuffer(vertexShader, constantBuffer);
-	context->setConstantBuffer(pixelShader, constantBuffer);
-
-	context->setVertexShader(vertexShader);
-	context->setPixelShader(pixelShader);
-
-	context->setVertexBuffer(vertexBuffer);
-}
-
-void GameObject::setTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
-{
-	m_topology = topology;
-}
-
 void GameObject::setPosition(float x, float y, float z)
 {
-	position = XMFLOAT3(x, y, z);
+	local_position = XMFLOAT3(x, y, z);
+}
+
+void GameObject::setPosition(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->local_position, vector);
+}
+
+XMVECTOR GameObject::getLocalPosition()
+{
+	return XMLoadFloat3(&this->local_position);
 }
 
 void GameObject::setRotation(float pitch, float yaw, float roll)
 {
-	rotation = XMFLOAT3(pitch, yaw, roll);
+	local_rotation = XMFLOAT3(pitch, yaw, roll);
+}
+
+void GameObject::setRotation(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->local_rotation, vector);
+}
+
+XMVECTOR GameObject::getLocalRotation()
+{
+	return XMLoadFloat3(&this->local_rotation);
 }
 
 void GameObject::setScale(float x, float y, float z)
 {
-	scale = XMFLOAT3(x, y, z);
+	local_scale = XMFLOAT3(x, y, z);
+}
+
+void GameObject::setScale(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->local_scale, vector);
+}
+
+XMVECTOR GameObject::getLocalScale()
+{
+	return XMLoadFloat3(&this->local_scale);
 }
 
 XMMATRIX GameObject::getWorldMatrix() const
 {
-	XMMATRIX matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	XMMATRIX matRotation = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-	XMMATRIX matTranslation = XMMatrixTranslation(position.x, position.y, position.z);
+	XMMATRIX matScale = XMMatrixScaling(local_scale.x, local_scale.y, local_scale.z);
+	XMMATRIX matRotation = XMMatrixRotationRollPitchYaw(local_rotation.x, local_rotation.y, local_rotation.z);
+	XMMATRIX matTranslation = XMMatrixTranslation(local_position.x, local_position.y, local_position.z);
 
 	return matScale * matRotation * matTranslation;
 }
@@ -94,28 +74,4 @@ bool GameObject::isActive()
 void GameObject::setActive(bool value)
 {
 	this->active = value;
-}
-
-void GameObject::release()
-{
-	if (vertexBuffer)
-	{
-		vertexBuffer->release();
-		vertexBuffer = nullptr;
-	}
-	if (constantBuffer)
-	{
-		constantBuffer->release();
-		constantBuffer = nullptr;
-	}
-	if (vertexShader)
-	{
-		vertexShader->release();
-		vertexShader = nullptr;
-	}
-	if (pixelShader)
-	{
-		pixelShader->release();
-		pixelShader = nullptr;
-	}
 }

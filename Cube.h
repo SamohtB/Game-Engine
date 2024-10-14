@@ -1,39 +1,34 @@
 #pragma once
-#include "Object3D.h"
+#include "GameObject.h"
 
-class Cube : public Object3D
+class Cube : public GameObject
 {
 public:
-    Cube()
-    {
-        this->vertices =
-        {
-            { XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT3(0, 1, 0) },
-            { XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT3(0, 1, 1) },
-            { XMFLOAT3(0.5f,  0.5f, -0.5f), XMFLOAT3(1, 0, 0) },
-            { XMFLOAT3(0.5f, -0.5f, -0.5f), XMFLOAT3(0, 0, 1) },
-            { XMFLOAT3(0.5f, -0.5f,  0.5f), XMFLOAT3(0, 0, 1) },
-            { XMFLOAT3(0.5f,  0.5f,  0.5f), XMFLOAT3(0, 0, 1) },
-            { XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT3(0, 0, 1) },
-            { XMFLOAT3(-0.5f, -0.5f,  0.5f), XMFLOAT3(0, 0, 1) }
-        };
+    Cube();
+    ~Cube();
 
-        this->index_list =
-        {
-            0, 1, 2,
-            2, 3, 0,
-            4, 5, 6,
-            6, 7, 4,
-            1, 6, 5,
-            5, 2, 1,
-            7, 0, 3,
-            3, 4, 7,
-            3, 2, 5,
-            5, 4, 3,
-            7, 6, 1,
-            1, 0, 7,
-        };
-    }
+    void initialize() override;
+    void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
+    void update(float deltaTime) override;
+    virtual void draw(int width, int height) override;
+    void release();
 
-    ~Cube() {}
+    void setSize(float size);
+    void setSpeed(float speed);
+
+private:
+    std::vector<vertex> vertices;
+    std::vector<unsigned int> index_list;
+
+    float m_size = 0.0f;
+    float m_ticks = 0.0f;
+    float m_delta_pos = 0.0f;
+    float m_delta_time = 0.0f;
+    float m_speed = 0.5f;
+
+    VertexBuffer* vertexBuffer = nullptr;
+    ConstantBuffer* constantBuffer = nullptr;
+    IndexBuffer* indexBuffer = nullptr;
+    VertexShader* vertexShader = nullptr;
+    PixelShader* pixelShader = nullptr;
 };

@@ -37,11 +37,11 @@
     <Filter Include="App\Objects\ObjectClasses">
       <UniqueIdentifier>{eca068d0-84b1-4f10-b0a5-9030ce19a4e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Math">
-      <UniqueIdentifier>{fcc4412d-b8c6-40aa-9468-f0e1a47ed38a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\GraphicsEngine\EngineTime">
       <UniqueIdentifier>{b3a705c7-ea02-4d30-a120-09977982a288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GraphicsEngine\IndexBuffer">
+      <UniqueIdentifier>{fd73cbe3-0e63-49a9-a91e-f3c9d105548f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,10 +81,13 @@
     <ClCompile Include="EngineTime.cpp">
       <Filter>Engine\GraphicsEngine\EngineTime</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
-    <ClCompile Include="CircleManager.cpp">
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,10 +128,13 @@
     <ClInclude Include="Quads.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Circle.h">
+    <ClInclude Include="GameObjectManager.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="CircleManager.h">
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
   </ItemGroup>

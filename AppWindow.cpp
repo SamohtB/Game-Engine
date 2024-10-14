@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 AppWindow::AppWindow() {}
 
@@ -22,15 +23,25 @@ void AppWindow::onCreate()
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
-	this->circleManager = new CircleManager();
-	//this->circleManager->setSpeed(0.5f);
-	//this->circleManager->CreateCirclePool(100);
-	//this->circleManager->spawnBatch(5);
+	Cube* cube = nullptr;
+	this->gameObjectManager = new GameObjectManager();
 
-	Cube* cube = new Cube();
-	cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	cube->setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	objectList.push_back(cube);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> posDist(-0.75f, 0.75f);
+	std::uniform_real_distribution<float> speedDist(-2.0f, 2.0f);
+
+	for (int i = 0; i < 1; i++)
+	{
+		cube = new Cube();
+		cube->setSize(0.15f);
+		cube->initialize();
+		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+		cube->setPosition(XMVECTOR{ posDist(gen), posDist(gen), posDist(gen) });
+		cube->setSpeed(speedDist(gen));
+		gameObjectManager->registerObject(cube);
+	}
+	
 }
 
 void AppWindow::onUpdate()
@@ -54,110 +65,31 @@ void AppWindow::onUpdate()
 	m_swap_chain->present(true);
 }
 
-void AppWindow::drawGameObjects()
+void AppWindow::handleKeyInputs()
 {
-	this->circleManager->draw();
-
-	for (GameObject* object : this->objectList)
-	{
-		object->draw();
-	}
-}
-
-void AppWindow::onDestroy()
-{
-	Window::onDestroy();
-	m_swap_chain->release();
-	delete this->circleManager;
-	GraphicsEngine::destroy();
 }
 
 void AppWindow::updateGameObjects()
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
 
-	DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
+	gameObjectManager->update(deltaTime);
+	gameObjectManager->draw(this->m_window_width, this->m_window_height);
+}
 
-	constant cc = calculateConstants(deltaTime);
+void AppWindow::drawGameObjects()
+{
 	
-	this->circleManager->update(deltaTime);
-	this->circleManager->setConstants(context, &cc);
-
-	for (GameObject* object : this->objectList)
-	{
-		object->update(deltaTime);
-		object->setConstants(context, &cc);
-	}
 }
 
-constant AppWindow::calculateConstants(float deltaTime)
+void AppWindow::onDestroy()
 {
-	constant stant;
-	float viewWidth = this->m_window_width / 200.0f;
-	float viewHeight = this->m_window_height / 200.0f;
-	this->m_ticks_scale += deltaTime;
-
-	stant.m_world = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-
-	stant.m_world *= XMMatrixRotationZ(this->m_ticks_scale);
-	stant.m_world *= XMMatrixRotationY(this->m_ticks_scale);
-	stant.m_world *= XMMatrixRotationX(this->m_ticks_scale);
-
-	stant.m_view = XMMatrixIdentity();
-
-	stant.m_projection_matrix = XMMatrixOrthographicOffCenterLH(
-		-viewWidth,
-		 viewWidth,
-		-viewHeight,
-		viewHeight,
-		-4.0f,
-		4.0f
-	);
-
-	stant.elapsedTime = deltaTime;
-
-	return stant;
+	Window::onDestroy();
+	m_swap_chain->release();
+	GraphicsEngine::destroy();
 }
 
-void AppWindow::handleKeyInputs()
-{
-	if (isBackspace())
-	{
-		if (!backspacePressed)
-		{
-			this->circleManager->clearNewestCircle();
-			backspacePressed = true;
-		}
-	}
-	else
-	{
-		backspacePressed = false;
-	}
 
-	if (isDelete())
-	{
-		if (!deletePressed)
-		{
-			this->circleManager->clearCircles();
-			deletePressed = true;
-		}
-	}
-	else
-	{
-		deletePressed = false;
-	}
 
-	if (isSpace())
-	{
-		if (!spacePressed)
-		{
-			this->circleManager->spawnBatch(1);
-			spacePressed = true;
-		}
-	}
-	else
-	{
-		spacePressed = false;
-	}
-}
+
 

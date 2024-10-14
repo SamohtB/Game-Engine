@@ -12,20 +12,6 @@
 
 using namespace DirectX;
 
-struct vertex
-{
-	XMFLOAT3 position;
-	XMFLOAT3 color;
-};
-
-struct alignas(16) constant
-{
-	XMMATRIX m_world;
-	XMMATRIX m_view;
-	XMMATRIX m_projection_matrix;
-	float elapsedTime;
-};
-
 class GraphicsEngine;
 class DeviceContext;
 
@@ -36,35 +22,45 @@ public:
 	GameObject();
 	~GameObject();
 	
-	virtual void update(float deltaTime);
-	virtual void draw();
-	virtual void release();
-
-	void setConstants(DeviceContext* context, void* buffer);
-	void setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
-	virtual void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
+	virtual void initialize() = 0;
+	virtual void update(float deltaTime) = 0;
+	virtual void draw(int width, int height) = 0;
 
 	bool isActive();
 	void setActive(bool value);
 
 	void setPosition(float x, float y, float z);
+	void setPosition(XMVECTOR vector);
+	XMVECTOR getLocalPosition();
+
 	void setRotation(float pitch, float yaw, float roll);
+	void setRotation(XMVECTOR vector);
+	XMVECTOR getLocalRotation();
+
 	void setScale(float x, float y, float z);
+	void setScale(XMVECTOR vector);
+	XMVECTOR getLocalScale();
+
 	XMMATRIX getWorldMatrix() const;
 
-protected:
-	std::vector<vertex> vertices;
+	struct vertex
+	{
+		XMFLOAT3 position;
+		XMFLOAT3 color;
+	};
 
-	XMFLOAT3 position;
-	XMFLOAT3 rotation;
-	XMFLOAT3 scale;
+	struct alignas(16) constant
+	{
+		XMMATRIX m_world;
+		XMMATRIX m_view;
+		XMMATRIX m_projection_matrix;
+	};
+
+protected:
+	XMFLOAT3 local_position;
+	XMFLOAT3 local_rotation;
+	XMFLOAT3 local_scale;
+	XMFLOAT4X4 local_matrix;
 
 	bool active = false;
-
-	D3D11_PRIMITIVE_TOPOLOGY m_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-
-	VertexBuffer* vertexBuffer = nullptr;
-	ConstantBuffer* constantBuffer = nullptr;
-	VertexShader* vertexShader = nullptr;
-	PixelShader* pixelShader = nullptr;
 };
