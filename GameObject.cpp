@@ -60,6 +60,14 @@ void GameObject::setScale(XMVECTOR vector)
 	XMStoreFloat3(&this->local_scale, vector);
 }
 
+void GameObject::scale(float scale)
+{
+	XMVECTOR currentScale = XMLoadFloat3(&this->local_scale);
+	XMVECTOR newScale = XMVectorSet(scale, scale, scale, 0.0f);
+	XMVECTOR combinedRotation = XMVectorAdd(currentScale, newScale);
+	XMStoreFloat3(&this->local_scale, combinedRotation);
+}
+
 XMVECTOR GameObject::getLocalScale()
 {
 	return XMLoadFloat3(&this->local_scale);

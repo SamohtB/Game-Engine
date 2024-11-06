@@ -28,6 +28,8 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+	virtual void onFocus() override;
+	virtual void onKillFocus() override;
 
 	void handleKeyInputs();
 	void updateGameObjects();
@@ -51,4 +53,11 @@ private:
 	// Inherited via InputListener
 	void onKeyDown(int key) override;
 	void onKeyUp(int key) override;
+
+	// Inherited via InputListener
+	void onMouseMove(const XMVECTOR& delta_mouse_pos) override;
+	void onLeftMouseDown(const XMVECTOR& mouse_pos) override;
+	void onLeftMouseUp(const XMVECTOR& mouse_pos) override;
+	void onRightMouseDown(const XMVECTOR& mouse_pos) override;
+	void onRightMouseUp(const XMVECTOR& mouse_pos) override;
 };

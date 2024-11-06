@@ -40,6 +40,7 @@ public:
 
 	void setScale(float x, float y, float z);
 	void setScale(XMVECTOR vector);
+	void scale(float scale);
 	XMVECTOR getLocalScale();
 
 	XMMATRIX getWorldMatrix() const;

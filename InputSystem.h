@@ -24,5 +24,9 @@ private:
 	std::map<InputListener*, InputListener*> m_map_listeners;
 	unsigned char m_keys_state[256] = {};
 	unsigned char m_old_keys_state[256] = {};
+	XMVECTOR old_mouse_position = XMVectorZero();
+	bool first_time = true;
+
+	XMVECTOR getMousePosition();
 };
 

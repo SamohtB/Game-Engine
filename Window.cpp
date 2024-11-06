@@ -19,6 +19,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		break;
 	}
 
+	case WM_SETFOCUS:
+	{
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onFocus();
+		break;
+	}
+
+	case WM_KILLFOCUS:
+	{
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onKillFocus();
+		break;
+	}
+
 	case WM_DESTROY:
 	{
 		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
@@ -27,70 +41,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		break;
 	}
 
-	case WM_KEYDOWN:
-	{
-		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-
-		if (!window->isKeyPressed(wparam)) // Check if the key is already pressed
-		{
-			switch (wparam)
-			{
-			case VK_ESCAPE:
-				window->onDestroy();
-				::PostQuitMessage(1);
-				break;
-			case VK_BACK:
-				window->setBackspace(true);
-				break;
-			case VK_DELETE:
-				window->setDelete(true);
-				break;
-			case VK_SPACE:
-				window->setSpace(true);
-				break;
-			}
-			window->setKeyPressed(wparam, true); // Mark the key as pressed
-		}
-
-		break;
-	}
-
-	case WM_KEYUP:
-	{
-		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-
-		switch (wparam)
-		{
-		case VK_BACK:
-			window->setBackspace(false);
-			break;
-		case VK_DELETE:
-			window->setDelete(false);
-			break;
-		case VK_SPACE:
-			window->setSpace(false);
-			break;
-		}
-
-		window->setKeyPressed(wparam, false);
-		break;
-	}
-
 	default:
 		return ::DefWindowProc(hwnd, msg, wparam, lparam);
 	}
 
-}
-
-bool Window::isKeyPressed(WPARAM key)
-{
-	auto it = keyStates.find(key);
-	return it != keyStates.end() && it->second;
-}
-
-void Window::setKeyPressed(WPARAM key, bool pressed)
-{
-	keyStates[key] = pressed;
 }
 
 bool Window::init()
@@ -196,5 +150,13 @@ void Window::onUpdate() {}
 void Window::onDestroy()
 {
 	m_is_run = false;
+}
+
+void Window::onFocus()
+{
+}
+
+void Window::onKillFocus()
+{
 }
 

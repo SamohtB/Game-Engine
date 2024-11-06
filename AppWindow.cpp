@@ -85,12 +85,11 @@ void AppWindow::updateGameObjects()
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
 
 	gameObjectManager->update(deltaTime);
-	gameObjectManager->draw(this->m_window_width, this->m_window_height);
 }
 
 void AppWindow::drawGameObjects()
 {
-	
+	gameObjectManager->draw(this->m_window_width, this->m_window_height);
 }
 
 void AppWindow::onKeyDown(int key)
@@ -123,12 +122,56 @@ void AppWindow::onKeyUp(int key)
 {
 }
 
+void AppWindow::onMouseMove(const XMVECTOR& delta_mouse_pos)
+{
+	/*float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());*/
+	float sensitivity = 0.1f;
+
+	DirectX::XMFLOAT2 deltaMouse;
+	DirectX::XMStoreFloat2(&deltaMouse, delta_mouse_pos);
+
+	float pitch = -deltaMouse.y * sensitivity /** deltaTime*/;
+	float yaw = -deltaMouse.x * sensitivity /** deltaTime*/;
+
+	rotatedObject->rotate(pitch, yaw, 0.0f);
+}
+
+void AppWindow::onLeftMouseDown(const XMVECTOR& mouse_pos)
+{
+	rotatedObject->setScale(0.5f, 0.5f, 0.5f);
+}
+
+void AppWindow::onLeftMouseUp(const XMVECTOR& mouse_pos)
+{
+	rotatedObject->setScale(1.f, 1.f, 1.f);
+}
+
+void AppWindow::onRightMouseDown(const XMVECTOR& mouse_pos)
+{
+	rotatedObject->setScale(2.f, 2.f, 2.f);
+}
+
+void AppWindow::onRightMouseUp(const XMVECTOR& mouse_pos)
+{
+	rotatedObject->setScale(1.f, 1.f, 1.f);
+}
+
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
 	m_swap_chain->release();
 	GraphicsEngine::destroy();
 	InputSystem::destroy();
+}
+
+void AppWindow::onFocus()
+{
+	InputSystem::getInstance()->addListener(this);
+}
+
+void AppWindow::onKillFocus()
+{
+	InputSystem::getInstance()->removeListener(this);
 }
 
 

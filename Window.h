@@ -18,28 +18,14 @@ public:
 	virtual void onCreate();
 	virtual void onUpdate();
 	virtual void onDestroy();
-
-	bool isKeyPressed(WPARAM key);
-	void setKeyPressed(WPARAM key, bool pressed);
-
-	bool isBackspace() const { return isBackspacePressed; }
-	bool isDelete() const { return isDeletePressed; }
-	bool isSpace() const { return isSpacePressed; }
-
-	void setBackspace(bool value) { isBackspacePressed = value; }
-	void setDelete(bool value) { isDeletePressed = value; }
-	void setSpace(bool value) { isSpacePressed = value; }
+	virtual void onFocus();
+	virtual void onKillFocus();
 
 protected:
 	HWND m_hwnd = {};
 	bool m_is_run = false;
 
 private:
-	std::unordered_map<WPARAM, bool> keyStates;
-	bool isBackspacePressed = false;
-	bool isDeletePressed = false;
-	bool isSpacePressed = false;
-
 	int frameCount = 0;
 	double totalTime = 0.0;
 	double updateInterval = 1.0;
