@@ -27,13 +27,11 @@ void AppWindow::onCreate()
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
+	XMMATRIX translationMatrix = XMMatrixTranslation(0.0f, 0.0f, -2.0f);
+	m_world_camera = XMMatrixMultiply(m_world_camera, translationMatrix);
+
 	Cube* cube = nullptr;
 	this->gameObjectManager = new GameObjectManager();
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> posDist(-0.75f, 0.75f);
-	std::uniform_real_distribution<float> speedDist(-2.0f, 2.0f);
 
 	for (int i = 0; i < 1; i++)
 	{
@@ -41,19 +39,11 @@ void AppWindow::onCreate()
 		cube->setSize(0.15f);
 		cube->initialize();
 		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-		cube->setPosition(XMVECTOR{ 0, 0.25, 0 });
-		cube->setSpeed(speedDist(gen));
+		cube->setPosition(XMVECTOR{ 0, 0, 0 });
 		gameObjectManager->registerObject(cube);
 	}
 
 	rotatedObject = cube;
-
-	Plane* plane = new Plane();
-	plane->setSize(0.45f);
-	plane->initialize();
-	plane->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-	plane->setPosition(XMVECTOR{ 0, 0, 0 });
-	gameObjectManager->registerObject(plane);
 }
 
 void AppWindow::onUpdate()
