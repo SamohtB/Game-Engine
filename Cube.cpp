@@ -78,14 +78,6 @@ void Cube::loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t
 void Cube::update(float deltaTime)
 {
     this->m_ticks += deltaTime;
-
-    XMVECTOR targetRotation = { m_ticks * m_speed, m_ticks * m_speed, m_ticks * m_speed };
-    XMVECTOR currentRotation = getLocalRotation();
-
-    float lerpFactor = deltaTime;
-    currentRotation = XMVectorLerp(currentRotation, targetRotation, lerpFactor);
-
-    setRotation(currentRotation);
 }
 
 void Cube::draw(int width, int height)

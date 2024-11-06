@@ -37,6 +37,14 @@ void GameObject::setRotation(XMVECTOR vector)
 	XMStoreFloat3(&this->local_rotation, vector);
 }
 
+void GameObject::rotate(float pitch, float yaw, float roll)
+{
+	XMVECTOR currentRotation = XMLoadFloat3(&this->local_rotation);
+	XMVECTOR newRotation = XMVectorSet(pitch, yaw, roll, 0.0f);
+	XMVECTOR combinedRotation = XMVectorAdd(currentRotation, newRotation);
+	XMStoreFloat3(&this->local_rotation, combinedRotation);
+}
+
 XMVECTOR GameObject::getLocalRotation()
 {
 	return XMLoadFloat3(&this->local_rotation);

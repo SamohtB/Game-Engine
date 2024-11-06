@@ -35,6 +35,7 @@ public:
 
 	void setRotation(float pitch, float yaw, float roll);
 	void setRotation(XMVECTOR vector);
+	void rotate(float pitch, float yaw, float roll);
 	XMVECTOR getLocalRotation();
 
 	void setScale(float x, float y, float z);

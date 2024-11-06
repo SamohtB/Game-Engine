@@ -5,6 +5,7 @@
 
 #include "GraphicsEngine.h"
 #include "EngineTime.h"
+#include "InputSystem.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -13,10 +14,12 @@
 #include "PixelShader.h"
 
 #include "GameObjectManager.h"
+#include "InputListener.h"
+
 #include "Cube.h"
 #include "Plane.h"
 
-class AppWindow : public Window
+class AppWindow : public Window, public InputListener
 {
 public:
 	AppWindow();
@@ -32,6 +35,7 @@ public:
 
 private:
 	GameObjectManager* gameObjectManager = nullptr;
+	GameObject* rotatedObject = nullptr;
 
 	SwapChain* m_swap_chain = nullptr;
 
@@ -43,4 +47,8 @@ private:
 	float m_ticks_translate = 0.0f;
 	float m_ticks_scale = 0.0f;
 	float elapsedTime = 0.0f;
+
+	// Inherited via InputListener
+	void onKeyDown(int key) override;
+	void onKeyUp(int key) override;
 };

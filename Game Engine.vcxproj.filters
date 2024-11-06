@@ -46,6 +46,9 @@
     <Filter Include="App\Objects\ObjectClasses\Primitives">
       <UniqueIdentifier>{e9fd2026-5583-40b9-8504-f4ae6b9f2e95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\InputSystem">
+      <UniqueIdentifier>{6a91df05-74c5-4047-80a6-52d152426c26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +99,9 @@
     <ClCompile Include="Plane.cpp">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Engine\InputSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -145,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="Quads.h">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Engine\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="InputListener.h">
+      <Filter>Engine\InputSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
