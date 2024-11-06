@@ -37,11 +37,17 @@ void AppWindow::onCreate()
 		cube->setSize(0.15f);
 		cube->initialize();
 		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-		cube->setPosition(XMVECTOR{ posDist(gen), posDist(gen), posDist(gen) });
+		cube->setPosition(XMVECTOR{ 0, 0.25, 0 });
 		cube->setSpeed(speedDist(gen));
 		gameObjectManager->registerObject(cube);
 	}
-	
+
+	Plane* plane = new Plane();
+	plane->setSize(0.45f);
+	plane->initialize();
+	plane->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	plane->setPosition(XMVECTOR{ 0, 0, 0 });
+	gameObjectManager->registerObject(plane);
 }
 
 void AppWindow::onUpdate()

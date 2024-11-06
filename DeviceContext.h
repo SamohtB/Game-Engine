@@ -25,8 +25,14 @@ public:
 	void setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
 	void setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
 
-	void drawTriangle(UINT vertex_count, UINT start_vertex_index);
+	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawIndexedTriangle(UINT index_count, UINT start_vertex_index, UINT start_index_location);
+
+	void drawLineList(UINT vertex_count, UINT start_vertex_index);
+	void drawIndexedLine(UINT index_count, UINT start_vertex_index, UINT start_index_location);
+
+	void drawPointList(UINT vertex_count, UINT start_vertex_index);
+	void drawIndexedPoint(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 
 	bool release();
 	

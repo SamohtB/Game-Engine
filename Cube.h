@@ -7,16 +7,16 @@ public:
     Cube();
     ~Cube();
 
-    void initialize() override;
+    virtual void initialize() override;
     void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
-    void update(float deltaTime) override;
+    virtual void update(float deltaTime) override;
     virtual void draw(int width, int height) override;
     void release();
 
     void setSize(float size);
     void setSpeed(float speed);
 
-private:
+protected:
     std::vector<vertex> vertices;
     std::vector<unsigned int> index_list;
 

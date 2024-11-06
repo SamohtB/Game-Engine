@@ -43,6 +43,9 @@
     <Filter Include="Engine\GraphicsEngine\IndexBuffer">
       <UniqueIdentifier>{fd73cbe3-0e63-49a9-a91e-f3c9d105548f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="App\Objects\ObjectClasses\Primitives">
+      <UniqueIdentifier>{e9fd2026-5583-40b9-8504-f4ae6b9f2e95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,7 +91,10 @@
       <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>App\Objects\ObjectClasses</Filter>
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +131,6 @@
     <ClInclude Include="EngineTime.h">
       <Filter>Engine\GraphicsEngine\EngineTime</Filter>
     </ClInclude>
-    <ClInclude Include="Quads.h">
-      <Filter>App\Objects\ObjectClasses</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjectManager.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
@@ -135,7 +138,13 @@
       <Filter>Engine\GraphicsEngine\IndexBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>App\Objects\ObjectClasses</Filter>
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Quads.h">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

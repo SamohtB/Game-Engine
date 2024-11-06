@@ -1,23 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube()
-{
-    this->index_list =
-    {
-        0, 1, 2,
-        2, 3, 0,
-        4, 5, 6,
-        6, 7, 4,
-        1, 6, 5,
-        5, 2, 1,
-        7, 0, 3,
-        3, 4, 7,
-        3, 2, 5,
-        5, 4, 3,
-        7, 6, 1,
-        1, 0, 7,
-    };
-}
+Cube::Cube() {}
 
 Cube::~Cube()
 {
@@ -28,16 +11,37 @@ void Cube::initialize()
 {
     this->active = true;
 
-    this->vertices =
-    {
-        { XMFLOAT3(-m_size, -m_size, -m_size), XMFLOAT3(0.8f, 0.5f, 0.5f) }, 
-        { XMFLOAT3(-m_size,  m_size, -m_size), XMFLOAT3(0.5f, 0.8f, 0.5f) }, 
-        { XMFLOAT3(m_size,  m_size, -m_size), XMFLOAT3(0.5f, 0.5f, 0.8f) }, 
-        { XMFLOAT3(m_size, -m_size, -m_size), XMFLOAT3(0.8f, 0.8f, 0.5f) }, 
-        { XMFLOAT3(m_size, -m_size,  m_size), XMFLOAT3(0.8f, 0.5f, 0.8f) }, 
-        { XMFLOAT3(m_size,  m_size,  m_size), XMFLOAT3(0.5f, 0.8f, 0.8f) }, 
-        { XMFLOAT3(-m_size,  m_size,  m_size), XMFLOAT3(0.5f, 0.5f, 0.5f) }, 
-        { XMFLOAT3(-m_size, -m_size,  m_size), XMFLOAT3(0.8f, 0.8f, 0.8f) }
+    this->vertices.clear();
+
+    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, -m_size), XMFLOAT3(0.3f, 0.5f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size,  m_size, -m_size), XMFLOAT3(0.1f, 0.4f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, m_size, -m_size), XMFLOAT3(0.8f, 0.2f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, -m_size), XMFLOAT3(0.8f, 0.1f, 0.5f) });
+
+    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.7f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, m_size, m_size), XMFLOAT3(0.8f, 0.8f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size, m_size, m_size), XMFLOAT3(0.8f, 0.9f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.5f, 0.4f) });
+
+    this->index_list = {
+        //FRONT SIDE
+        0,1,2,  //FIRST TRIANGLE
+        2,3,0,  //SECOND TRIANGLE
+        //BACK SIDE
+        4,5,6,
+        6,7,4,
+        //TOP SIDE
+        1,6,5,
+        5,2,1,
+        //BOTTOM SIDE
+        7,0,3,
+        3,4,7,
+        //RIGHT SIDE
+        3,2,5,
+        5,4,3,
+        //LEFT SIDE
+        7,6,1,
+        1,0,7
     };
 }
 
