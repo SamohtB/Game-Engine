@@ -10,7 +10,7 @@ public:
     virtual void initialize() override;
     void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
     virtual void update(float deltaTime) override;
-    virtual void draw(int width, int height) override;
+    virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
     void release();
 
     void setSize(float size);

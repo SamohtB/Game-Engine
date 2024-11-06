@@ -13,6 +13,9 @@ public:
 	void addListener(InputListener* listener);
 	void removeListener(InputListener* listener);
 
+	void setCursorPosition(const XMFLOAT2& point);
+	void showCursor(bool show);
+
 private:
 	InputSystem();
 	~InputSystem();

@@ -34,7 +34,17 @@ void GameObjectManager::draw(int width, int height)
     {
         if (obj->isActive())
         {
-            obj->draw(width, height);
+            obj->draw(width, height, this->currentViewMatrix, this->currentProjectionMatrix);
         }
     }
+}
+
+void GameObjectManager::setViewMatrix(XMMATRIX view_matrix)
+{
+    this->currentViewMatrix = view_matrix;
+}
+
+void GameObjectManager::setProjectionMatrix(XMMATRIX projection_matrix)
+{
+    this->currentProjectionMatrix = projection_matrix;
 }

@@ -80,14 +80,14 @@ void Cube::update(float deltaTime)
     this->m_ticks += deltaTime;
 }
 
-void Cube::draw(int width, int height)
+void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix)
 {
     DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
     constant cc;
 
     cc.m_world = this->getWorldMatrix();
-    cc.m_view = XMMatrixIdentity();
-    cc.m_projection_matrix = XMMatrixOrthographicLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
+    cc.m_view = view_matrix;
+    cc.m_projection_matrix = projection_matrix;
 
     this->constantBuffer->update(context, &cc);
 

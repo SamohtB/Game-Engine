@@ -20,6 +20,7 @@ void AppWindow::onCreate()
 	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 
 	InputSystem::getInstance()->addListener(this);
+	InputSystem::getInstance()->showCursor(false);
 	
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
@@ -76,14 +77,43 @@ void AppWindow::onUpdate()
 	m_swap_chain->present(true);
 }
 
-void AppWindow::handleKeyInputs()
-{
-}
-
 void AppWindow::updateGameObjects()
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
+	float speed = 0.3f;
 
+	/* Get Rotation and Directions */
+	XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(x_rotate, y_rotate, 0.0f);
+	XMVECTOR forwardVector = XMVector3TransformCoord(XMLoadFloat3(new XMFLOAT3(0.0f, 0.0f, 1.0f)), rotationMatrix);
+	XMVECTOR rightVector = XMVector3TransformCoord(XMLoadFloat3(new XMFLOAT3(1.0f, 0.0f, 0.0f)), rotationMatrix);
+
+	/* Calculate Movement */
+	XMVECTOR movementVector = (forwardVector * forward + rightVector * strafe);
+
+	if (XMVector3Length(movementVector).m128_f32[0] > 0.0f)
+	{
+		movementVector = XMVector3Normalize(movementVector) * speed * deltaTime;
+	}
+
+	/* Update Camera Position */
+	XMVECTOR currentCameraPosition = m_world_camera.r[3];
+	XMVECTOR newCameraPosition = currentCameraPosition + movementVector;
+
+	/* Update Camera World Matrix with new Position */
+	m_world_camera = rotationMatrix;
+	m_world_camera.r[3] = newCameraPosition;
+	
+	/* Transform to View Matrix by inverting */
+	XMMATRIX viewMatrix = XMMatrixInverse(nullptr, m_world_camera);
+
+	float fov = XM_PIDIV4;
+	float aspectRatio = static_cast<float>(m_window_height / m_window_height);
+	float nearZ = 0.01f;
+	float farZ = 100.0f;
+	XMMATRIX projection_matrix = XMMatrixPerspectiveFovLH(fov, aspectRatio, nearZ, farZ);
+
+	gameObjectManager->setViewMatrix(viewMatrix);
+	gameObjectManager->setProjectionMatrix(projection_matrix);
 	gameObjectManager->update(deltaTime);
 }
 
@@ -95,45 +125,49 @@ void AppWindow::drawGameObjects()
 void AppWindow::onKeyDown(int key)
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	static float speed = 3.14f;
 
 	if (key == 'W')
 	{
-		rotatedObject->rotate(speed * deltaTime, 0.0f, 0.0f);
+		forward = 1.0f;
 	}
 
 	else if (key == 'S')
 	{
-		rotatedObject->rotate(speed * deltaTime * -1.0f, 0.0f, 0.0f);
+		forward = -1.0f;
 	}
 
 	if (key == 'A')
 	{
-		rotatedObject->rotate(0.0f, 0.0f, speed * deltaTime);
+		strafe = -1.0f;
 	}
 
 	else if (key == 'D')
 	{
-		rotatedObject->rotate(0.0f, 0.0f, speed * deltaTime * -1.0f);
+		strafe = 1.0f;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
+	if (key == 'W' || key == 'S')
+	{
+		forward = 0.0f;
+	}
+	if (key == 'A' || key == 'D')
+	{
+		strafe = 0.0f;
+	}
 }
 
-void AppWindow::onMouseMove(const XMVECTOR& delta_mouse_pos)
+void AppWindow::onMouseMove(const XMFLOAT2& mouse_pos)
 {
-	/*float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());*/
+	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
 	float sensitivity = 0.1f;
 
-	DirectX::XMFLOAT2 deltaMouse;
-	DirectX::XMStoreFloat2(&deltaMouse, delta_mouse_pos);
+	x_rotate += (mouse_pos.y - (m_window_height / 2.0f)) * sensitivity * deltaTime;
+	y_rotate += (mouse_pos.x - (m_window_width / 2.0f)) * sensitivity * deltaTime;
 
-	float pitch = -deltaMouse.y * sensitivity /** deltaTime*/;
-	float yaw = -deltaMouse.x * sensitivity /** deltaTime*/;
-
-	rotatedObject->rotate(pitch, yaw, 0.0f);
+	InputSystem::getInstance()->setCursorPosition(XMFLOAT2(m_window_width / 2.0f, m_window_height / 2.0f));
 }
 
 void AppWindow::onLeftMouseDown(const XMVECTOR& mouse_pos)
@@ -173,8 +207,3 @@ void AppWindow::onKillFocus()
 {
 	InputSystem::getInstance()->removeListener(this);
 }
-
-
-
-
-

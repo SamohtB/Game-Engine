@@ -16,8 +16,13 @@ public:
 
 	void registerObject(GameObject* gameObject);
 
+	void setViewMatrix(XMMATRIX view_matrix);
+	void setProjectionMatrix(XMMATRIX projection_matrix);
+
 private:
 	std::vector<GameObject*> objectList;
+	XMMATRIX currentViewMatrix = XMMatrixIdentity();
+	XMMATRIX currentProjectionMatrix = XMMatrixIdentity();
 };
 
 

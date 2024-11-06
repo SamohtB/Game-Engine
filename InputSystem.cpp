@@ -35,7 +35,10 @@ void InputSystem::update()
 
 		while (it != m_map_listeners.end())
 		{
-			it->second->onMouseMove(XMVectorSubtract(current_mouse_pos, old_mouse_position));
+			XMFLOAT2 current_point;
+			XMStoreFloat2(&current_point, current_mouse_pos);
+
+			it->second->onMouseMove(current_point);
 			it++;
 		}
 
@@ -121,6 +124,16 @@ void InputSystem::removeListener(InputListener* listener)
 	{
 		m_map_listeners.erase(it);
 	}
+}
+
+void InputSystem::setCursorPosition(const XMFLOAT2& point)
+{
+	::SetCursorPos(static_cast<int>(point.x), static_cast<int>(point.y));
+}
+
+void InputSystem::showCursor(bool show)
+{
+	::ShowCursor(show);
 }
 
 XMVECTOR InputSystem::getMousePosition()

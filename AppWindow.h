@@ -31,7 +31,6 @@ public:
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
 
-	void handleKeyInputs();
 	void updateGameObjects();
 	void drawGameObjects();
 
@@ -41,21 +40,24 @@ private:
 
 	SwapChain* m_swap_chain = nullptr;
 
-	bool backspacePressed = false;
-	bool deletePressed = false;
-	bool spacePressed = false;
 	LONG m_window_width = 0;
 	LONG m_window_height = 0;
 	float m_ticks_translate = 0.0f;
 	float m_ticks_scale = 0.0f;
 	float elapsedTime = 0.0f;
 
+	float x_rotate = 0.0f;
+	float y_rotate = 0.0f;
+	XMMATRIX m_world_camera = XMMatrixIdentity();
+	float forward = 0.f;
+	float strafe = 0.0f;
+
 	// Inherited via InputListener
 	void onKeyDown(int key) override;
 	void onKeyUp(int key) override;
 
 	// Inherited via InputListener
-	void onMouseMove(const XMVECTOR& delta_mouse_pos) override;
+	void onMouseMove(const XMFLOAT2& mouse_pos) override;
 	void onLeftMouseDown(const XMVECTOR& mouse_pos) override;
 	void onLeftMouseUp(const XMVECTOR& mouse_pos) override;
 	void onRightMouseDown(const XMVECTOR& mouse_pos) override;
