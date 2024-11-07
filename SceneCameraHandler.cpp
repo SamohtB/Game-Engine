@@ -38,6 +38,12 @@ XMMATRIX SceneCameraHandler::getSceneCameraProjMatrix()
 void SceneCameraHandler::setScreenSize(float width, float height)
 {
 	this->aspectRatio = width / height;
+	this->sceneCamera->setScreenParams(width, height);
+}
+
+Camera* SceneCameraHandler::getCamera()
+{
+	return sharedInstance->sceneCamera;
 }
 
 SceneCameraHandler::SceneCameraHandler() {}

@@ -13,6 +13,7 @@ public:
 	XMMATRIX getSceneCameraViewMatrix();
 	XMMATRIX getSceneCameraProjMatrix();
 	void setScreenSize(float width, float height);
+	Camera* getCamera();
 
 private:
 	SceneCameraHandler();

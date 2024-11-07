@@ -23,10 +23,15 @@ public:
 	virtual void onRightMouseDown(const XMVECTOR& mouse_pos) override;
 	virtual void onRightMouseUp(const XMVECTOR& mouse_pos) override;
 
+	void setScreenParams(float width, float height);
+
 private:
 	void updateViewMatrix();
 
 	// Inherited via GameObject
 	void initialize() override;
 	void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
+
+	float width = 0;
+	float height = 0;
 };

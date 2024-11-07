@@ -109,13 +109,6 @@ void AppWindow::onKeyUp(int key) {}
 
 void AppWindow::onMouseMove(const XMFLOAT2& mouse_pos)
 {
-	//float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	//float sensitivity = 0.1f;
-
-	//x_rotate += (mouse_pos.y - (m_window_height / 2.0f)) * sensitivity * deltaTime;
-	//y_rotate += (mouse_pos.x - (m_window_width / 2.0f)) * sensitivity * deltaTime;
-
-	//InputSystem::getInstance()->setCursorPosition(XMFLOAT2(m_window_width / 2.0f, m_window_height / 2.0f));
 }
 
 void AppWindow::onLeftMouseDown(const XMVECTOR& mouse_pos)
@@ -146,9 +139,11 @@ void AppWindow::onDestroy()
 void AppWindow::onFocus()
 {
 	InputSystem::getInstance()->addListener(this);
+	InputSystem::getInstance()->addListener(SceneCameraHandler::getInstance()->getCamera());
 }
 
 void AppWindow::onKillFocus()
 {
 	InputSystem::getInstance()->removeListener(this);
+	InputSystem::getInstance()->removeListener(SceneCameraHandler::getInstance()->getCamera());
 }
