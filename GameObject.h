@@ -62,7 +62,7 @@ protected:
 	XMFLOAT3 local_position;
 	XMFLOAT3 local_rotation;
 	XMFLOAT3 local_scale;
-	XMFLOAT4X4 local_matrix;
+	XMMATRIX local_matrix;
 
 	bool active = false;
 };

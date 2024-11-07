@@ -6,6 +6,7 @@
 #include "GraphicsEngine.h"
 #include "EngineTime.h"
 #include "InputSystem.h"
+#include "SceneCameraHandler.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -44,12 +45,6 @@ private:
 	float m_ticks_translate = 0.0f;
 	float m_ticks_scale = 0.0f;
 	float elapsedTime = 0.0f;
-
-	float x_rotate = 0.0f;
-	float y_rotate = 0.0f;
-	XMMATRIX m_world_camera = XMMatrixIdentity();
-	float forward = 0.f;
-	float strafe = 0.0f;
 
 	// Inherited via InputListener
 	void onKeyDown(int key) override;

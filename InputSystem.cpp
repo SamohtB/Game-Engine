@@ -126,6 +126,16 @@ void InputSystem::removeListener(InputListener* listener)
 	}
 }
 
+bool InputSystem::isKeyDown(int key)
+{
+	return (m_keys_state[key] & 0x80) != 0;
+}
+
+bool InputSystem::isKeyUp(int key)
+{
+	return (m_keys_state[key] & 0x80) == 0;
+}
+
 void InputSystem::setCursorPosition(const XMFLOAT2& point)
 {
 	::SetCursorPos(static_cast<int>(point.x), static_cast<int>(point.y));

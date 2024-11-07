@@ -13,6 +13,9 @@ public:
 	void addListener(InputListener* listener);
 	void removeListener(InputListener* listener);
 
+	bool isKeyDown(int key);
+	bool isKeyUp(int key);
+
 	void setCursorPosition(const XMFLOAT2& point);
 	void showCursor(bool show);
 

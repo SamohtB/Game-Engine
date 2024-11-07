@@ -11,24 +11,25 @@ AppWindow::~AppWindow() {}
 void AppWindow::onCreate()
 {
 	Window::onCreate();
+
 	/* Engine Component Initialization */
-	GraphicsEngine::initialize();
 	EngineTime::initialize();
 	InputSystem::initialize();
+	SceneCameraHandler::initialize();
+	GraphicsEngine::initialize();
 
 	EngineTime::setFrameTime(60);
-	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
-
 	InputSystem::getInstance()->addListener(this);
 	InputSystem::getInstance()->showCursor(false);
+
+	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
 	
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
 
-	XMMATRIX translationMatrix = XMMatrixTranslation(0.0f, 0.0f, -2.0f);
-	m_world_camera = XMMatrixMultiply(m_world_camera, translationMatrix);
+	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
 	Cube* cube = nullptr;
 	this->gameObjectManager = new GameObjectManager();
@@ -73,6 +74,7 @@ void AppWindow::onUpdate()
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
 
 	/* Inputs */
+	SceneCameraHandler::getInstance()->update();
 	InputSystem::getInstance()->update();
 
 	/* Updates */
@@ -87,40 +89,12 @@ void AppWindow::onUpdate()
 void AppWindow::updateGameObjects()
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	float speed = 0.3f;
-
-	/* Get Rotation and Directions */
-	XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(x_rotate, y_rotate, 0.0f);
-	XMVECTOR forwardVector = XMVector3TransformCoord(XMLoadFloat3(new XMFLOAT3(0.0f, 0.0f, 1.0f)), rotationMatrix);
-	XMVECTOR rightVector = XMVector3TransformCoord(XMLoadFloat3(new XMFLOAT3(1.0f, 0.0f, 0.0f)), rotationMatrix);
-
-	/* Calculate Movement */
-	XMVECTOR movementVector = (forwardVector * forward + rightVector * strafe);
-
-	if (XMVector3Length(movementVector).m128_f32[0] > 0.0f)
-	{
-		movementVector = XMVector3Normalize(movementVector) * speed * deltaTime;
-	}
-
-	/* Update Camera Position */
-	XMVECTOR currentCameraPosition = m_world_camera.r[3];
-	XMVECTOR newCameraPosition = currentCameraPosition + movementVector;
-
-	/* Update Camera World Matrix with new Position */
-	m_world_camera = rotationMatrix;
-	m_world_camera.r[3] = newCameraPosition;
 	
-	/* Transform to View Matrix by inverting */
-	XMMATRIX viewMatrix = XMMatrixInverse(nullptr, m_world_camera);
-
-	float fov = XM_PIDIV4;
-	float aspectRatio = static_cast<float>(m_window_height / m_window_height);
-	float nearZ = 0.01f;
-	float farZ = 100.0f;
-	XMMATRIX projection_matrix = XMMatrixPerspectiveFovLH(fov, aspectRatio, nearZ, farZ);
+	XMMATRIX viewMatrix = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
+	XMMATRIX projectionMatrix = SceneCameraHandler::getInstance()->getSceneCameraProjMatrix();
 
 	gameObjectManager->setViewMatrix(viewMatrix);
-	gameObjectManager->setProjectionMatrix(projection_matrix);
+	gameObjectManager->setProjectionMatrix(projectionMatrix);
 	gameObjectManager->update(deltaTime);
 }
 
@@ -129,52 +103,19 @@ void AppWindow::drawGameObjects()
 	gameObjectManager->draw(this->m_window_width, this->m_window_height);
 }
 
-void AppWindow::onKeyDown(int key)
-{
-	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
+void AppWindow::onKeyDown(int key) {}
 
-	if (key == 'W')
-	{
-		forward = 1.0f;
-	}
-
-	else if (key == 'S')
-	{
-		forward = -1.0f;
-	}
-
-	if (key == 'A')
-	{
-		strafe = -1.0f;
-	}
-
-	else if (key == 'D')
-	{
-		strafe = 1.0f;
-	}
-}
-
-void AppWindow::onKeyUp(int key)
-{
-	if (key == 'W' || key == 'S')
-	{
-		forward = 0.0f;
-	}
-	if (key == 'A' || key == 'D')
-	{
-		strafe = 0.0f;
-	}
-}
+void AppWindow::onKeyUp(int key) {}
 
 void AppWindow::onMouseMove(const XMFLOAT2& mouse_pos)
 {
-	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	float sensitivity = 0.1f;
+	//float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
+	//float sensitivity = 0.1f;
 
-	x_rotate += (mouse_pos.y - (m_window_height / 2.0f)) * sensitivity * deltaTime;
-	y_rotate += (mouse_pos.x - (m_window_width / 2.0f)) * sensitivity * deltaTime;
+	//x_rotate += (mouse_pos.y - (m_window_height / 2.0f)) * sensitivity * deltaTime;
+	//y_rotate += (mouse_pos.x - (m_window_width / 2.0f)) * sensitivity * deltaTime;
 
-	InputSystem::getInstance()->setCursorPosition(XMFLOAT2(m_window_width / 2.0f, m_window_height / 2.0f));
+	//InputSystem::getInstance()->setCursorPosition(XMFLOAT2(m_window_width / 2.0f, m_window_height / 2.0f));
 }
 
 void AppWindow::onLeftMouseDown(const XMVECTOR& mouse_pos)
@@ -199,6 +140,7 @@ void AppWindow::onDestroy()
 	m_swap_chain->release();
 	GraphicsEngine::destroy();
 	InputSystem::destroy();
+	SceneCameraHandler::destroy();
 }
 
 void AppWindow::onFocus()
