@@ -13,15 +13,15 @@ void Cube::initialize()
 
     this->vertices.clear();
 
-    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, -m_size), XMFLOAT3(0.3f, 0.5f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(-m_size,  m_size, -m_size), XMFLOAT3(0.1f, 0.4f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(m_size, m_size, -m_size), XMFLOAT3(0.8f, 0.2f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, -m_size), XMFLOAT3(0.8f, 0.1f, 0.5f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, -m_size), XMFLOAT3(0.3f, 0.5f, 0.5f), XMFLOAT2(0.0f, 0.0f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size,  m_size, -m_size), XMFLOAT3(0.1f, 0.4f, 0.5f), XMFLOAT2(0.0f, 1.0f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, m_size, -m_size), XMFLOAT3(0.8f, 0.2f, 0.5f), XMFLOAT2(1.0f, 1.0f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, -m_size), XMFLOAT3(0.8f, 0.1f, 0.5f), XMFLOAT2(1.0f, 0.0f) });
 
-    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.7f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(m_size, m_size, m_size), XMFLOAT3(0.8f, 0.8f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(-m_size, m_size, m_size), XMFLOAT3(0.8f, 0.9f, 0.5f) });
-    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.5f, 0.4f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.7f, 0.5f), XMFLOAT2(0.0f, 0.0f) });
+    this->vertices.push_back({ XMFLOAT3(m_size, m_size, m_size), XMFLOAT3(0.8f, 0.8f, 0.5f), XMFLOAT2(0.0f, 1.0f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size, m_size, m_size), XMFLOAT3(0.8f, 0.9f, 0.5f), XMFLOAT2(1.0f, 1.0f) });
+    this->vertices.push_back({ XMFLOAT3(-m_size, -m_size, m_size), XMFLOAT3(0.8f, 0.5f, 0.4f), XMFLOAT2(1.0f, 0.0f) });
 
     this->index_list = {
         //FRONT SIDE
@@ -80,7 +80,7 @@ void Cube::update(float deltaTime)
     this->m_ticks += deltaTime;
 }
 
-void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix)
+void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix, ID3D11ShaderResourceView* srv)
 {
     DeviceContext* context = GraphicsEngine::getInstance()->getImmediateDeviceContext();
     constant cc;

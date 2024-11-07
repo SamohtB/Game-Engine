@@ -114,6 +114,6 @@ void Camera::initialize()
 {
 }
 
-void Camera::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix)
+void Camera::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix, ID3D11ShaderResourceView* srv)
 {
 }

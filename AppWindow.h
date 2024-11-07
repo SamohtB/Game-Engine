@@ -19,6 +19,7 @@
 
 #include "Cube.h"
 #include "Plane.h"
+#include "Quad.h"
 
 class AppWindow : public Window, public InputListener
 {
@@ -37,6 +38,7 @@ public:
 
 private:
 	GameObjectManager* gameObjectManager = nullptr;
+	Quad* fullQuad = nullptr;
 
 	SwapChain* m_swap_chain = nullptr;
 

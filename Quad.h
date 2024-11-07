@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-class Cube : public GameObject
+class Quad : public GameObject
 {
 public:
-    Cube();
-    ~Cube();
+    Quad();
+    ~Quad();
 
     virtual void initialize() override;
     void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
@@ -14,7 +14,6 @@ public:
     void release();
 
     void setSize(float size);
-    void setSpeed(float speed);
 
 protected:
     std::vector<vertex> vertices;

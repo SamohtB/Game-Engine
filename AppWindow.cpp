@@ -62,15 +62,18 @@ void AppWindow::onCreate()
 		cube->setPosition(position);
 		gameObjectManager->registerObject(cube);
 	}
+
+	fullQuad = new Quad();
+	fullQuad->initialize();
+	fullQuad->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-	
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.3f, 0.2f, 0.4f, 1);
-	
 	RECT rc = this->getClientWindowRect();
+
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.3f, 0.2f, 0.4f, 1);
 	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
 
 	/* Inputs */
@@ -82,6 +85,16 @@ void AppWindow::onUpdate()
 
 	/* Draws */
 	drawGameObjects();
+
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor2(this->m_swap_chain, 0.f, 0.f, 0.f, 1);
+	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
+
+	fullQuad->draw(
+		this->m_window_width, 
+		this->m_window_height,
+		SceneCameraHandler::getInstance()->getSceneCameraViewMatrix(),
+		SceneCameraHandler::getInstance()->getSceneCameraProjMatrix(),
+		this->m_swap_chain->m_offscreen_srv);
 
 	m_swap_chain->present(true);
 }

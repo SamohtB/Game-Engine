@@ -34,7 +34,7 @@ void GameObjectManager::draw(int width, int height)
     {
         if (obj->isActive())
         {
-            obj->draw(width, height, this->currentViewMatrix, this->currentProjectionMatrix);
+            obj->draw(width, height, this->currentViewMatrix, this->currentProjectionMatrix, nullptr);
         }
     }
 }

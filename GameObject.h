@@ -24,7 +24,7 @@ public:
 	
 	virtual void initialize() = 0;
 	virtual void update(float deltaTime) = 0;
-	virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) = 0;
+	virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix, ID3D11ShaderResourceView* srv) = 0;
 
 	bool isActive();
 	void setActive(bool value);
@@ -49,6 +49,7 @@ public:
 	{
 		XMFLOAT3 position;
 		XMFLOAT3 color;
+		XMFLOAT2 texcoord;
 	};
 
 	struct alignas(16) constant

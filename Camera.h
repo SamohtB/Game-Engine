@@ -30,7 +30,7 @@ private:
 
 	// Inherited via GameObject
 	void initialize() override;
-	void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
+	void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix, ID3D11ShaderResourceView* srv) override;
 
 	float width = 0;
 	float height = 0;
