@@ -36,7 +36,6 @@ public:
 
 private:
 	GameObjectManager* gameObjectManager = nullptr;
-	GameObject* rotatedObject = nullptr;
 
 	SwapChain* m_swap_chain = nullptr;
 

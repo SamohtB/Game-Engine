@@ -33,17 +33,34 @@ void AppWindow::onCreate()
 	Cube* cube = nullptr;
 	this->gameObjectManager = new GameObjectManager();
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		cube = new Cube();
+		Cube* cube = new Cube();
 		cube->setSize(0.15f);
 		cube->initialize();
 		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-		cube->setPosition(XMVECTOR{ 0, 0, 0 });
+
+		XMVECTOR position;
+
+		if (i == 0) {
+			position = XMVectorSet(-0.5f, -0.5f, 0.0f, 0.0f);  // Bottom-left corner
+		}
+		else if (i == 1) {
+			position = XMVectorSet(0.5f, -0.5f, 0.0f, 0.0f);   // Bottom-right corner
+		}
+		else if (i == 2) {
+			position = XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f);    // Top-right corner
+		}
+		else if (i == 3) {
+			position = XMVectorSet(-0.5f, 0.5f, 0.0f, 0.0f);   // Top-left corner
+		}
+		else {
+			position = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);    // Center of the space
+		}
+
+		cube->setPosition(position);
 		gameObjectManager->registerObject(cube);
 	}
-
-	rotatedObject = cube;
 }
 
 void AppWindow::onUpdate()
@@ -162,22 +179,18 @@ void AppWindow::onMouseMove(const XMFLOAT2& mouse_pos)
 
 void AppWindow::onLeftMouseDown(const XMVECTOR& mouse_pos)
 {
-	rotatedObject->setScale(0.5f, 0.5f, 0.5f);
 }
 
 void AppWindow::onLeftMouseUp(const XMVECTOR& mouse_pos)
 {
-	rotatedObject->setScale(1.f, 1.f, 1.f);
 }
 
 void AppWindow::onRightMouseDown(const XMVECTOR& mouse_pos)
 {
-	rotatedObject->setScale(2.f, 2.f, 2.f);
 }
 
 void AppWindow::onRightMouseUp(const XMVECTOR& mouse_pos)
 {
-	rotatedObject->setScale(1.f, 1.f, 1.f);
 }
 
 void AppWindow::onDestroy()
