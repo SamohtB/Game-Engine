@@ -56,6 +56,10 @@ public:
 		XMMATRIX m_world;
 		XMMATRIX m_view;
 		XMMATRIX m_projection_matrix;
+		float focalPlane;
+		float focusRange;
+		float blurRange;
+		float buffer;
 	};
 
 protected:

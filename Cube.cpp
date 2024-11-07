@@ -88,6 +88,9 @@ void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection
     cc.m_world = this->getWorldMatrix();
     cc.m_view = view_matrix;
     cc.m_projection_matrix = projection_matrix;
+    cc.focalPlane = 0.5f;
+    cc.focusRange = 0.1f;
+    cc.blurRange = 0.2f; 
 
     this->constantBuffer->update(context, &cc);
 

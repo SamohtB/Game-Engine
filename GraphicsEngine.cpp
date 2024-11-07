@@ -6,6 +6,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "ShaderResourceView.h"
 
 #include <d3dcompiler.h>
 

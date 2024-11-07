@@ -72,6 +72,27 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 		throw std::exception("SwapChain not Created Successfully");
 	}
 
+	D3D11_TEXTURE2D_DESC textureDesc = {};
+	textureDesc.Width = width;
+	textureDesc.Height = height;
+	textureDesc.MipLevels = 1;
+	textureDesc.ArraySize = 1;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+	HRESULT hr = device->CreateTexture2D(&textureDesc, nullptr, &m_rtt);
+	if (FAILED(hr)) 
+	{
+		return false;
+	}
+
+	hr = device->CreateShaderResourceView(m_rtt, nullptr, &m_srv);
+	if (FAILED(hr)) 
+	{
+		return false;
+	}
 
 	return true;
 }

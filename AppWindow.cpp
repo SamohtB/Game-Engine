@@ -39,7 +39,7 @@ void AppWindow::onCreate()
 		Cube* cube = new Cube();
 		cube->setSize(0.15f);
 		cube->initialize();
-		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"DepthOfField.hlsl", "main");
 
 		XMVECTOR position;
 
@@ -100,6 +100,7 @@ void AppWindow::updateGameObjects()
 
 void AppWindow::drawGameObjects()
 {
+
 	gameObjectManager->draw(this->m_window_width, this->m_window_height);
 }
 

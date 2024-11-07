@@ -98,6 +98,16 @@ void DeviceContext::setViewportSize(UINT width, UINT height)
 	m_device_context->RSSetViewports(1, &vp);
 }
 
+void DeviceContext::setShaderResourceView(ID3D11ShaderResourceView* shaderResourceView)
+{
+	m_device_context->PSSetShaderResources(0, 1, &shaderResourceView);
+}
+
+void DeviceContext::setSampleState(ID3D11SamplerState* sampleState)
+{
+	m_device_context->PSSetSamplers(0, 1, &sampleState);
+}
+
 bool DeviceContext::release()
 {
 	m_device_context->Release();

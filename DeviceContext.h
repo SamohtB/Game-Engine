@@ -19,6 +19,9 @@ public:
 	void setIndexBuffer(IndexBuffer* index_buffer);
 	void setViewportSize(UINT width, UINT height);
 
+	void setShaderResourceView(ID3D11ShaderResourceView* shaderResourceView);
+	void setSampleState(ID3D11SamplerState* sampleState);
+
 	void setVertexShader(VertexShader* vertex_shader);
 	void setPixelShader(PixelShader* pixel_shader);
 
@@ -33,6 +36,8 @@ public:
 
 	void drawPointList(UINT vertex_count, UINT start_vertex_index);
 	void drawIndexedPoint(UINT index_count, UINT start_vertex_index, UINT start_index_location);
+
+	void RenderBlurEffect(ID3D11ShaderResourceView* shaderResourceView, ID3D11VertexShader* vertexShader, ID3D11PixelShader* horizontalBlurShader, ID3D11PixelShader* verticalBlurShader, ID3D11SamplerState* sampleState, int indexCount);
 
 	bool release();
 	
