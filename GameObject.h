@@ -57,6 +57,10 @@ public:
 		XMMATRIX m_world;
 		XMMATRIX m_view;
 		XMMATRIX m_projection_matrix;
+		XMFLOAT4 screenSize;
+		float focalLength;
+		float blurAmount;
+		float maxBlurRadius;
 	};
 
 protected:

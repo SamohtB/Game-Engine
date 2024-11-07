@@ -65,7 +65,7 @@ void AppWindow::onCreate()
 
 	fullQuad = new Quad();
 	fullQuad->initialize();
-	fullQuad->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+	fullQuad->loadShaders(L"DOFVS.hlsl", "main", L"DOFPS.hlsl", "main");
 }
 
 void AppWindow::onUpdate()

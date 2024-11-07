@@ -88,6 +88,10 @@ void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection
     cc.m_world = this->getWorldMatrix();
     cc.m_view = view_matrix;
     cc.m_projection_matrix = projection_matrix;
+    cc.screenSize = XMFLOAT4(width, height, 1.0f / width, 1.0f / height);
+    cc.focalLength = 0.5f;  // Example: focal length (adjust as needed)
+    cc.blurAmount = 10.0f;  // Amount of blur
+    cc.maxBlurRadius = 0.01f;  // Max blur radius (controls blur strength)
 
     this->constantBuffer->update(context, &cc);
 
