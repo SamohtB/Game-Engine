@@ -1,12 +1,10 @@
 #include "SwapChain.h"
-#include "GraphicsEngine.h"
+#include "RenderSystem.h"
 #include <exception>
 
-SwapChain::SwapChain() {}
-
-bool SwapChain::init(HWND hwnd, UINT width, UINT height)
+SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) : m_system(system) 
 {
-	ID3D11Device* device = GraphicsEngine::getInstance()->m_d3d_device;
+	ID3D11Device* device = m_system->m_d3d_device;
 
 	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
@@ -22,19 +20,21 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	desc.SampleDesc.Quality = 0;
 	desc.Windowed = TRUE;
 
-	HRESULT hr = GraphicsEngine::getInstance()->m_dxgi_factory->CreateSwapChain(device, &desc, &m_swap_chain);
+	/* Create Swap Chain */
+	HRESULT hr = m_system->m_dxgi_factory->CreateSwapChain(device, &desc, &m_swap_chain);
 
 	if (FAILED(hr))
 	{
-		return false;
+		throw std::exception("SwapChain not created successfully");
 	}
 
+	/* Get Back Buffer */
 	ID3D11Texture2D* buffer = NULL;
 	hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
 
 	if (FAILED(hr))
 	{
-		return false;
+		throw std::exception("SwapChain not created successfully");
 	}
 
 	hr = device->CreateRenderTargetView(buffer, NULL, &m_rtv);
@@ -42,7 +42,7 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 
 	if (FAILED(hr))
 	{
-		return false;
+		throw std::exception("SwapChain not created successfully");
 	}
 
 	D3D11_TEXTURE2D_DESC tex_desc = {};
@@ -58,6 +58,7 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	tex_desc.ArraySize = 1;
 	tex_desc.CPUAccessFlags = 0;
 
+	/* Create Depth Buffer */
 	hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
 
 	if (FAILED(hr))
@@ -71,9 +72,6 @@ bool SwapChain::init(HWND hwnd, UINT width, UINT height)
 	{
 		throw std::exception("SwapChain not Created Successfully");
 	}
-
-
-	return true;
 }
 
 bool SwapChain::present(bool vsync)
@@ -83,13 +81,9 @@ bool SwapChain::present(bool vsync)
 	return true;
 }
 
-bool SwapChain::release()
-{
-	m_swap_chain->Release();
-	delete this;
-	return true;
-}
-
 SwapChain::~SwapChain()
 {
+	if(m_swap_chain) m_swap_chain->Release();
+	if (m_rtv) m_rtv->Release();
+	if (m_dsv) m_dsv->Release();
 }

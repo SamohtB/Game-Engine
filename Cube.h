@@ -1,34 +1,29 @@
 #pragma once
 #include "GameObject.h"
+#include "RenderSystem.h"
 
 class Cube : public GameObject
 {
 public:
-    Cube();
+    Cube(float size);
     ~Cube();
 
-    virtual void initialize() override;
     void loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry);
     virtual void update(float deltaTime) override;
     virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
-    void release();
-
-    void setSize(float size);
-    void setSpeed(float speed);
 
 protected:
-    std::vector<vertex> vertices;
-    std::vector<unsigned int> index_list;
+    static const int NUM_VERTICES = 8;
+    static const int NUM_INDICES = 36;
 
-    float m_size = 0.0f;
+    vertex m_vertex_list[NUM_VERTICES];
+    unsigned int m_index_list[NUM_INDICES];
+
     float m_ticks = 0.0f;
-    float m_delta_pos = 0.0f;
-    float m_delta_time = 0.0f;
-    float m_speed = 0.5f;
 
-    VertexBuffer* vertexBuffer = nullptr;
-    ConstantBuffer* constantBuffer = nullptr;
-    IndexBuffer* indexBuffer = nullptr;
-    VertexShader* vertexShader = nullptr;
-    PixelShader* pixelShader = nullptr;
+    VertexBuffer* m_vertex_buffer = nullptr;
+    ConstantBuffer* m_constant_buffer = nullptr;
+    IndexBuffer* m_index_buffer = nullptr;
+    VertexShader* m_vertex_shader = nullptr;
+    PixelShader* m_pixel_shader = nullptr;
 };

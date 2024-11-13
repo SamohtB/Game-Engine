@@ -22,12 +22,10 @@ void AppWindow::onCreate()
 	InputSystem::getInstance()->addListener(this);
 	InputSystem::getInstance()->showCursor(false);
 
-	m_swap_chain = GraphicsEngine::getInstance()->createSwapChain();
-	
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
 	this->m_window_height = rc.bottom - rc.top;
-	m_swap_chain->init(this->m_hwnd, this->m_window_width, this->m_window_height);
+	m_swap_chain = GraphicsEngine::getInstance()->getRenderSystem()->createSwapChain(this->m_hwnd, this->m_window_width, this->m_window_height);
 
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
@@ -36,9 +34,7 @@ void AppWindow::onCreate()
 
 	for (int i = 0; i < 5; i++)
 	{
-		Cube* cube = new Cube();
-		cube->setSize(0.15f);
-		cube->initialize();
+		Cube* cube = new Cube(0.15f);
 		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 
 		XMVECTOR position;
@@ -68,10 +64,10 @@ void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.3f, 0.2f, 0.4f, 1);
+	GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0.3f, 0.2f, 0.4f, 1);
 	
 	RECT rc = this->getClientWindowRect();
-	GraphicsEngine::getInstance()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
+	GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext()->setViewportSize(m_window_width, m_window_height);
 
 	/* Inputs */
 	SceneCameraHandler::getInstance()->update();
@@ -130,7 +126,6 @@ void AppWindow::onRightMouseUp(const XMVECTOR& mouse_pos)
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
-	m_swap_chain->release();
 	GraphicsEngine::destroy();
 	InputSystem::destroy();
 	SceneCameraHandler::destroy();

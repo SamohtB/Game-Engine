@@ -1,17 +1,11 @@
 #pragma once
 #include <d3d11.h>
-
-class SwapChain;
-class VertexBuffer;
-class IndexBuffer;
-class ConstantBuffer;
-class VertexShader;
-class PixelShader;
+#include "Prerequisites.h"
 
 class DeviceContext
 {
 public:
-	DeviceContext(ID3D11DeviceContext* device_context);
+	DeviceContext(RenderSystem* system, ID3D11DeviceContext* device_context);
 	~DeviceContext();
 
 	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
@@ -33,12 +27,11 @@ public:
 
 	void drawPointList(UINT vertex_count, UINT start_vertex_index);
 	void drawIndexedPoint(UINT index_count, UINT start_vertex_index, UINT start_index_location);
-
-	bool release();
 	
 private:
 	ID3D11DeviceContext* m_device_context;
-	D3D11_PRIMITIVE_TOPOLOGY current_topology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
+
+	RenderSystem* m_system = nullptr;
 
 	friend class ConstantBuffer;
 };

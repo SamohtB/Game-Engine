@@ -7,6 +7,7 @@
 #include "EngineTime.h"
 #include "InputSystem.h"
 #include "SceneCameraHandler.h"
+#include "RenderSystem.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"

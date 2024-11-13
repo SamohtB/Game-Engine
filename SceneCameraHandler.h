@@ -24,9 +24,4 @@ private:
 	static SceneCameraHandler* sharedInstance;
 
 	Camera* sceneCamera = nullptr;
-
-	float fov = XM_PIDIV4;
-	float aspectRatio = 0.0f;
-	float nearZ = 0.01f;
-	float farZ = 100.0f;
 };

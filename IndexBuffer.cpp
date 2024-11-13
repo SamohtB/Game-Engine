@@ -1,17 +1,9 @@
 #include "IndexBuffer.h"
-#include "GraphicsEngine.h"
+#include "RenderSystem.h"
+#include <exception>
 
-IndexBuffer::IndexBuffer() : m_buffer(0) {}
-
-IndexBuffer::~IndexBuffer() {}
-
-bool IndexBuffer::load(void* list_indices, UINT size_list)
+IndexBuffer::IndexBuffer(void* list_indices, UINT size_list, RenderSystem* system) : m_system(system)
 {
-	if (m_buffer)
-	{
-		m_buffer->Release();
-	}
-
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
 	buff_desc.ByteWidth = 4 * size_list;
@@ -23,25 +15,19 @@ bool IndexBuffer::load(void* list_indices, UINT size_list)
 	init_data.pSysMem = list_indices;
 	m_size_list = size_list;
 
-	if (FAILED(GraphicsEngine::getInstance()->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
+	if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
 	{
-		return false;
+		throw std::exception("IndexBuffer not created successfully");
 	}
-	return true;
 }
+
+IndexBuffer::~IndexBuffer() 
+{
+	if (m_buffer) m_buffer->Release();
+}
+
 
 UINT IndexBuffer::getSizeIndexList()
 {
 	return this->m_size_list;
-}
-
-bool IndexBuffer::release()
-{
-	if (m_buffer)
-	{
-		m_buffer->Release();
-		m_buffer = nullptr;
-	}
-	delete this;
-	return true;
 }

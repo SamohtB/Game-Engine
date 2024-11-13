@@ -32,12 +32,11 @@ XMMATRIX SceneCameraHandler::getSceneCameraViewMatrix()
 
 XMMATRIX SceneCameraHandler::getSceneCameraProjMatrix()
 {
-	return XMMatrixPerspectiveFovLH(fov, aspectRatio, nearZ, farZ);
+	return sharedInstance->sceneCamera->getProjectionMatrix();
 }
 
 void SceneCameraHandler::setScreenSize(float width, float height)
 {
-	this->aspectRatio = width / height;
 	this->sceneCamera->setScreenParams(width, height);
 }
 

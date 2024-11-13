@@ -5,10 +5,14 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include <exception>
 
-DeviceContext::DeviceContext(ID3D11DeviceContext* device_context) :m_device_context(device_context) {}
+DeviceContext::DeviceContext(RenderSystem* system, ID3D11DeviceContext* device_context) : m_system(system), m_device_context(device_context) {}
 
-DeviceContext::~DeviceContext() {}
+DeviceContext::~DeviceContext() 
+{
+	if(m_device_context) m_device_context->Release();
+}
 
 void DeviceContext::clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha)
 {
@@ -97,11 +101,3 @@ void DeviceContext::setViewportSize(UINT width, UINT height)
 	vp.MaxDepth = 1.0f;
 	m_device_context->RSSetViewports(1, &vp);
 }
-
-bool DeviceContext::release()
-{
-	m_device_context->Release();
-	delete this;
-	return true;
-}
-

@@ -11,6 +11,7 @@ public:
 
 	void update(float deltaTime) override;
 	XMMATRIX getViewMatrix();
+	XMMATRIX getProjectionMatrix();
 
 	virtual void onKeyDown(int key) override;
 	virtual void onKeyUp(int key) override;
@@ -29,9 +30,17 @@ private:
 	void updateViewMatrix();
 
 	// Inherited via GameObject
-	void initialize() override;
 	void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
 
+	bool isProjectionToggle = false;
 	float width = 0;
 	float height = 0;
+
+	float fov = XM_PIDIV4;
+	float aspectRatio = 0.0f;
+	float nearZ = 0.01f;
+	float farZ = 100.0f;
+
+	float view_width = 0;
+	float view_height = 0;
 };
