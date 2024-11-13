@@ -2,6 +2,17 @@
 
 SceneCameraHandler* SceneCameraHandler::sharedInstance = nullptr;
 
+SceneCameraHandler::SceneCameraHandler()
+{
+	sceneCamera = new Camera();
+	sceneCamera->setPosition(0.0f, 0.0f, -2.0f);
+}
+
+SceneCameraHandler::~SceneCameraHandler() 
+{
+	delete sceneCamera;
+}
+
 SceneCameraHandler* SceneCameraHandler::getInstance()
 {
 	return sharedInstance;
@@ -9,9 +20,14 @@ SceneCameraHandler* SceneCameraHandler::getInstance()
 
 void SceneCameraHandler::initialize()
 {
-	sharedInstance = new SceneCameraHandler();
-	sharedInstance->sceneCamera = new Camera();
-	sharedInstance->sceneCamera->setPosition(0.0f, 0.0f, -2.0f);
+	try
+	{
+		sharedInstance = new SceneCameraHandler();
+	}
+	catch (...)
+	{
+		throw std::exception("SceneCameraHandler not created successfully");
+	}
 }
 
 void SceneCameraHandler::destroy()
@@ -44,7 +60,3 @@ Camera* SceneCameraHandler::getCamera()
 {
 	return sharedInstance->sceneCamera;
 }
-
-SceneCameraHandler::SceneCameraHandler() {}
-
-SceneCameraHandler::~SceneCameraHandler() {}

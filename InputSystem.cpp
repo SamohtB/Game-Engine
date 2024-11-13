@@ -10,7 +10,14 @@ InputSystem* InputSystem::getInstance()
 
 void InputSystem::initialize()
 {
-	sharedInstance = new InputSystem();
+	try
+	{
+		sharedInstance = new InputSystem();
+	}
+	catch (...)
+	{
+		throw std::exception("InputSystem not created successfully");
+	}
 }
 
 void InputSystem::destroy()

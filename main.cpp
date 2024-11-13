@@ -3,14 +3,15 @@
 
 int main()
 {
-	AppWindow app;
-
-	if (app.init())
+	try
 	{
-		while (app.isRun())
-		{
-			app.broadcast();
-		}
+		AppWindow app;
+
+		while (app.isRun()) {}
+	}
+	catch (...)
+	{
+		return -1;
 	}
 
 	return 0;

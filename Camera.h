@@ -32,7 +32,7 @@ private:
 	// Inherited via GameObject
 	void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
 
-	bool isProjectionToggle = false;
+	bool isProjectionToggle = true;
 	float width = 0;
 	float height = 0;
 

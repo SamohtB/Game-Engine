@@ -7,13 +7,10 @@ class Window
 public:
 	Window();
 	~Window();
-	bool init();
-	bool broadcast();
-	bool release();
+	
 	bool isRun();
 
 	RECT getClientWindowRect();
-	void setHWND(HWND hwnd);
 
 	virtual void onCreate();
 	virtual void onUpdate();
@@ -26,7 +23,10 @@ protected:
 	bool m_is_run = false;
 
 private:
+	bool broadcast();
+
 	int frameCount = 0;
 	double totalTime = 0.0;
 	double updateInterval = 1.0;
+	bool isInit = false;
 };

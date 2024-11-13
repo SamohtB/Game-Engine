@@ -39,7 +39,7 @@ public:
 private:
 	GameObjectManager* gameObjectManager = nullptr;
 
-	SwapChain* m_swap_chain = nullptr;
+	SwapChainPtr m_swap_chain = nullptr;
 
 	LONG m_window_width = 0;
 	LONG m_window_height = 0;

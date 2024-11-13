@@ -21,9 +21,9 @@ protected:
 
     float m_ticks = 0.0f;
 
-    VertexBuffer* m_vertex_buffer = nullptr;
-    ConstantBuffer* m_constant_buffer = nullptr;
-    IndexBuffer* m_index_buffer = nullptr;
-    VertexShader* m_vertex_shader = nullptr;
-    PixelShader* m_pixel_shader = nullptr;
+    VertexBufferPtr m_vertex_buffer = nullptr;
+    ConstantBufferPtr m_constant_buffer = nullptr;
+    IndexBufferPtr m_index_buffer = nullptr;
+    VertexShaderPtr m_vertex_shader = nullptr;
+    PixelShaderPtr m_pixel_shader = nullptr;
 };

@@ -37,14 +37,7 @@ Cube::Cube(float size)
     std::copy(std::begin(index_data), std::end(index_data), std::begin(m_index_list));
 }
 
-Cube::~Cube() 
-{
-    if (m_vertex_buffer) delete m_vertex_buffer;
-    if (m_constant_buffer) delete m_constant_buffer;
-    if (m_index_buffer) delete m_index_buffer;
-    if (m_vertex_shader) delete m_vertex_shader;
-    if (m_pixel_shader) delete m_pixel_shader;
-}
+Cube::~Cube() {}
 
 void Cube::loadShaders(const wchar_t* vsPath, const char* vsEntry, const wchar_t* psPath, const char* psEntry)
 {
@@ -80,7 +73,7 @@ void Cube::update(float deltaTime)
 
 void Cube::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix)
 {
-    DeviceContext* context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
+    DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
     constant cc;
 
     cc.m_world = this->getWorldMatrix();
