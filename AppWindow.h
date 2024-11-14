@@ -8,6 +8,7 @@
 #include "InputSystem.h"
 #include "SceneCameraHandler.h"
 #include "RenderSystem.h"
+#include "UIManager.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -34,7 +35,6 @@ public:
 	virtual void onKillFocus() override;
 
 	void updateGameObjects();
-	void drawGameObjects();
 
 private:
 	GameObjectManager* gameObjectManager = nullptr;
@@ -46,6 +46,8 @@ private:
 	float m_ticks_translate = 0.0f;
 	float m_ticks_scale = 0.0f;
 	float elapsedTime = 0.0f;
+
+    bool my_tool_active = true;
 
 	// Inherited via InputListener
 	void onKeyDown(int key) override;

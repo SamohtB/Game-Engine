@@ -8,6 +8,8 @@ public:
 	DeviceContext(RenderSystem* system, ID3D11DeviceContext* device_context);
 	~DeviceContext();
 
+    ID3D11DeviceContext* getContext();
+
 	void clearRenderTargetColor(SwapChainPtr swap_chain, float red, float green, float blue, float alpha);
 	void setVertexBuffer(VertexBufferPtr vertex_buffer);
 	void setIndexBuffer(IndexBufferPtr index_buffer);

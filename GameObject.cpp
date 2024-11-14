@@ -6,6 +6,7 @@ GameObject::GameObject()
 	this->local_position = XMFLOAT3(0, 0, 0);
 	this->local_rotation = XMFLOAT3(0, 0, 0);
 	this->local_scale = XMFLOAT3(1, 1, 1);
+    this->local_matrix = XMMatrixIdentity();
 }
 
 GameObject::~GameObject() {}

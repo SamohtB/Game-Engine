@@ -14,6 +14,11 @@ DeviceContext::~DeviceContext()
 	if(m_device_context) m_device_context->Release();
 }
 
+ID3D11DeviceContext* DeviceContext::getContext()
+{
+    return this->m_device_context;
+}
+
 void DeviceContext::clearRenderTargetColor(SwapChainPtr swap_chain, float red, float green, float blue, float alpha)
 {
 	FLOAT clear_color[] = { red,green,blue,alpha };

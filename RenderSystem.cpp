@@ -65,6 +65,10 @@ RenderSystem::~RenderSystem()
 	m_dxgi_factory->Release();
 
 	m_d3d_device->Release();
+
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
 }
 
 SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)
@@ -84,6 +88,11 @@ SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)
 DeviceContextPtr RenderSystem::getImmediateDeviceContext()
 {
 	return this->m_imm_device_context;
+}
+
+ID3D11Device* RenderSystem::getDirectXDevice()
+{
+    return this->m_d3d_device;
 }
 
 VertexBufferPtr RenderSystem::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
@@ -196,6 +205,5 @@ void RenderSystem::releaseCompiledShader()
 {
 	if (m_blob) m_blob->Release();
 }
-
 
 

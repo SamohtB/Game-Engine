@@ -17,10 +17,10 @@ void AppWindow::onCreate()
 	InputSystem::initialize();
 	SceneCameraHandler::initialize();
 	GraphicsEngine::initialize();
+    UIManager::initialize(this->m_hwnd);
 
 	EngineTime::setFrameTime(60);
 	InputSystem::getInstance()->addListener(this);
-	InputSystem::getInstance()->showCursor(false);
 
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
@@ -77,7 +77,8 @@ void AppWindow::onUpdate()
 	updateGameObjects();
 
 	/* Draws */
-	drawGameObjects();
+    UIManager::getInstance()->drawAllUI();
+    gameObjectManager->draw(this->m_window_width, this->m_window_height);
 
 	m_swap_chain->present(true);
 }
@@ -92,11 +93,6 @@ void AppWindow::updateGameObjects()
 	gameObjectManager->setViewMatrix(viewMatrix);
 	gameObjectManager->setProjectionMatrix(projectionMatrix);
 	gameObjectManager->update(deltaTime);
-}
-
-void AppWindow::drawGameObjects()
-{
-	gameObjectManager->draw(this->m_window_width, this->m_window_height);
 }
 
 void AppWindow::onKeyDown(int key) {}
@@ -129,6 +125,7 @@ void AppWindow::onDestroy()
 	GraphicsEngine::destroy();
 	InputSystem::destroy();
 	SceneCameraHandler::destroy();
+    UIManager::destroy();
 }
 
 void AppWindow::onFocus()

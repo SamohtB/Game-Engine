@@ -55,6 +55,12 @@
     <Filter Include="Engine\EngineTime">
       <UniqueIdentifier>{b3a705c7-ea02-4d30-a120-09977982a288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\IMGUI">
+      <UniqueIdentifier>{302f4ddf-2b6b-4695-bf8b-f14fc830dffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{79b8a8d5-c8c0-4799-b60d-52d247a11a1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +122,30 @@
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>Engine\GraphicsEngine\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>Engine\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +214,33 @@
     </ClInclude>
     <ClInclude Include="Prerequisites.h">
       <Filter>Engine\GraphicsEngine\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
