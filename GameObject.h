@@ -15,12 +15,12 @@ using namespace DirectX;
 class GraphicsEngine;
 class DeviceContext;
 
-class GameObject
+class AGameObject
 {
 
 public:
-	GameObject();
-	~GameObject();
+	AGameObject();
+	~AGameObject();
 	
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) = 0;

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "RenderSystem.h"
 
-class Cube : public GameObject
+class Cube : public AGameObject
 {
 public:
     Cube(float size);

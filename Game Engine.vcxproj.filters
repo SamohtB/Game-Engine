@@ -64,6 +64,9 @@
     <Filter Include="Engine\UI\MainScreens">
       <UniqueIdentifier>{50d5581f-9c27-4d6e-8b0e-d50b71522cb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameObjects">
+      <UniqueIdentifier>{29233ddf-b1f6-46d2-81a4-d907234ef047}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,14 +99,8 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>Engine\GraphicsEngine\RenderSystem\ConstantBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>App\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>Engine\EngineTime</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>Engine\GraphicsEngine\RenderSystem\IndexBuffer</Filter>
@@ -156,6 +153,12 @@
     <ClCompile Include="ToolBar.cpp">
       <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -185,14 +188,8 @@
     <ClInclude Include="ConstantBuffer.h">
       <Filter>Engine\GraphicsEngine\RenderSystem\ConstantBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>App\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="EngineTime.h">
       <Filter>Engine\EngineTime</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
       <Filter>Engine\GraphicsEngine\RenderSystem\IndexBuffer</Filter>
@@ -256,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="ToolBar.h">
       <Filter>Engine\UI\MainScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

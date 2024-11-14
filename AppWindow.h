@@ -9,6 +9,7 @@
 #include "SceneCameraHandler.h"
 #include "RenderSystem.h"
 #include "UIManager.h"
+#include "GameObjectManager.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -34,11 +35,7 @@ public:
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
 
-	void updateGameObjects();
-
 private:
-	GameObjectManager* gameObjectManager = nullptr;
-
 	SwapChainPtr m_swap_chain = nullptr;
 
 	LONG m_window_width = 0;

@@ -18,6 +18,7 @@ void AppWindow::onCreate()
 	SceneCameraHandler::initialize();
 	GraphicsEngine::initialize();
     UIManager::initialize(this->m_hwnd);
+    GameObjectManager::initialize();
 
 	EngineTime::setFrameTime(60);
 	InputSystem::getInstance()->addListener(this);
@@ -30,7 +31,6 @@ void AppWindow::onCreate()
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
 	Cube* cube = nullptr;
-	this->gameObjectManager = new GameObjectManager();
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -56,7 +56,7 @@ void AppWindow::onCreate()
 		}
 
 		cube->setPosition(position);
-		gameObjectManager->registerObject(cube);
+		GameObjectManager::getInstance()->addGameObject(cube);
 	}
 }
 
@@ -74,25 +74,14 @@ void AppWindow::onUpdate()
 	InputSystem::getInstance()->update();
 
 	/* Updates */
-	updateGameObjects();
+    GameObjectManager::getInstance()->updateAll();
 
 	/* Draws */
     UIManager::getInstance()->drawAllUI();
-    gameObjectManager->draw(this->m_window_width, this->m_window_height);
+    GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height,
+        SceneCameraHandler::getInstance()->getSceneCameraViewMatrix(), SceneCameraHandler::getInstance()->getSceneCameraProjMatrix());
 
 	m_swap_chain->present(true);
-}
-
-void AppWindow::updateGameObjects()
-{
-	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	
-	XMMATRIX viewMatrix = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
-	XMMATRIX projectionMatrix = SceneCameraHandler::getInstance()->getSceneCameraProjMatrix();
-
-	gameObjectManager->setViewMatrix(viewMatrix);
-	gameObjectManager->setProjectionMatrix(projectionMatrix);
-	gameObjectManager->update(deltaTime);
 }
 
 void AppWindow::onKeyDown(int key) {}

@@ -3,7 +3,7 @@
 #include "InputListener.h"
 #include "InputSystem.h"
 
-class Camera : public GameObject, public InputListener
+class Camera : public AGameObject, public InputListener
 {
 public:
 	Camera();

@@ -1,10 +1,35 @@
 #include "GameObjectManager.h"
+#include "EngineTime.h"
+
+GameObjectManager* GameObjectManager::sharedInstance = nullptr;
+
+GameObjectManager* GameObjectManager::getInstance()
+{
+    return sharedInstance;
+}
+
+void GameObjectManager::initialize()
+{
+    try
+    {
+        sharedInstance = new GameObjectManager();
+    }
+    catch (...)
+    {
+        throw std::exception("GameObjectManager not created successfully");
+    }
+}
+
+void GameObjectManager::destroy()
+{
+    delete sharedInstance;
+}
 
 GameObjectManager::GameObjectManager() {}
 
 GameObjectManager::~GameObjectManager()
 {
-    for (GameObject* obj : objectList)
+    for (AGameObject* obj : sharedInstance->objectList)
     {
         delete obj;
     }
@@ -12,14 +37,37 @@ GameObjectManager::~GameObjectManager()
     objectList.clear();
 }
 
-void GameObjectManager::registerObject(GameObject* gameObject)
+AGameObject* GameObjectManager::findObjectByName(String name)
 {
-    this->objectList.push_back(gameObject);
+    throw std::exception("FUNCTION UNAVAILABLE");
+    return nullptr;
 }
 
-void GameObjectManager::update(float deltaTime)
+List GameObjectManager::getAllObjects()
 {
-    for (GameObject* obj : objectList)
+    return this->objectList;
+}
+
+int GameObjectManager::activeObjects()
+{
+    int count = 0;
+
+    for (AGameObject* obj : objectList)
+    {
+        if (obj->isActive())
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+void GameObjectManager::updateAll()
+{
+    float deltaTime = static_cast<float>(EngineTime::getDeltaTime());
+
+    for (AGameObject* obj : objectList)
     {
         if (obj->isActive())
         {
@@ -28,23 +76,52 @@ void GameObjectManager::update(float deltaTime)
     }
 }
 
-void GameObjectManager::draw(int width, int height)
+void GameObjectManager::renderAll(int viewport_width, int viewport_height, XMMATRIX view_matrix, XMMATRIX proj_matrix)
 {
-    for (GameObject* obj : objectList)
+    for (AGameObject* obj : objectList)
     {
         if (obj->isActive())
         {
-            obj->draw(width, height, this->currentViewMatrix, this->currentProjectionMatrix);
+            obj->draw(viewport_width, viewport_height,
+                view_matrix, proj_matrix);
         }
     }
 }
 
-void GameObjectManager::setViewMatrix(XMMATRIX view_matrix)
+void GameObjectManager::addGameObject(AGameObject* gameObject)
 {
-    this->currentViewMatrix = view_matrix;
+    this->objectList.push_back(gameObject);
+    // add to hash table when object has name
 }
 
-void GameObjectManager::setProjectionMatrix(XMMATRIX projection_matrix)
+void GameObjectManager::createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader)
 {
-    this->currentProjectionMatrix = projection_matrix;
+    throw std::exception("FUNCTION UNAVAILABLE");
 }
+
+void GameObjectManager::deleteObject(AGameObject* gameObject)
+{
+    throw std::exception("FUNCTION UNAVAILABLE");
+}
+
+void GameObjectManager::deleteObjectByName(String name)
+{
+    throw std::exception("FUNCTION UNAVAILABLE");
+}
+
+void GameObjectManager::setSelectedObject(String name)
+{
+    throw std::exception("FUNCTION UNAVAILABLE");
+}
+
+void GameObjectManager::setSelectedObject(AGameObject* gameObject)
+{
+    throw std::exception("FUNCTION UNAVAILABLE");
+}
+
+AGameObject* GameObjectManager::getSelectedObject()
+{
+    return nullptr;
+}
+
+

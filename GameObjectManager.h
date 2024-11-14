@@ -1,28 +1,51 @@
 #pragma once
-#include <stack>
 #include <vector>
-#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <exception>
 
 #include "GameObject.h"
+
+typedef std::string String;
+typedef std::vector<AGameObject*> List;
+typedef std::unordered_map<String, AGameObject*> HashTable;
 
 class GameObjectManager
 {
 public:
-	GameObjectManager();
-	~GameObjectManager();
+    enum PrimitiveType {
+        CUBE,
+        PLANE,
+        SPHERE
+    };
 
-	void update(float deltaTime);
-	void draw(int width, int height);
+    static GameObjectManager* getInstance();
+    static void initialize();
+    static void destroy();
 
-	void registerObject(GameObject* gameObject);
-
-	void setViewMatrix(XMMATRIX view_matrix);
-	void setProjectionMatrix(XMMATRIX projection_matrix);
+    AGameObject* findObjectByName(String name);
+    List getAllObjects();
+    int activeObjects();
+    void updateAll();
+    void renderAll(int viewport_width, int viewport_height, XMMATRIX view_matrix, XMMATRIX proj_matrix);
+    void addGameObject(AGameObject* gameObject);
+    void createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader);
+    void deleteObject(AGameObject* gameObject);
+    void deleteObjectByName(String name);
+    void setSelectedObject(String name);
+    void setSelectedObject(AGameObject* gameObject);
+    AGameObject* getSelectedObject();
 
 private:
-	std::vector<GameObject*> objectList;
-	XMMATRIX currentViewMatrix = XMMatrixIdentity();
-	XMMATRIX currentProjectionMatrix = XMMatrixIdentity();
+	GameObjectManager();
+	~GameObjectManager();
+    GameObjectManager(GameObjectManager const&) {}
+    GameObjectManager& operator=(GameObjectManager const&) {}
+
+    static GameObjectManager* sharedInstance;
+
+    List objectList;
+    HashTable objectTable;
 };
 
 
