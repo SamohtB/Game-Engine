@@ -65,10 +65,6 @@ RenderSystem::~RenderSystem()
 	m_dxgi_factory->Release();
 
 	m_d3d_device->Release();
-
-    ImGui_ImplDX11_Shutdown();
-    ImGui_ImplWin32_Shutdown();
-    ImGui::DestroyContext();
 }
 
 SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)

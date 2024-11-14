@@ -4,24 +4,25 @@
 #include <unordered_map>
 #include <Windows.h>
 
+#include "AUIScreen.h"
+
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
-#include "AUIScreen.h"
-
+#include "ToolBar.h"
 
 class UINames
 {
+public:
+    const String TOOL_BAR = "TOOL_BAR";
 };
-
-class AUIScreen;
 
 class UIManager
 {
 public:
     typedef std::string String;
     typedef std::vector<AUIScreen*> UIList;
-    typedef std::unordered_map<String, AUIScreen> UITable;
+    typedef std::unordered_map<String, AUIScreen*> UITable;
 
     static UIManager* getInstance();
     static void initialize(HWND windowHandle);

@@ -61,6 +61,9 @@
     <Filter Include="Engine\UI">
       <UniqueIdentifier>{79b8a8d5-c8c0-4799-b60d-52d247a11a1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI\MainScreens">
+      <UniqueIdentifier>{50d5581f-9c27-4d6e-8b0e-d50b71522cb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AUIScreen.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBar.cpp">
+      <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AUIScreen.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBar.h">
+      <Filter>Engine\UI\MainScreens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

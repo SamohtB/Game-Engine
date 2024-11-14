@@ -14,6 +14,7 @@ UIManager::UIManager(HWND windowHandle)
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiWindowFlags_MenuBar;
 
     /* Style */
     ImGui::StyleColorsDark();
@@ -23,11 +24,18 @@ UIManager::UIManager(HWND windowHandle)
         GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext()->getContext());
 
     /* Populate */
+    UINames uiNames;
 
+    ToolBar* toolBar = new ToolBar();
+    this->uiTable[uiNames.TOOL_BAR] = toolBar;
+    this->uiList.push_back(toolBar);
 }
 
 UIManager::~UIManager()
 {
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
 }
 
 UIManager* UIManager::getInstance()
@@ -65,5 +73,8 @@ void UIManager::drawAllUI()
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
 }
 
