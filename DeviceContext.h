@@ -21,6 +21,9 @@ public:
 	void setConstantBuffer(VertexShaderPtr vertex_shader, ConstantBufferPtr buffer);
 	void setConstantBuffer(PixelShaderPtr pixel_shader, ConstantBufferPtr buffer);
 
+    void setTexture(VertexShaderPtr vertex_shader, TexturePtr texture);
+    void setTexture(PixelShaderPtr pixel_shader, TexturePtr texture);
+
 	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawIndexedTriangle(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 

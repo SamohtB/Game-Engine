@@ -5,6 +5,8 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Texture.h"
+
 #include <exception>
 
 DeviceContext::DeviceContext(RenderSystem* system, ID3D11DeviceContext* device_context) : m_system(system), m_device_context(device_context) {}
@@ -59,6 +61,16 @@ void DeviceContext::setConstantBuffer(VertexShaderPtr vertex_shader, ConstantBuf
 void DeviceContext::setConstantBuffer(PixelShaderPtr pixel_shader, ConstantBufferPtr buffer)
 {
 	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+}
+
+void DeviceContext::setTexture(VertexShaderPtr vertex_shader, TexturePtr texture)
+{
+    m_device_context->VSSetShaderResources(0, 1, &texture->m_shader_resource_view);
+}
+
+void DeviceContext::setTexture(PixelShaderPtr pixel_shader, TexturePtr texture)
+{
+    m_device_context->PSSetShaderResources(0, 1, &texture->m_shader_resource_view);
 }
 
 void DeviceContext::drawTriangleList(UINT vertex_count, UINT start_vertex_index)

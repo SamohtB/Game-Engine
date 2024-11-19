@@ -67,6 +67,15 @@
     <Filter Include="Engine\GameObjects">
       <UniqueIdentifier>{29233ddf-b1f6-46d2-81a4-d907234ef047}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Resources">
+      <UniqueIdentifier>{69819797-30ba-4047-a94f-19d5cd53a515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\TextureManager">
+      <UniqueIdentifier>{799353f2-77da-49e4-8bbc-129b7aa6bfd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6ccfe5ee-9575-431f-86b1-5ae7e9ba075b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -159,6 +168,18 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="AResourceManager.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Engine\Resources\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Engine\Resources\TextureManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -218,9 +239,6 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>Engine\GraphicsEngine\RenderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Prerequisites.h">
-      <Filter>Engine\GraphicsEngine\RenderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="imconfig.h">
       <Filter>Engine\IMGUI</Filter>
     </ClInclude>
@@ -260,13 +278,28 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="AResourceManager.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Prerequisites.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Engine\Resources\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine\Resources\TextureManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>App</Filter>
-    </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>App</Filter>
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

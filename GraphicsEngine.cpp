@@ -1,5 +1,4 @@
 #include "GraphicsEngine.h"
-#include "RenderSystem.h"
 
 GraphicsEngine* GraphicsEngine::sharedInstance = nullptr;
 
@@ -13,10 +12,20 @@ GraphicsEngine::GraphicsEngine()
 	{
 		throw std::exception("RenderSystem not created successfully");
 	}
+
+    try
+    {
+        m_texture_manager = new TextureManager();
+    }
+    catch (...)
+    {
+        throw std::exception("TextureManager not created successfully");
+    }
 }
 
 GraphicsEngine::~GraphicsEngine() 
 {
+    delete m_texture_manager;
 	delete m_render_system;
 }
 
@@ -45,4 +54,9 @@ void GraphicsEngine::destroy()
 RenderSystem* GraphicsEngine::getRenderSystem()
 {
 	return m_render_system;
+}
+
+TextureManager* GraphicsEngine::getTextureManager()
+{
+    return m_texture_manager;
 }

@@ -35,6 +35,7 @@ void AppWindow::onCreate()
 	for (int i = 0; i < 5; i++)
 	{
 		Cube* cube = new Cube(0.15f);
+        cube->loadTexture(L"Assets\\Textures\\wood.jpg");
 		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 
 		XMVECTOR position;

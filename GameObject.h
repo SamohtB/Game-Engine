@@ -15,6 +15,19 @@ using namespace DirectX;
 class GraphicsEngine;
 class DeviceContext;
 
+struct vertex
+{
+    XMFLOAT3 position;
+    XMFLOAT2 texcoord;
+};
+
+struct alignas(16) constant
+{
+    XMMATRIX m_world;
+    XMMATRIX m_view;
+    XMMATRIX m_projection_matrix;
+};
+
 class AGameObject
 {
 
@@ -43,19 +56,6 @@ public:
 	XMVECTOR getLocalScale();
 
 	XMMATRIX getWorldMatrix() const;
-
-	struct vertex
-	{
-		XMFLOAT3 position;
-		XMFLOAT3 color;
-	};
-
-	struct alignas(16) constant
-	{
-		XMMATRIX m_world;
-		XMMATRIX m_view;
-		XMMATRIX m_projection_matrix;
-	};
 
 protected:
 	XMFLOAT3 local_position;
