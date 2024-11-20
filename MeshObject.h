@@ -1,6 +1,7 @@
 #pragma once
 #include "AGameObject.h"
 #include "RenderSystem.h"
+#include "SceneCameraHandler.h"
 
 class MeshObject :  public AGameObject
 {
@@ -10,7 +11,7 @@ public:
 
     // Inherited via AGameObject
     void update(float deltaTime) override;
-    void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
+    void draw(int width, int height) override;
 
 private:
     ConstantBufferPtr m_constant_buffer = nullptr;

@@ -1,6 +1,7 @@
 #pragma once
 #include "AGameObject.h"
 #include "RenderSystem.h"
+#include "SceneCameraHandler.h"
 
 using namespace DirectX;
 
@@ -13,7 +14,7 @@ public:
     void loadTexture(const wchar_t* texture_path);
     void loadShaders(const wchar_t* vs_path, const char* vs_entry, const wchar_t* ps_path, const char* psEntry);
     virtual void update(float deltaTime) override;
-    virtual void draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix) override;
+    virtual void draw(int width, int height) override;
 
 protected:
     static const int NUM_VERTICES = 24;

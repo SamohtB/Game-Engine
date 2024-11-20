@@ -30,14 +30,14 @@ void MeshObject::update(float deltaTime)
 {
 }
 
-void MeshObject::draw(int width, int height, XMMATRIX view_matrix, XMMATRIX projection_matrix)
+void MeshObject::draw(int width, int height)
 {
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
     constant cc;
 
     cc.m_world = this->getWorldMatrix();
-    cc.m_view = view_matrix;
-    cc.m_projection_matrix = projection_matrix;
+    cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
+    cc.m_projection_matrix = SceneCameraHandler::getInstance()->getSceneCameraProjMatrix();
 
     this->m_constant_buffer->update(context, &cc);
 

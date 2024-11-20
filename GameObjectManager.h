@@ -27,7 +27,7 @@ public:
     List getAllObjects();
     int activeObjects();
     void updateAll();
-    void renderAll(int viewport_width, int viewport_height, XMMATRIX view_matrix, XMMATRIX proj_matrix);
+    void renderAll(int viewport_width, int viewport_height);
     void addGameObject(AGameObject* gameObject);
     void createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader);
     void deleteObject(AGameObject* gameObject);

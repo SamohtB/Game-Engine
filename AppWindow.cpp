@@ -82,8 +82,7 @@ void AppWindow::onUpdate()
 
 	/* Draws */
     UIManager::getInstance()->drawAllUI();
-    GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height,
-        SceneCameraHandler::getInstance()->getSceneCameraViewMatrix(), SceneCameraHandler::getInstance()->getSceneCameraProjMatrix());
+    GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height);
 
 	m_swap_chain->present(true);
 }

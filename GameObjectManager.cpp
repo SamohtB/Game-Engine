@@ -76,14 +76,13 @@ void GameObjectManager::updateAll()
     }
 }
 
-void GameObjectManager::renderAll(int viewport_width, int viewport_height, XMMATRIX view_matrix, XMMATRIX proj_matrix)
+void GameObjectManager::renderAll(int viewport_width, int viewport_height)
 {
     for (AGameObject* obj : objectList)
     {
         if (obj->isActive())
         {
-            obj->draw(viewport_width, viewport_height,
-                view_matrix, proj_matrix);
+            obj->draw(viewport_width, viewport_height);
         }
     }
 }
