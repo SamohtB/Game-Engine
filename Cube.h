@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "AGameObject.h"
 #include "RenderSystem.h"
 
 using namespace DirectX;

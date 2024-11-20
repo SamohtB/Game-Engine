@@ -63,5 +63,5 @@ protected:
 	XMFLOAT3 local_scale;
 	XMMATRIX local_matrix;
 
-	bool active = false;
+	bool active = true;
 };

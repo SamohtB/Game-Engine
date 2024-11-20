@@ -22,6 +22,7 @@
 
 #include "Cube.h"
 #include "Plane.h"
+#include "MeshObject.h"
 
 class AppWindow : public Window, public InputListener
 {

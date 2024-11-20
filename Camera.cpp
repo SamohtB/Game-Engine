@@ -77,28 +77,6 @@ void Camera::onKeyUp(int key)
 
 void Camera::onMouseMove(const XMFLOAT2& mouse_pos)
 {
-	//XMFLOAT3 localRot = this->local_position;
-	//XMVECTOR rotation = XMLoadFloat3(&localRot);
-	//float r_x = XMVectorGetX(rotation);
-	//float r_y = XMVectorGetY(rotation);
-	//float r_z = XMVectorGetZ(rotation);
-	//float sensitivity = 0.01f;
-
-	//float xOffset = (mouse_pos.x - (width / 2.0f)) * sensitivity;
-	//float yOffset = (mouse_pos.y - (height / 2.0f)) * sensitivity;
-
-	//r_x += xOffset;
-	//r_y += yOffset;
-
-	////// Clamp pitch to prevent flipping
-	////if (r_y > XM_PIDIV2 - 0.1f)
-	////	r_y = XM_PIDIV2 - 0.1f;
-	////if (r_x < -XM_PIDIV2 + 0.1f)
-	////	r_x = -XM_PIDIV2 + 0.1f;
-
-	//InputSystem::getInstance()->setCursorPosition(XMFLOAT2(width / 2.0f, height / 2.0f));
-	//this->setRotation(r_x, r_y, r_z);
-	//this->updateViewMatrix();
 }
 
 void Camera::onLeftMouseDown(const XMVECTOR& mouse_pos)

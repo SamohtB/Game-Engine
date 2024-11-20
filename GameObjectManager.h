@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <exception>
 
-#include "GameObject.h"
+#include "AGameObject.h"
 
 typedef std::string String;
 typedef std::vector<AGameObject*> List;

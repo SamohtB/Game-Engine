@@ -30,35 +30,38 @@ void AppWindow::onCreate()
 
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
-	Cube* cube = nullptr;
+    MeshObject* test = new MeshObject(L"Assets\\Meshes\\teapot.obj", L"Assets\\Textures\\brick.png", L"VertexShader.hlsl", L"PixelShader.hlsl");
+    GameObjectManager::getInstance()->addGameObject(test);
 
-	for (int i = 0; i < 5; i++)
-	{
-		Cube* cube = new Cube(0.15f);
+    Cube* cube = nullptr;
+
+    for (int i = 0; i < 5; i++)
+    {
+        Cube* cube = new Cube(0.15f);
         cube->loadTexture(L"Assets\\Textures\\wood.jpg");
-		cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
+        cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
 
-		XMVECTOR position;
+        XMVECTOR position;
 
-		if (i == 0) {
-			position = XMVectorSet(-0.5f, -0.5f, 0.0f, 0.0f);  // Bottom-left corner
-		}
-		else if (i == 1) {
-			position = XMVectorSet(0.5f, -0.5f, 0.0f, 0.0f);   // Bottom-right corner
-		}
-		else if (i == 2) {
-			position = XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f);    // Top-right corner
-		}
-		else if (i == 3) {
-			position = XMVectorSet(-0.5f, 0.5f, 0.0f, 0.0f);   // Top-left corner
-		}
-		else {
-			position = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);    // Center of the space
-		}
+        if (i == 0) {
+            position = XMVectorSet(-0.5f, -0.5f, -1.0f, 0.0f);  // Bottom-left corner
+        }
+        else if (i == 1) {
+            position = XMVectorSet(0.5f, -0.5f, -1.0f, 0.0f);   // Bottom-right corner
+        }
+        else if (i == 2) {
+            position = XMVectorSet(0.5f, 0.5f, -1.0f, 0.0f);    // Top-right corner
+        }
+        else if (i == 3) {
+            position = XMVectorSet(-0.5f, 0.5f, -1.0f, 0.0f);   // Top-left corner
+        }
+        else {
+            position = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);    // Center of the space
+        }
 
-		cube->setPosition(position);
-		GameObjectManager::getInstance()->addGameObject(cube);
-	}
+        cube->setPosition(position);
+        GameObjectManager::getInstance()->addGameObject(cube);
+    }
 }
 
 void AppWindow::onUpdate()

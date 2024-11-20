@@ -76,6 +76,12 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{6ccfe5ee-9575-431f-86b1-5ae7e9ba075b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Resources\MeshManager">
+      <UniqueIdentifier>{5fda592f-b0f1-4b39-9998-80492c03c916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Math">
+      <UniqueIdentifier>{287221a4-95a2-40df-94d6-ef5926a76e02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -165,7 +171,7 @@
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Engine\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="AGameObject.cpp">
       <Filter>Engine\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="AResourceManager.cpp">
@@ -179,6 +185,15 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Engine\Resources\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>Engine\Resources\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Engine\Resources\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshObject.cpp">
+      <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +290,7 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>Engine\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="AGameObject.h">
       <Filter>Engine\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="AResourceManager.h">
@@ -293,12 +308,27 @@
     <ClInclude Include="Texture.h">
       <Filter>Engine\Resources\TextureManager</Filter>
     </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>Engine\Resources\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Engine\Resources\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexMesh.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshObject.h">
+      <Filter>App\Objects\ObjectClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexMeshLayoutShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
