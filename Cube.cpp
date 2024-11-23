@@ -76,41 +76,23 @@ Cube::Cube(float size)
     };
 
     std::copy(std::begin(index_data), std::end(index_data), std::begin(m_index_list));
-}
 
-Cube::~Cube() {}
-
-void Cube::loadTexture(const wchar_t* texture_path)
-{
-    m_texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(texture_path);
-}
-
-void Cube::loadShaders(const wchar_t* vs_path, const char* vs_entry, const wchar_t* ps_path, const char* ps_entry)
-{
+    ShaderNames shaderNames;
+    void* shader_byte_code = nullptr;
+    size_t size_shader = 0;
     UINT size_list = ARRAYSIZE(m_vertex_list);
     UINT size_index_list = ARRAYSIZE(m_index_list);
 
+    ShaderLibrary::getInstance()->requestVertexShaderData(shaderNames.BASE_VERTEX_SHADER_NAME, &shader_byte_code, &size_shader);
+
     m_index_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createIndexBuffer(this->m_index_list, size_index_list);
-
-    void* shader_byte_code = nullptr;
-    size_t size_shader = 0;
-
-    GraphicsEngine::getInstance()->getRenderSystem()->compileVertexShader(vs_path, vs_entry, &shader_byte_code, &size_shader);
-
-    m_vertex_shader = GraphicsEngine::getInstance()->getRenderSystem()->createVertexShader(shader_byte_code, size_shader);
     m_vertex_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createVertexBuffer(m_vertex_list, sizeof(vertex), size_list, shader_byte_code, static_cast<UINT>(size_shader));
-
-    GraphicsEngine::getInstance()->getRenderSystem()->releaseCompiledShader();
-
-    GraphicsEngine::getInstance()->getRenderSystem()->compilePixelShader(ps_path, ps_entry, &shader_byte_code, &size_shader);
-
-    m_pixel_shader = GraphicsEngine::getInstance()->getRenderSystem()->createPixelShader(shader_byte_code, size_shader);
-
-    GraphicsEngine::getInstance()->getRenderSystem()->releaseCompiledShader();
 
     constant initialConstant;
     m_constant_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createConstantBuffer(&initialConstant, sizeof(constant));
 }
+
+Cube::~Cube() {}
 
 void Cube::update(float deltaTime)
 {
@@ -120,6 +102,7 @@ void Cube::update(float deltaTime)
 void Cube::draw(int width, int height)
 {
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
+    ShaderNames shaderNames;
     constant cc;
 
     cc.m_world = this->getWorldMatrix();
@@ -128,15 +111,12 @@ void Cube::draw(int width, int height)
 
     this->m_constant_buffer->update(context, &cc);
 
-    context->setConstantBuffer(m_vertex_shader, m_constant_buffer);
-    context->setConstantBuffer(m_pixel_shader, m_constant_buffer);
+    context->setConstantBuffer(m_constant_buffer);
 
-    context->setVertexShader(m_vertex_shader);
-    context->setPixelShader(m_pixel_shader);
+    context->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shaderNames.BASE_VERTEX_SHADER_NAME));
+    context->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shaderNames.BASE_PIXEL_SHADER_NAME));
 
-    context->setTexture(m_pixel_shader, m_texture);
-
-    context->setVertexBuffer(m_vertex_buffer);
+    context->setVertexBuffer(this->m_vertex_buffer);
     context->setIndexBuffer(this->m_index_buffer);
 
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);

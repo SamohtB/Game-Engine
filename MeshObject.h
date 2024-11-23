@@ -2,11 +2,13 @@
 #include "AGameObject.h"
 #include "RenderSystem.h"
 #include "SceneCameraHandler.h"
+#include "ShaderLibrary.h"
+#include "TextureManager.h"
 
 class MeshObject :  public AGameObject
 {
 public:
-    MeshObject(const wchar_t* mesh_file_path, const wchar_t* texture_file_path, const wchar_t* vs_path, const wchar_t* ps_path);
+    MeshObject(const wchar_t* mesh_file_path);
     ~MeshObject();
 
     // Inherited via AGameObject
@@ -15,9 +17,6 @@ public:
 
 private:
     ConstantBufferPtr m_constant_buffer = nullptr;
-    VertexShaderPtr m_vertex_shader = nullptr;
-    PixelShaderPtr m_pixel_shader = nullptr;
-    TexturePtr m_texture = nullptr;
     MeshPtr m_mesh = nullptr;
 
     friend class Mesh;

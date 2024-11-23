@@ -10,6 +10,8 @@
 #include "RenderSystem.h"
 #include "UIManager.h"
 #include "GameObjectManager.h"
+#include "ShaderLibrary.h"
+#include "TextureManager.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"

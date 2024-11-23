@@ -2,6 +2,7 @@
 #include "AGameObject.h"
 #include "RenderSystem.h"
 #include "SceneCameraHandler.h"
+#include "ShaderLibrary.h"
 
 using namespace DirectX;
 
@@ -11,8 +12,6 @@ public:
     Cube(float size);
     ~Cube();
 
-    void loadTexture(const wchar_t* texture_path);
-    void loadShaders(const wchar_t* vs_path, const char* vs_entry, const wchar_t* ps_path, const char* psEntry);
     virtual void update(float deltaTime) override;
     virtual void draw(int width, int height) override;
 
@@ -28,7 +27,4 @@ protected:
     VertexBufferPtr m_vertex_buffer = nullptr;
     ConstantBufferPtr m_constant_buffer = nullptr;
     IndexBufferPtr m_index_buffer = nullptr;
-    VertexShaderPtr m_vertex_shader = nullptr;
-    PixelShaderPtr m_pixel_shader = nullptr;
-    TexturePtr m_texture = nullptr;
 };

@@ -2,21 +2,9 @@
 #include "Mesh.h"
 #include "VertexMesh.h"
 
-MeshObject::MeshObject(const wchar_t* mesh_file_path, const wchar_t* texture_file_path, const wchar_t* vs_path, const wchar_t* ps_path) : AGameObject()
+MeshObject::MeshObject(const wchar_t* mesh_file_path) : AGameObject()
 {
     m_mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(mesh_file_path);
-    m_texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(texture_file_path);
-
-    void* shader_byte_code = nullptr;
-    size_t size_shader = 0;
-
-    GraphicsEngine::getInstance()->getRenderSystem()->compileVertexShader(vs_path, "vsmain", &shader_byte_code, &size_shader);
-    m_vertex_shader = GraphicsEngine::getInstance()->getRenderSystem()->createVertexShader(shader_byte_code, size_shader);
-    GraphicsEngine::getInstance()->getRenderSystem()->releaseCompiledShader();
-
-    GraphicsEngine::getInstance()->getRenderSystem()->compilePixelShader(ps_path, "psmain", &shader_byte_code, &size_shader);
-    m_pixel_shader = GraphicsEngine::getInstance()->getRenderSystem()->createPixelShader(shader_byte_code, size_shader);
-    GraphicsEngine::getInstance()->getRenderSystem()->releaseCompiledShader();
 
     constant initialConstant;
     m_constant_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createConstantBuffer(&initialConstant, sizeof(constant));
@@ -32,6 +20,9 @@ void MeshObject::update(float deltaTime)
 
 void MeshObject::draw(int width, int height)
 {
+    ShaderNames shaderNames;
+    TextureNames textureNames;
+
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
     constant cc;
 
@@ -41,16 +32,16 @@ void MeshObject::draw(int width, int height)
 
     this->m_constant_buffer->update(context, &cc);
 
-    context->setConstantBuffer(m_vertex_shader, m_constant_buffer);
-    context->setConstantBuffer(m_pixel_shader, m_constant_buffer);
+    context->setConstantBuffer(m_constant_buffer);
 
-    context->setVertexShader(m_vertex_shader);
-    context->setPixelShader(m_pixel_shader);
+    context->setVertexShader(ShaderLibrary::getInstance()->getVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME));
+    context->setPixelShader(ShaderLibrary::getInstance()->getPixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME));
 
-    context->setTexture(m_pixel_shader, m_texture);
+    Texture* tex = TextureManager::getInstance()->getTexture(textureNames.BRICK_TEXTURE);
+    context->setTexture(tex);
 
     context->setVertexBuffer(m_mesh->getVertexBuffer());
     context->setIndexBuffer(m_mesh->getIndexBuffer());
-
+    
     context->drawIndexedTriangle(m_mesh->getIndexBuffer()->getSizeIndexList(), 0, 0);
 }

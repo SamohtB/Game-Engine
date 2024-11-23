@@ -1,22 +1,39 @@
 #include "TextureManager.h"
-#include "Texture.h"
 
-TextureManager::TextureManager() : AResourceManager()
+TextureManager* TextureManager::sharedInstance = nullptr;
+
+TextureManager::TextureManager()
 {
+    TextureNames textureNames;
 
+    this->textureMap[textureNames.BRICK_TEXTURE] = createTextureFromFile(static_cast<const wchar_t*>(textureNames.BRICK_TEXTURE.c_str()));
 }
 
 TextureManager::~TextureManager()
 {
-
 }
 
-TexturePtr TextureManager::createTextureFromFile(const wchar_t* file_path)
+TextureManager* TextureManager::getInstance()
 {
-    return std::static_pointer_cast<Texture>(createResourceFromFile(file_path));
+    return sharedInstance;
 }
 
-Resource* TextureManager::createResourceFromFileConcrete(const wchar_t* file_path)
+void TextureManager::initialize()
+{
+    sharedInstance = new TextureManager();
+}
+
+void TextureManager::destroy()
+{
+    delete sharedInstance;
+}
+
+Texture* TextureManager::getTexture(String texture_name)
+{
+    return this->textureMap[texture_name];
+}
+
+Texture* TextureManager::createTextureFromFile(const wchar_t* file_path)
 {
     Texture* tex = nullptr;
 
@@ -31,3 +48,4 @@ Resource* TextureManager::createResourceFromFileConcrete(const wchar_t* file_pat
 
     return tex;
 }
+

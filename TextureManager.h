@@ -1,15 +1,38 @@
 #pragma once
-#include "AResourceManager.h"
-#include "Prerequisites.h"
+#include "Texture.h"
 
-class TextureManager : public AResourceManager
+#include <string>
+#include <unordered_map>
+
+class TextureNames
 {
 public:
+    typedef std::wstring String;
+
+    const String BRICK_TEXTURE = L"Assets\\Textures\\brick.png";
+};
+
+class TextureManager
+{
+public:
+    typedef std::wstring String;
+    typedef std::unordered_map<String, Texture*> TextureMap;
+
+    static TextureManager* getInstance();
+    static void initialize();
+    static void destroy();
+
+    Texture* getTexture(String texture_name);
+
+private:
     TextureManager();
     ~TextureManager();
+    TextureManager(TextureManager const&) {}
+    TextureManager& operator=(TextureManager const&) {}
 
-    TexturePtr createTextureFromFile(const wchar_t* file_path);
+    static TextureManager* sharedInstance;
 
+    TextureMap textureMap;
 protected:
-    Resource* createResourceFromFileConcrete(const wchar_t* file_path) override;
+    Texture* createTextureFromFile(const wchar_t* file_path);
 };

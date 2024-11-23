@@ -7,6 +7,7 @@
 #include <DirectXMath.h>
 
 #include "GraphicsEngine.h"
+#include "ShaderLibrary.h"
 #include "VertexMesh.h"
 
 Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
@@ -57,11 +58,15 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
         }
     }
 
+    ShaderNames shaderNames;
     void* shader_byte_code = nullptr;
     size_t size_shader = 0;
-    GraphicsEngine::getInstance()->getVertexMeshLayoutShaderByteCodeAndSize(&shader_byte_code, &size_shader);
+
+    ShaderLibrary::getInstance()->requestVertexShaderData(shaderNames.VERTEX_MESH_LAYOUT_SHADER_NAME, &shader_byte_code, &size_shader);
+
     m_vertex_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createVertexBuffer(&list_vertices[0], sizeof(VertexMesh),
         (UINT)list_vertices.size(), shader_byte_code, (UINT)size_shader);
+
     m_index_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createIndexBuffer(&list_indices[0], (UINT)list_indices.size());
 
 }

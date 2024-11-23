@@ -18,11 +18,8 @@ public:
 	void setVertexShader(VertexShaderPtr vertex_shader);
 	void setPixelShader(PixelShaderPtr pixel_shader);
 
-	void setConstantBuffer(VertexShaderPtr vertex_shader, ConstantBufferPtr buffer);
-	void setConstantBuffer(PixelShaderPtr pixel_shader, ConstantBufferPtr buffer);
-
-    void setTexture(VertexShaderPtr vertex_shader, TexturePtr texture);
-    void setTexture(PixelShaderPtr pixel_shader, TexturePtr texture);
+	void setConstantBuffer(ConstantBufferPtr buffer);
+    void setTexture(Texture* texture);
 
 	void drawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void drawIndexedTriangle(UINT index_count, UINT start_vertex_index, UINT start_index_location);
