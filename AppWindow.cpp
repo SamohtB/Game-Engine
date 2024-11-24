@@ -19,6 +19,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::initialize();
     UIManager::initialize(this->m_hwnd);
     GameObjectManager::initialize();
+    ShaderLibrary::initialize();
 
 	EngineTime::setFrameTime(60);
 	InputSystem::getInstance()->addListener(this);
@@ -30,7 +31,7 @@ void AppWindow::onCreate()
 
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
-    MeshObject* test = new MeshObject(L"Assets\\Meshes\\teapot.obj", L"Assets\\Textures\\brick.png", L"VertexShader.hlsl", L"PixelShader.hlsl");
+    MeshObject* test = new MeshObject(L"Assets\\Meshes\\teapot.obj");
     GameObjectManager::getInstance()->addGameObject(test);
 
     Cube* cube = nullptr;
@@ -38,9 +39,6 @@ void AppWindow::onCreate()
     for (int i = 0; i < 5; i++)
     {
         Cube* cube = new Cube(0.15f);
-        cube->loadTexture(L"Assets\\Textures\\wood.jpg");
-        cube->loadShaders(L"VertexShader.hlsl", "vsmain", L"PixelShader.hlsl", "psmain");
-
         XMVECTOR position;
 
         if (i == 0) {
@@ -118,6 +116,7 @@ void AppWindow::onDestroy()
 	InputSystem::destroy();
 	SceneCameraHandler::destroy();
     UIManager::destroy();
+    ShaderLibrary::destroy();
 }
 
 void AppWindow::onFocus()

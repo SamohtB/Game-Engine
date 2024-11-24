@@ -7,7 +7,7 @@ class Mesh : public Resource
 {
 public:
     Mesh(const wchar_t* full_path);
-    ~Mesh();
+    ~Mesh() override;
 
     const VertexBufferPtr& getVertexBuffer();
     const IndexBufferPtr& getIndexBuffer();
