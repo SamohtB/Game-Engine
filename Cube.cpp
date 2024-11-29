@@ -1,9 +1,9 @@
 #include "Cube.h"
 #include "ShaderLibrary.h"
 
-Cube::Cube(float size) 
+Cube::Cube(String name, float size) : AGameObject(name)
 {
-    this->active = true;
+    this->setActive(true);
 
     XMFLOAT3 vertex_data[8] =
     {
@@ -111,7 +111,21 @@ void Cube::draw(int width, int height)
     TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\wood.jpg");
     constant cc;
 
-    cc.m_world = this->getWorldMatrix();
+    XMVECTOR position = this->getLocalPosition();
+    XMVECTOR rotation = this->getLocalRotation();
+    XMVECTOR scale = this->getLocalScale();
+
+    XMMATRIX translationMatrix = XMMatrixTranslationFromVector(position);
+    XMMATRIX scaleMatrix = XMMatrixScalingFromVector(scale);
+
+    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMVectorGetX(rotation));
+    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMVectorGetY(rotation));
+    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMVectorGetZ(rotation));
+
+    XMMATRIX rotationMatrix = XMMatrixMultiply(rotationMatrixX, XMMatrixMultiply(rotationMatrixY, rotationMatrixZ));
+    XMMATRIX worldMatrix = XMMatrixMultiply(scaleMatrix, XMMatrixMultiply(rotationMatrix, translationMatrix));
+
+    cc.m_world = worldMatrix;
     cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
     cc.m_projection_matrix = SceneCameraHandler::getInstance()->getSceneCameraProjMatrix();
 

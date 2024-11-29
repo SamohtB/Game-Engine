@@ -82,8 +82,17 @@
     <Filter Include="Engine\Math">
       <UniqueIdentifier>{287221a4-95a2-40df-94d6-ef5926a76e02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ComponentSystem">
+      <UniqueIdentifier>{1cc6eb06-d3a4-44ff-ab35-b98b72636154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ComponentSystem\Components">
+      <UniqueIdentifier>{5784ddc6-f8a2-4ca0-ac6c-58b7a1a1cacd}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{97748946-d10a-4256-9073-b1391eb786c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ComponentSystem\Components\PhysicsComponent">
+      <UniqueIdentifier>{86f3527e-dfc1-4b83-a3b4-9c43f776a879}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +212,15 @@
     </ClCompile>
     <ClCompile Include="ShaderLibrary.cpp">
       <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponentSystem.cpp">
+      <Filter>Engine\ComponentSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="AComponent.cpp">
+      <Filter>Engine\ComponentSystem\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +352,15 @@
     </ClInclude>
     <ClInclude Include="ShaderLibrary.h">
       <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponentSystem.h">
+      <Filter>Engine\ComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AComponent.h">
+      <Filter>Engine\ComponentSystem\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

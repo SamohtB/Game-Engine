@@ -179,8 +179,10 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AComponent.cpp" />
     <ClCompile Include="AppWindow.cpp" />
     <ClCompile Include="AUIScreen.cpp" />
+    <ClCompile Include="BaseComponentSystem.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
@@ -202,6 +204,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="MeshObject.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Plane.cpp" />
@@ -220,8 +223,10 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AComponent.h" />
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="AUIScreen.h" />
+    <ClInclude Include="BaseComponentSystem.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -244,6 +249,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshManager.h" />
     <ClInclude Include="MeshObject.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Plane.h" />

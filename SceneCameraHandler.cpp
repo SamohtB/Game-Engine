@@ -4,7 +4,7 @@ SceneCameraHandler* SceneCameraHandler::sharedInstance = nullptr;
 
 SceneCameraHandler::SceneCameraHandler()
 {
-	sceneCamera = new Camera();
+	sceneCamera = new Camera("Scene Camera");
 	sceneCamera->setPosition(0.0f, 0.0f, -2.0f);
 }
 

@@ -6,6 +6,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "AComponent.h"
 
 #include <vector>
 #include <DirectXMath.h>
@@ -32,8 +33,12 @@ class AGameObject
 {
 
 public:
-	AGameObject();
-	~AGameObject();
+
+    typedef std::string String;
+    typedef std::vector<AComponent*> ComponentList;
+
+	AGameObject(String name);
+	virtual ~AGameObject();
 	
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(int width, int height) = 0;
@@ -55,13 +60,35 @@ public:
 	void scale(float scale);
 	XMVECTOR getLocalScale();
 
-	XMMATRIX getWorldMatrix() const;
+    String getName();
+    
+    void attachComponent(AComponent* component);
+    void detachComponent(AComponent* component);
+
+    AComponent* findComponentByName(String name);
+    AComponent* findComponentOfType(AComponent::ComponentType type, String name);
+    ComponentList getComponentsOfType(AComponent::ComponentType type);
+    ComponentList getComponentsOfTypeRecursive(AComponent::ComponentType type);
+
+    void updateLocalMatrix(); 
+    float* getMatrix();
+    
+    float* getPhysicsLocalMatrix();
+    XMMATRIX getLocalMatrix();
+    void setLocalMatrix(float* matrix);
 
 protected:
-	XMFLOAT3 local_position;
-	XMFLOAT3 local_rotation;
-	XMFLOAT3 local_scale;
-	XMMATRIX local_matrix;
+    String m_name;
+	XMFLOAT3 m_local_position;
+	XMFLOAT3 m_local_rotation;
+	XMFLOAT3 m_local_scale;
+	XMMATRIX m_local_matrix;
 
-	bool active = true;
+    ComponentList m_component_list;
+
+    virtual void awake();
+	
+private:
+    bool active = true;
+    friend class GameObjectManager;
 };

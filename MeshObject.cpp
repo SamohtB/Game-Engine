@@ -5,7 +5,7 @@
 #include "SceneCameraHandler.h"
 #include "ShaderLibrary.h"
 
-MeshObject::MeshObject(const wchar_t* mesh_file_path) : AGameObject()
+MeshObject::MeshObject(String name, const wchar_t* mesh_file_path) : AGameObject(name)
 {
     m_mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(mesh_file_path);
 
@@ -28,7 +28,21 @@ void MeshObject::draw(int width, int height)
     TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
     constant cc;
 
-    cc.m_world = this->getWorldMatrix();
+    XMVECTOR position = this->getLocalPosition();
+    XMVECTOR rotation = this->getLocalRotation();
+    XMVECTOR scale = this->getLocalScale();
+
+    XMMATRIX translationMatrix = XMMatrixTranslationFromVector(position);
+    XMMATRIX scaleMatrix = XMMatrixScalingFromVector(scale);
+
+    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMVectorGetX(rotation));
+    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMVectorGetY(rotation));
+    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMVectorGetZ(rotation));
+
+    XMMATRIX rotationMatrix = XMMatrixMultiply(rotationMatrixX, XMMatrixMultiply(rotationMatrixY, rotationMatrixZ));
+    XMMATRIX worldMatrix = XMMatrixMultiply(scaleMatrix, XMMatrixMultiply(rotationMatrix, translationMatrix));
+
+    cc.m_world = worldMatrix;
     cc.m_view = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
     cc.m_projection_matrix = SceneCameraHandler::getInstance()->getSceneCameraProjMatrix();
 

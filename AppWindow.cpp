@@ -33,14 +33,14 @@ void AppWindow::onCreate()
 
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
 
-    MeshObject* test = new MeshObject(L"Assets\\Meshes\\teapot.obj");
+    MeshObject* test = new MeshObject("Tea Pot", L"Assets\\Meshes\\teapot.obj");
     GameObjectManager::getInstance()->addGameObject(test);
 
     Cube* cube = nullptr;
 
     for (int i = 0; i < 5; i++)
     {
-        Cube* cube = new Cube(0.15f);
+        Cube* cube = new Cube("Cube " + std::to_string(i), 0.15f);
         XMVECTOR position;
 
         if (i == 0) {

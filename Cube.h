@@ -8,7 +8,7 @@ using namespace DirectX;
 class Cube : public AGameObject
 {
 public:
-    Cube(float size);
+    Cube(String name, float size);
     ~Cube();
 
     virtual void update(float deltaTime) override;

@@ -1,94 +1,244 @@
 #include "AGameObject.h"
 
+typedef std::string String;
+typedef std::vector<AComponent*> ComponentList;
 
-AGameObject::AGameObject() 
+AGameObject::AGameObject(String name) : m_name(name)
 {
-	this->local_position = XMFLOAT3(0, 0, 0);
-	this->local_rotation = XMFLOAT3(0, 0, 0);
-	this->local_scale = XMFLOAT3(1, 1, 1);
-    this->local_matrix = XMMatrixIdentity();
+	this->m_local_position = XMFLOAT3(0, 0, 0);
+	this->m_local_rotation = XMFLOAT3(0, 0, 0);
+	this->m_local_scale = XMFLOAT3(1, 1, 1);
+    this->m_local_matrix = XMMatrixIdentity();
 }
 
-AGameObject::~AGameObject() {}
-
-void AGameObject::update(float deltaTime) {}
-
-void AGameObject::setPosition(float x, float y, float z)
+AGameObject::~AGameObject()
 {
-	local_position = XMFLOAT3(x, y, z);
-}
-
-void AGameObject::setPosition(XMVECTOR vector)
-{
-	XMStoreFloat3(&this->local_position, vector);
-}
-
-XMVECTOR AGameObject::getLocalPosition()
-{
-	return XMLoadFloat3(&this->local_position);
-}
-
-void AGameObject::setRotation(float pitch, float yaw, float roll)
-{
-	local_rotation = XMFLOAT3(pitch, yaw, roll);
-}
-
-void AGameObject::setRotation(XMVECTOR vector)
-{
-	XMStoreFloat3(&this->local_rotation, vector);
-}
-
-void AGameObject::rotate(float pitch, float yaw, float roll)
-{
-	XMVECTOR currentRotation = XMLoadFloat3(&this->local_rotation);
-	XMVECTOR newRotation = XMVectorSet(pitch, yaw, roll, 0.0f);
-	XMVECTOR combinedRotation = XMVectorAdd(currentRotation, newRotation);
-	XMStoreFloat3(&this->local_rotation, combinedRotation);
-}
-
-XMVECTOR AGameObject::getLocalRotation()
-{
-	return XMLoadFloat3(&this->local_rotation);
-}
-
-void AGameObject::setScale(float x, float y, float z)
-{
-	local_scale = XMFLOAT3(x, y, z);
-}
-
-void AGameObject::setScale(XMVECTOR vector)
-{
-	XMStoreFloat3(&this->local_scale, vector);
-}
-
-void AGameObject::scale(float scale)
-{
-	XMVECTOR currentScale = XMLoadFloat3(&this->local_scale);
-	XMVECTOR newScale = XMVectorSet(scale, scale, scale, 0.0f);
-	XMVECTOR combinedRotation = XMVectorAdd(currentScale, newScale);
-	XMStoreFloat3(&this->local_scale, combinedRotation);
-}
-
-XMVECTOR AGameObject::getLocalScale()
-{
-	return XMLoadFloat3(&this->local_scale);
-}
-
-XMMATRIX AGameObject::getWorldMatrix() const
-{
-	XMMATRIX matScale = XMMatrixScaling(local_scale.x, local_scale.y, local_scale.z);
-	XMMATRIX matRotation = XMMatrixRotationRollPitchYaw(local_rotation.x, local_rotation.y, local_rotation.z);
-	XMMATRIX matTranslation = XMMatrixTranslation(local_position.x, local_position.y, local_position.z);
-
-	return matScale * matRotation * matTranslation;
+    for (int i = 0; i < this->m_component_list.size(); i++) {
+        this->m_component_list[i]->detachOwner();
+    }
+    this->m_component_list.clear();
 }
 
 bool AGameObject::isActive()
 {
-	return this->active;
+    return this->active;
 }
 
 void AGameObject::setActive(bool value)
 {
-	this->active = value;
+    this->active = value;
+}
+
+void AGameObject::setPosition(float x, float y, float z)
+{
+	m_local_position = XMFLOAT3(x, y, z);
+}
+
+void AGameObject::setPosition(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->m_local_position, vector);
+}
+
+XMVECTOR AGameObject::getLocalPosition()
+{
+	return XMLoadFloat3(&this->m_local_position);
+}
+
+void AGameObject::setRotation(float pitch, float yaw, float roll)
+{
+	m_local_rotation = XMFLOAT3(pitch, yaw, roll);
+}
+
+void AGameObject::setRotation(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->m_local_rotation, vector);
+}
+
+void AGameObject::rotate(float pitch, float yaw, float roll)
+{
+	XMVECTOR currentRotation = XMLoadFloat3(&this->m_local_rotation);
+	XMVECTOR newRotation = XMVectorSet(pitch, yaw, roll, 0.0f);
+	XMVECTOR combinedRotation = XMVectorAdd(currentRotation, newRotation);
+	XMStoreFloat3(&this->m_local_rotation, combinedRotation);
+}
+
+XMVECTOR AGameObject::getLocalRotation()
+{
+	return XMLoadFloat3(&this->m_local_rotation);
+}
+
+void AGameObject::setScale(float x, float y, float z)
+{
+	m_local_scale = XMFLOAT3(x, y, z);
+}
+
+void AGameObject::setScale(XMVECTOR vector)
+{
+	XMStoreFloat3(&this->m_local_scale, vector);
+}
+
+void AGameObject::scale(float scale)
+{
+	XMVECTOR currentScale = XMLoadFloat3(&this->m_local_scale);
+	XMVECTOR newScale = XMVectorSet(scale, scale, scale, 0.0f);
+	XMVECTOR combinedRotation = XMVectorAdd(currentScale, newScale);
+	XMStoreFloat3(&this->m_local_scale, combinedRotation);
+}
+
+XMVECTOR AGameObject::getLocalScale()
+{
+	return XMLoadFloat3(&this->m_local_scale);
+}
+
+AGameObject::String AGameObject::getName()
+{
+    return this->m_name;
+}
+
+void AGameObject::attachComponent(AComponent* component)
+{
+    this->m_component_list.push_back(component);
+    component->attachOwner(this);
+}
+
+void AGameObject::detachComponent(AComponent* component)
+{
+    int index = -1;
+    for (int i = 0; i < this->m_component_list.size(); i++) {
+        if (this->m_component_list[i] == component) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index != -1) {
+        this->m_component_list.erase(this->m_component_list.begin() + index);
+    }
+}
+
+AComponent* AGameObject::findComponentByName(String name)
+{
+    for (int i = 0; i < this->m_component_list.size(); i++)
+    {
+        if (this->m_component_list[i]->getName() == name)
+        {
+            return this->m_component_list[i];
+        }
+    }
+
+    return nullptr;
+}
+
+AComponent* AGameObject::findComponentOfType(AComponent::ComponentType type, String name)
+{
+    for (int i = 0; i < this->m_component_list.size(); i++)
+    {
+        if (this->m_component_list[i]->getName() == name && this->m_component_list[i]->getType() == type)
+        {
+            return this->m_component_list[i];
+        }
+    }
+
+    return nullptr;
+}
+
+ComponentList AGameObject::getComponentsOfType(AComponent::ComponentType type)
+{
+    ComponentList foundList;
+    for (int i = 0; i < this->m_component_list.size(); i++)
+    {
+        if (this->m_component_list[i]->getType() == type)
+        {
+            foundList.push_back(this->m_component_list[i]);
+        }
+    }
+
+    return foundList;
+}
+
+ComponentList AGameObject::getComponentsOfTypeRecursive(AComponent::ComponentType type)
+{
+    ComponentList foundList;
+    for (int i = 0; i < this->m_component_list.size(); i++)
+    {
+        if (this->m_component_list[i]->getType() == type)
+        {
+            foundList.push_back(this->m_component_list[i]);
+        }
+    }
+
+    return foundList;
+}
+
+void AGameObject::updateLocalMatrix()
+{
+    XMMATRIX scaleMatrix = XMMatrixScalingFromVector(XMLoadFloat3(&this->m_local_scale));
+    XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYawFromVector(XMLoadFloat3(&this->m_local_rotation));
+    XMMATRIX translationMatrix = XMMatrixTranslationFromVector(XMLoadFloat3(&this->m_local_position));
+
+    this->m_local_matrix = scaleMatrix * rotationMatrix * translationMatrix;
+}
+
+float* AGameObject::getMatrix()
+{
+    static XMFLOAT4X4 matrixResult;
+    XMStoreFloat4x4(&matrixResult, this->m_local_matrix);
+
+    return reinterpret_cast<float*>(&matrixResult);
+}
+
+float* AGameObject::getPhysicsLocalMatrix()
+{
+    XMMATRIX allMatrix = XMMatrixIdentity();
+
+    /* position matrix */
+    XMVECTOR localPosition = this->getLocalPosition();
+    XMMATRIX translationMatrix = XMMatrixTranslationFromVector(localPosition);
+
+    /* scale matrix */
+    XMMATRIX scaleMatrix = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+
+    /* rotation matrix */
+    XMVECTOR rotation = this->getLocalRotation();
+    float pitch = XMVectorGetX(rotation);
+    float yaw = XMVectorGetY(rotation);
+    float roll = XMVectorGetZ(rotation);
+
+    XMMATRIX xMatrix = XMMatrixRotationX(pitch);
+    XMMATRIX yMatrix = XMMatrixRotationY(yaw);
+    XMMATRIX zMatrix = XMMatrixRotationZ(roll);
+
+    XMMATRIX rotMatrix = XMMatrixMultiply(xMatrix, XMMatrixMultiply(yMatrix, zMatrix));
+    allMatrix = XMMatrixMultiply(scaleMatrix, XMMatrixMultiply(rotMatrix, translationMatrix));
+
+    static XMFLOAT4X4 matrixResult;
+    XMStoreFloat4x4(&matrixResult, allMatrix);
+
+    return reinterpret_cast<float*>(&matrixResult);
+}
+
+XMMATRIX AGameObject::getLocalMatrix()
+{
+    return this->m_local_matrix;  
+}
+
+void AGameObject::setLocalMatrix(float* matrix)
+{
+    XMMATRIX newMatrix = XMMatrixSet(
+        matrix[0], matrix[1], matrix[2], matrix[3],
+        matrix[4], matrix[5], matrix[6], matrix[7],
+        matrix[8], matrix[9], matrix[10], matrix[11],
+        matrix[12], matrix[13], matrix[14], matrix[15]
+    );
+
+    XMMATRIX scaleMatrix = XMMatrixScalingFromVector(XMLoadFloat3(&this->m_local_scale));
+    XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYawFromVector(XMLoadFloat3(&this->m_local_rotation));
+    XMMATRIX translationMatrix = XMMatrixTranslationFromVector(XMLoadFloat3(&this->m_local_position));
+
+    this->m_local_matrix = scaleMatrix * rotationMatrix * newMatrix * translationMatrix;
+}
+
+void AGameObject::awake()
+{
+
 }
