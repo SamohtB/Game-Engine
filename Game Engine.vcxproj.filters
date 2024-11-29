@@ -195,6 +195,7 @@
     <ClCompile Include="MeshObject.cpp">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -320,16 +321,13 @@
     <ClInclude Include="MeshObject.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderLibrary.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="TexturedPixelShader.hlsl" />
+    <FxCompile Include="TexturedVertexShader.hlsl" />
   </ItemGroup>
 </Project>
