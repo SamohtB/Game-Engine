@@ -11,6 +11,7 @@
 #include "UIManager.h"
 #include "GameObjectManager.h"
 #include "ShaderLibrary.h"
+#include "PhysicsSystem.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -39,6 +40,7 @@ public:
 
 private:
 	SwapChainPtr m_swap_chain = nullptr;
+    PhysicsSystem* m_physics_system = nullptr;
 
 	LONG m_window_width = 0;
 	LONG m_window_height = 0;

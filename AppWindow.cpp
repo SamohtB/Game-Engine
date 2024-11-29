@@ -21,6 +21,8 @@ void AppWindow::onCreate()
     GameObjectManager::initialize();
     ShaderLibrary::initialize();
 
+    this->m_physics_system = new PhysicsSystem();
+
 	EngineTime::setFrameTime(60);
 	InputSystem::getInstance()->addListener(this);
 

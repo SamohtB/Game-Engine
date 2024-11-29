@@ -82,6 +82,9 @@
     <Filter Include="Engine\Math">
       <UniqueIdentifier>{287221a4-95a2-40df-94d6-ef5926a76e02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{97748946-d10a-4256-9073-b1391eb786c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,7 +198,12 @@
     <ClCompile Include="MeshObject.cpp">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderLibrary.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLibrary.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -321,13 +329,22 @@
     <ClInclude Include="MeshObject.h">
       <Filter>App\Objects\ObjectClasses</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderLibrary.h" />
+    <ClInclude Include="PhysicsSystem.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLibrary.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="TexturedPixelShader.hlsl" />
-    <FxCompile Include="TexturedVertexShader.hlsl" />
+    <FxCompile Include="TexturedPixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
