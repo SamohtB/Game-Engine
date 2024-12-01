@@ -30,7 +30,7 @@ public:
     void renderAll(int viewport_width, int viewport_height);
     void addGameObject(AGameObject* gameObject);
     void createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader);
-    void deleteObject(AGameObject* gameObject);
+    void deleteObject(AGameObject* game_object);
     void deleteObjectByName(String name);
     void setSelectedObject(String name);
     void setSelectedObject(AGameObject* gameObject);
@@ -44,8 +44,8 @@ private:
 
     static GameObjectManager* sharedInstance;
 
-    List objectList;
-    HashTable objectTable;
+    List m_object_list;
+    HashTable m_object_table;
 };
 
 
