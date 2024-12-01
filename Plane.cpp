@@ -5,6 +5,8 @@ Plane::Plane(String name, float width, float height) : Cube(name, width, height)
 {
     this->setActive(true);
     this->setObjectType(AGameObject::PLANE);
+    this->setScale(10.0f, 10.0f, 10.0f);
+    this->setRotation(90.0f, 0.0f, 0.0f);
 
     XMFLOAT3 vertex_data[4] =
     {

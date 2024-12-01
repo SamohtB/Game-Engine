@@ -9,12 +9,13 @@
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
-#include "ToolBar.h"
 
 class UINames
 {
 public:
     const String TOOL_BAR = "TOOL_BAR";
+    const String HIERARCHY = "HIERARCHY";
+    const String INSPECTOR = "INSPECTOR";
 };
 
 class UIManager
@@ -43,5 +44,7 @@ private:
 
     UIList uiList;
     UITable uiTable;
+
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 };
 

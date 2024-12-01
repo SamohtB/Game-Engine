@@ -43,4 +43,6 @@ private:
 
 	float view_width = 0;
 	float view_height = 0;
+
+    float moveSpeed = 10.0f;
 };

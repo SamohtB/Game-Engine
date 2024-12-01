@@ -4,6 +4,6 @@
 class Plane : public Cube
 {
 public:
-    Plane(String name, float width, float height);
+    Plane(String name, float width = 1, float height = 1);
     ~Plane();
 };

@@ -222,7 +222,7 @@
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Heirarchy.cpp">
+    <ClCompile Include="Hierarchy.cpp">
       <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
     <ClCompile Include="Inspector.cpp">
@@ -368,7 +368,7 @@
     <ClInclude Include="PhysicsComponent.h">
       <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Heirarchy.h">
+    <ClInclude Include="Hierarchy.h">
       <Filter>Engine\UI\MainScreens</Filter>
     </ClInclude>
     <ClInclude Include="Inspector.h">

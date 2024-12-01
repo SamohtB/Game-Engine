@@ -17,7 +17,6 @@ void Camera::update(float deltaTime)
 	float p_x = XMVectorGetX(position);
 	float p_y = XMVectorGetY(position);
 	float p_z = XMVectorGetZ(position);
-	float moveSpeed = 3.0f;
 
 	if (InputSystem::getInstance()->isKeyDown('W'))
 	{
@@ -31,12 +30,12 @@ void Camera::update(float deltaTime)
 	}
 	else if (InputSystem::getInstance()->isKeyDown('A'))
 	{
-		p_x += deltaTime * moveSpeed;
+		p_x -= deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
 	}
 	else if (InputSystem::getInstance()->isKeyDown('D'))
 	{
-		p_x -= deltaTime * moveSpeed;
+		p_x += deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
 	}
 

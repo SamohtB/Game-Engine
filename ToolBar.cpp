@@ -22,6 +22,7 @@ void ToolBar::drawUI()
         if (ImGui::BeginMenu("Primitives"))
         {
             if (ImGui::MenuItem("Wood Cube")) { GameObjectManager::getInstance()->createObject(AGameObject::CUBE); }
+            if (ImGui::MenuItem("Wood Plane")) { GameObjectManager::getInstance()->createObject(AGameObject::PLANE); }
             if (ImGui::MenuItem("Brick Teapot")) { GameObjectManager::getInstance()->createObject(AGameObject::MESH); }
             ImGui::EndMenu();
         }

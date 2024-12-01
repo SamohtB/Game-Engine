@@ -4,6 +4,10 @@
 #include "DeviceContext.h"
 #include "AUIScreen.h"
 
+#include "ToolBar.h"
+#include "Hierarchy.h"
+#include "Inspector.h"
+
 UIManager* UIManager::sharedInstance = nullptr;
 
 UIManager::UIManager(HWND windowHandle)
@@ -29,6 +33,10 @@ UIManager::UIManager(HWND windowHandle)
     ToolBar* toolBar = new ToolBar();
     this->uiTable[uiNames.TOOL_BAR] = toolBar;
     this->uiList.push_back(toolBar);
+
+    Hierarchy* hierarchy = new Hierarchy();
+    this->uiTable[uiNames.HIERARCHY] = hierarchy;
+    this->uiList.push_back(hierarchy);
 }
 
 UIManager::~UIManager()
@@ -66,6 +74,8 @@ void UIManager::drawAllUI()
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
+    ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockspace_flags);
+
     for(AUIScreen* ui : uiList)
     {
         ui->drawUI();
@@ -77,4 +87,3 @@ void UIManager::drawAllUI()
     ImGui::UpdatePlatformWindows();
     ImGui::RenderPlatformWindowsDefault();
 }
-

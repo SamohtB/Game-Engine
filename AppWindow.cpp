@@ -51,8 +51,8 @@ void AppWindow::onUpdate()
     GameObjectManager::getInstance()->updateAll();
 
 	/* Draws */
-    UIManager::getInstance()->drawAllUI();
     GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height);
+    UIManager::getInstance()->drawAllUI();
 
 	m_swap_chain->present(true);
 }

@@ -5,6 +5,10 @@
 #include "Plane.h"
 #include "MeshObject.h"
 
+typedef std::string String;
+typedef std::vector<AGameObject*> List;
+typedef std::unordered_map<String, AGameObject*> HashTable;
+
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
 GameObjectManager* GameObjectManager::getInstance()
@@ -109,16 +113,19 @@ AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
     {
     case AGameObject::CUBE:
         spawned_object = static_cast<AGameObject*>(new Cube("Cube_" + std::to_string(this->m_cube_count)));
+        std::cout << "Spawned Cube" << std::endl;
         this->m_cube_count++;
         break;
 
     case AGameObject::PLANE:
-        /*spawned_object = static_cast<AGameObject*>(new Plane("Plane_" + std::to_string(this->m_cube_count), 0.15f));
-        this->m_mesh_count++;*/
+        spawned_object = static_cast<AGameObject*>(new Plane("Plane_" + std::to_string(this->m_plane_count)));
+        std::cout << "Spawned Plane" << std::endl;
+        this->m_plane_count++;
         break;
 
     case AGameObject::MESH:
         spawned_object = static_cast<AGameObject*>(new MeshObject("Teapot_" + std::to_string(this->m_mesh_count)));
+        std::cout << "Spawned Mesh" << std::endl;
         this->m_mesh_count++;
         break;
 
@@ -130,10 +137,10 @@ AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
     if (spawned_object != nullptr)
     {
         this->addGameObject(spawned_object);
-        std::cout << "Spawned " << spawned_object->getObjectType() << std::endl;
         return spawned_object;
     }
-    
+
+    return nullptr;
 
 }
 

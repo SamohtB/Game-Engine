@@ -6,13 +6,13 @@
 
 #include "AGameObject.h"
 
-typedef std::string String;
-typedef std::vector<AGameObject*> List;
-typedef std::unordered_map<String, AGameObject*> HashTable;
-
 class GameObjectManager
 {
 public:
+    typedef std::string String;
+    typedef std::vector<AGameObject*> List;
+    typedef std::unordered_map<String, AGameObject*> HashTable;
+
     static GameObjectManager* getInstance();
     static void initialize();
     static void destroy();
