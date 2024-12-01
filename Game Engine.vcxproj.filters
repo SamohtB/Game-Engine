@@ -64,9 +64,6 @@
     <Filter Include="Engine\UI\MainScreens">
       <UniqueIdentifier>{50d5581f-9c27-4d6e-8b0e-d50b71522cb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObjects">
-      <UniqueIdentifier>{29233ddf-b1f6-46d2-81a4-d907234ef047}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Resources">
       <UniqueIdentifier>{69819797-30ba-4047-a94f-19d5cd53a515}</UniqueIdentifier>
     </Filter>
@@ -93,6 +90,9 @@
     </Filter>
     <Filter Include="Engine\ComponentSystem\Components\PhysicsComponent">
       <UniqueIdentifier>{86f3527e-dfc1-4b83-a3b4-9c43f776a879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Objects\ObjectClasses\GameObjects">
+      <UniqueIdentifier>{29233ddf-b1f6-46d2-81a4-d907234ef047}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,10 +181,10 @@
       <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Engine\GameObjects</Filter>
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="AGameObject.cpp">
-      <Filter>Engine\GameObjects</Filter>
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="AResourceManager.cpp">
       <Filter>Engine\Resources</Filter>
@@ -221,6 +221,12 @@
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Heirarchy.cpp">
+      <Filter>Engine\UI\MainScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="Inspector.cpp">
+      <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -315,10 +321,10 @@
       <Filter>Engine\UI\MainScreens</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
-      <Filter>Engine\GameObjects</Filter>
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="AGameObject.h">
-      <Filter>Engine\GameObjects</Filter>
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="AResourceManager.h">
       <Filter>Engine\Resources</Filter>
@@ -361,6 +367,12 @@
     </ClInclude>
     <ClInclude Include="PhysicsComponent.h">
       <Filter>Engine\ComponentSystem\Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Heirarchy.h">
+      <Filter>Engine\UI\MainScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="Inspector.h">
+      <Filter>Engine\UI\MainScreens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

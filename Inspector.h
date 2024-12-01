@@ -1,14 +1,12 @@
 #pragma once
 #include "AUIScreen.h"
-class ToolBar : public AUIScreen
+class Inspector : public AUIScreen
 {
 public:
-    ToolBar();
-    ~ToolBar();
+    Inspector();
+    ~Inspector();
 
     // Inherited via AUIScreen
     void drawUI() override;
-
-private:
 };
 

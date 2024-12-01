@@ -1,6 +1,10 @@
 #include "GameObjectManager.h"
 #include "EngineTime.h"
 
+#include "Cube.h"
+#include "Plane.h"
+#include "MeshObject.h"
+
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
 GameObjectManager* GameObjectManager::getInstance()
@@ -97,9 +101,40 @@ void GameObjectManager::addGameObject(AGameObject* game_object)
     this->m_object_table[game_object->getName()] = game_object;
 }
 
-void GameObjectManager::createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader)
+AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
 {
-    throw std::exception("FUNCTION UNAVAILABLE");
+    AGameObject* spawned_object = nullptr;
+
+    switch (type)
+    {
+    case AGameObject::CUBE:
+        spawned_object = static_cast<AGameObject*>(new Cube("Cube_" + std::to_string(this->m_cube_count)));
+        this->m_cube_count++;
+        break;
+
+    case AGameObject::PLANE:
+        /*spawned_object = static_cast<AGameObject*>(new Plane("Plane_" + std::to_string(this->m_cube_count), 0.15f));
+        this->m_mesh_count++;*/
+        break;
+
+    case AGameObject::MESH:
+        spawned_object = static_cast<AGameObject*>(new MeshObject("Teapot_" + std::to_string(this->m_mesh_count)));
+        this->m_mesh_count++;
+        break;
+
+    default:
+        std::cout << "INVALID OBJECT TYPE" << std::endl;
+        break;
+    }
+
+    if (spawned_object != nullptr)
+    {
+        this->addGameObject(spawned_object);
+        std::cout << "Spawned " << spawned_object->getObjectType() << std::endl;
+        return spawned_object;
+    }
+    
+
 }
 
 void GameObjectManager::deleteObject(AGameObject* game_object)
@@ -158,17 +193,17 @@ void GameObjectManager::deleteObjectByName(String name)
 
 void GameObjectManager::setSelectedObject(String name)
 {
-    throw std::exception("FUNCTION UNAVAILABLE");
+    this->m_selected_object = this->m_object_table[name];
 }
 
-void GameObjectManager::setSelectedObject(AGameObject* gameObject)
+void GameObjectManager::setSelectedObject(AGameObject* game_object)
 {
-    throw std::exception("FUNCTION UNAVAILABLE");
+    this->m_selected_object = game_object;
 }
 
 AGameObject* GameObjectManager::getSelectedObject()
 {
-    return nullptr;
+    return this->m_selected_object;
 }
 
 

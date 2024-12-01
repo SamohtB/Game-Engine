@@ -13,12 +13,6 @@ typedef std::unordered_map<String, AGameObject*> HashTable;
 class GameObjectManager
 {
 public:
-    enum PrimitiveType {
-        CUBE,
-        PLANE,
-        SPHERE
-    };
-
     static GameObjectManager* getInstance();
     static void initialize();
     static void destroy();
@@ -29,11 +23,11 @@ public:
     void updateAll();
     void renderAll(int viewport_width, int viewport_height);
     void addGameObject(AGameObject* gameObject);
-    void createObject(PrimitiveType type, void* shaderByteCode, size_t sizeShader);
+    AGameObject* createObject(AGameObject::PrimitiveType type);
     void deleteObject(AGameObject* game_object);
     void deleteObjectByName(String name);
     void setSelectedObject(String name);
-    void setSelectedObject(AGameObject* gameObject);
+    void setSelectedObject(AGameObject* game_object);
     AGameObject* getSelectedObject();
 
 private:
@@ -46,6 +40,11 @@ private:
 
     List m_object_list;
     HashTable m_object_table;
+    AGameObject* m_selected_object = nullptr;
+
+    int m_cube_count = 0;
+    int m_plane_count = 0;
+    int m_mesh_count = 0;
 };
 
 

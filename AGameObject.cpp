@@ -95,6 +95,16 @@ AGameObject::String AGameObject::getName()
     return this->m_name;
 }
 
+void AGameObject::setObjectType(PrimitiveType type)
+{
+    this->m_type = type;
+}
+
+AGameObject::PrimitiveType AGameObject::getObjectType()
+{
+    return this->m_type;
+}
+
 void AGameObject::attachComponent(AComponent* component)
 {
     this->m_component_list.push_back(component);

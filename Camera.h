@@ -36,7 +36,7 @@ private:
 	float width = 0;
 	float height = 0;
 
-	float fov = XM_PIDIV4;
+	float fov = 60.0f;
 	float aspectRatio = 0.0f;
 	float nearZ = 0.01f;
 	float farZ = 100.0f;

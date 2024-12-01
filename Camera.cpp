@@ -2,6 +2,8 @@
 
 Camera::Camera(String name) : AGameObject(name)
 {
+    this->setActive(true);
+    this->setObjectType(CAMERA);
 }
 
 Camera::~Camera()
@@ -15,37 +17,35 @@ void Camera::update(float deltaTime)
 	float p_x = XMVectorGetX(position);
 	float p_y = XMVectorGetY(position);
 	float p_z = XMVectorGetZ(position);
-	float moveSpeed = 10.0f;
+	float moveSpeed = 3.0f;
 
 	if (InputSystem::getInstance()->isKeyDown('W'))
 	{
 		p_z += deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
-		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('S'))
 	{
 		p_z -= deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
-		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('A'))
 	{
-		p_x -= deltaTime * moveSpeed;
+		p_x += deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
-		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('D'))
 	{
-		p_x += deltaTime * moveSpeed;
+		p_x -= deltaTime * moveSpeed;
 		this->setPosition(p_x, p_y, p_z);
-		this->updateViewMatrix();
 	}
 
 	if (InputSystem::getInstance()->isKeyDown('R'))
 	{ 
 		isProjectionToggle = !isProjectionToggle;
 	}
+
+    this->updateViewMatrix();
 }
 
 XMMATRIX Camera::getViewMatrix()
@@ -58,7 +58,7 @@ XMMATRIX Camera::getProjectionMatrix()
 	if (this->isProjectionToggle)
 	{
 		this->aspectRatio = this->width / this->height;
-		return XMMatrixPerspectiveFovLH(fov, aspectRatio, nearZ, farZ);
+		return XMMatrixPerspectiveFovLH(XMConvertToRadians(fov), aspectRatio, nearZ, farZ);
 	}
 
 	this->view_width = this->width / 200.0f;

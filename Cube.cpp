@@ -1,21 +1,23 @@
 #include "Cube.h"
 #include "ShaderLibrary.h"
 
-Cube::Cube(String name, float size) : AGameObject(name)
+Cube::Cube(String name, float width, float height) : AGameObject(name)
 {
     this->setActive(true);
+    this->setObjectType(AGameObject::CUBE);
 
     XMFLOAT3 vertex_data[8] =
     {
-        { XMFLOAT3(-size, -size, -size) },
-        { XMFLOAT3(-size,  size, -size) },
-        { XMFLOAT3(size, size, -size) },
-        { XMFLOAT3(size, -size, -size) },
-        { XMFLOAT3(size, -size, size) },
-        { XMFLOAT3(size, size, size) },
-        { XMFLOAT3(-size, size, size) },
-        { XMFLOAT3(-size, -size, size) }
+        { XMFLOAT3(-width, -height, -width) },
+        { XMFLOAT3(-width,  height, -width) },
+        { XMFLOAT3(width,  height, -width) },
+        { XMFLOAT3(width, -height, -width) },
+        { XMFLOAT3(width, -height,  width) },
+        { XMFLOAT3(width,  height,  width) },
+        { XMFLOAT3(-width,  height,  width) },
+        { XMFLOAT3(-width, -height,  width) }
     };
+
 
     XMFLOAT2 texcoord_data[4] =
     {

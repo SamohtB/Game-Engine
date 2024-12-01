@@ -5,7 +5,7 @@
 class MeshObject :  public AGameObject
 {
 public:
-    MeshObject(String name, const wchar_t* mesh_file_path);
+    MeshObject(String name);
     ~MeshObject();
 
     // Inherited via AGameObject

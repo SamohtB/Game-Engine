@@ -32,36 +32,6 @@ void AppWindow::onCreate()
 	m_swap_chain = GraphicsEngine::getInstance()->getRenderSystem()->createSwapChain(this->m_hwnd, this->m_window_width, this->m_window_height);
 
 	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
-
-    MeshObject* test = new MeshObject("Tea Pot", L"Assets\\Meshes\\teapot.obj");
-    GameObjectManager::getInstance()->addGameObject(test);
-
-    Cube* cube = nullptr;
-
-    for (int i = 0; i < 5; i++)
-    {
-        Cube* cube = new Cube("Cube " + std::to_string(i), 0.15f);
-        XMVECTOR position;
-
-        if (i == 0) {
-            position = XMVectorSet(-0.5f, -0.5f, -1.0f, 0.0f);  // Bottom-left corner
-        }
-        else if (i == 1) {
-            position = XMVectorSet(0.5f, -0.5f, -1.0f, 0.0f);   // Bottom-right corner
-        }
-        else if (i == 2) {
-            position = XMVectorSet(0.5f, 0.5f, -1.0f, 0.0f);    // Top-right corner
-        }
-        else if (i == 3) {
-            position = XMVectorSet(-0.5f, 0.5f, -1.0f, 0.0f);   // Top-left corner
-        }
-        else {
-            position = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);    // Center of the space
-        }
-
-        cube->setPosition(position);
-        GameObjectManager::getInstance()->addGameObject(cube);
-    }
 }
 
 void AppWindow::onUpdate()

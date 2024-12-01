@@ -37,6 +37,14 @@ public:
     typedef std::string String;
     typedef std::vector<AComponent*> ComponentList;
 
+    enum PrimitiveType {
+        NOTSET = -1,
+        CAMERA = 0,
+        CUBE,
+        PLANE,
+        MESH
+    };
+
 	AGameObject(String name);
 	virtual ~AGameObject();
 	
@@ -61,6 +69,8 @@ public:
 	XMVECTOR getLocalScale();
 
     String getName();
+    void setObjectType(PrimitiveType type);
+    PrimitiveType getObjectType();
     
     void attachComponent(AComponent* component);
     void detachComponent(AComponent* component);
@@ -77,12 +87,16 @@ public:
     XMMATRIX getLocalMatrix();
     void setLocalMatrix(float* matrix);
 
+
+
 protected:
     String m_name;
 	XMFLOAT3 m_local_position;
 	XMFLOAT3 m_local_rotation;
 	XMFLOAT3 m_local_scale;
 	XMMATRIX m_local_matrix;
+
+    PrimitiveType m_type = NOTSET;
 
     ComponentList m_component_list;
 

@@ -5,9 +5,12 @@
 #include "SceneCameraHandler.h"
 #include "ShaderLibrary.h"
 
-MeshObject::MeshObject(String name, const wchar_t* mesh_file_path) : AGameObject(name)
+MeshObject::MeshObject(String name) : AGameObject(name)
 {
-    m_mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(mesh_file_path);
+    this->setActive(true);
+    this->setObjectType(AGameObject::MESH);
+
+    m_mesh = GraphicsEngine::getInstance()->getMeshManager()->createMeshFromFile(L"Assets\\Meshes\\teapot.obj");
 
     constant initialConstant;
     m_constant_buffer = GraphicsEngine::getInstance()->getRenderSystem()->createConstantBuffer(&initialConstant, sizeof(constant));
