@@ -1,11 +1,11 @@
 #include "Plane.h"
 #include "ShaderLibrary.h"
 
-Plane::Plane(String name, float width, float height) : AGameObject(name)
+Plane::Plane(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
     this->setObjectType(AGameObject::PLANE);
-    this->buildShape(width, height);
+    this->buildShape(width, height, color);
     this->setScale(10.0f, 10.0f, 10.0f);
 }
 
@@ -56,7 +56,7 @@ void Plane::draw(int width, int height)
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);
 }
 
-void Plane::buildShape(float width, float height)
+void Plane::buildShape(float width, float height, XMFLOAT3 color)
 {
     XMFLOAT3 vertex_data[4] =
     {
@@ -76,10 +76,10 @@ void Plane::buildShape(float width, float height)
 
     vertex vertex_list[4] =
     {
-        { vertex_data[0], texcoord_data[1] },
-        { vertex_data[1], texcoord_data[0] },
-        { vertex_data[2], texcoord_data[2] },
-        { vertex_data[3], texcoord_data[3] }
+        { vertex_data[0], texcoord_data[1], color},
+        { vertex_data[1], texcoord_data[0], color },
+        { vertex_data[2], texcoord_data[2], color },
+        { vertex_data[3], texcoord_data[3], color }
     };
 
     unsigned int index_data[] =

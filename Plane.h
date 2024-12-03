@@ -5,7 +5,7 @@
 class Plane : public AGameObject
 {
 public:
-    Plane(String name, float width = 1, float height = 1);
+    Plane(String name, float width = 1, float height = 1, XMFLOAT3 color = XMFLOAT3(1.0f, 1.0f, 1.0f));
     ~Plane();
 
     virtual void update(float deltaTime) override;
@@ -17,5 +17,5 @@ protected:
     IndexBufferPtr m_index_buffer = nullptr;
 
 private:
-    void buildShape(float width, float height);
+    void buildShape(float width, float height, XMFLOAT3 color);
 };

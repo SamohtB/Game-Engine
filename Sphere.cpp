@@ -1,11 +1,11 @@
 #include "Sphere.h"
 #include "ShaderLibrary.h"
 
-Sphere::Sphere(String name, float radius) : AGameObject(name)
+Sphere::Sphere(String name, float radius, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
     this->setObjectType(AGameObject::SPHERE);
-    this->buildShape(radius);
+    this->buildShape(radius, color);
 }
 
 Sphere::~Sphere()
@@ -56,7 +56,7 @@ void Sphere::draw(int width, int height)
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);
 }
 
-void Sphere::buildShape(float radius)
+void Sphere::buildShape(float radius, XMFLOAT3 color)
 {
     std::vector<XMFLOAT3> positions;
     std::vector<XMFLOAT2> texcoords;
@@ -93,7 +93,7 @@ void Sphere::buildShape(float radius)
     
     for (size_t i = 0; i < positions.size(); ++i)
     {
-        vertex_list.push_back({ positions[i], texcoords[i] });
+        vertex_list.push_back({ positions[i], texcoords[i], color });
     }
 
     /* calculate indices */

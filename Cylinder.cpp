@@ -1,11 +1,11 @@
 #include "Cylinder.h"
 #include "ShaderLibrary.h"
 
-Cylinder::Cylinder(String name, float width, float height) : AGameObject(name)
+Cylinder::Cylinder(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
     this->setObjectType(AGameObject::PLANE);
-    this->buildShape(width, height);
+    this->buildShape(width, height, color);
 }
 
 Cylinder::~Cylinder()
@@ -56,7 +56,7 @@ void Cylinder::draw(int width, int height)
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);
 }
 
-void Cylinder::buildShape(float radius, float height)
+void Cylinder::buildShape(float radius, float height, XMFLOAT3 color)
 {
     std::vector<XMFLOAT3> positions;
     std::vector<XMFLOAT2> texcoords;
@@ -152,7 +152,7 @@ void Cylinder::buildShape(float radius, float height)
 
     for (size_t i = 0; i < positions.size(); ++i)
     {
-        vertex_list.emplace_back(positions[i], texcoords[i]);
+        vertex_list.emplace_back(positions[i], texcoords[i], color);
     }
 
     ShaderNames shaderNames;

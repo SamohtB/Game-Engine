@@ -7,7 +7,7 @@ using namespace DirectX;
 class Cylinder : public AGameObject
 {
 public:
-    Cylinder(String name, float width = 1, float height = 2);
+    Cylinder(String name, float width = 1, float height = 2, XMFLOAT3 color = XMFLOAT3(1.0f, 1.0f, 1.0f));
     ~Cylinder();
 
     virtual void update(float deltaTime) override;
@@ -22,6 +22,6 @@ protected:
     IndexBufferPtr m_index_buffer = nullptr;
 
 private:
-    void buildShape(float width, float height);
+    void buildShape(float width, float height, XMFLOAT3 color);
 };
 

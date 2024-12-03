@@ -16,19 +16,6 @@ using namespace DirectX;
 class GraphicsEngine;
 class DeviceContext;
 
-struct vertex
-{
-    XMFLOAT3 position;
-    XMFLOAT2 texcoord;
-};
-
-struct alignas(16) constant
-{
-    XMMATRIX m_world;
-    XMMATRIX m_view;
-    XMMATRIX m_projection_matrix;
-};
-
 class AGameObject
 {
 
@@ -45,6 +32,20 @@ public:
         MESH,
         SPHERE,
         CYLINDER
+    };
+
+    struct vertex
+    {
+        XMFLOAT3 position;
+        XMFLOAT2 texcoord;
+        XMFLOAT3 color;
+    };
+
+    struct alignas(16) constant
+    {
+        XMMATRIX m_world;
+        XMMATRIX m_view;
+        XMMATRIX m_projection_matrix;
     };
 
 	AGameObject(String name);
