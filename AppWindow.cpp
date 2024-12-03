@@ -15,7 +15,7 @@ void AppWindow::onCreate()
 	/* Engine Component Initialization */
 	EngineTime::initialize();
 	InputSystem::initialize();
-	SceneCameraHandler::initialize();
+	
 	GraphicsEngine::initialize();
     UIManager::initialize(this->m_hwnd);
     GameObjectManager::initialize();
@@ -23,15 +23,14 @@ void AppWindow::onCreate()
 
     this->m_physics_system = new PhysicsSystem();
 
-	EngineTime::setFrameTime(60);
-	InputSystem::getInstance()->addListener(this);
-
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
 	this->m_window_height = rc.bottom - rc.top;
 	m_swap_chain = GraphicsEngine::getInstance()->getRenderSystem()->createSwapChain(this->m_hwnd, this->m_window_width, this->m_window_height);
 
-	SceneCameraHandler::getInstance()->setScreenSize((float)m_window_width, (float)m_window_height);
+    SceneCameraHandler::initialize(static_cast<float>(m_window_width), static_cast<float>(m_window_height));
+    EngineTime::setFrameTime(60);
+    InputSystem::getInstance()->addListener(this);
 }
 
 void AppWindow::onUpdate()

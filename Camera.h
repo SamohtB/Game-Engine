@@ -6,7 +6,7 @@
 class Camera : public AGameObject, public InputListener
 {
 public:
-	Camera(String name);
+	Camera(String name, float width, float height);
 	~Camera();
 
 	void update(float deltaTime) override;
@@ -33,16 +33,16 @@ private:
 	void draw(int width, int height) override;
 
 	bool isProjectionToggle = true;
-	float width = 0;
-	float height = 0;
 
 	float fov = 60.0f;
 	float aspectRatio = 0.0f;
 	float nearZ = 0.01f;
 	float farZ = 100.0f;
 
-	float view_width = 0;
-	float view_height = 0;
+	float m_viewport_width = 0;
+	float m_viewport_height = 0;
 
-    float moveSpeed = 10.0f;
+    float m_move_speed = 50.0f;
+    XMFLOAT2 m_last_mouse_position;
+    bool m_right_mouse_pressed = false;
 };

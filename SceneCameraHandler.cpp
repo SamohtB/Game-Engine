@@ -2,15 +2,15 @@
 
 SceneCameraHandler* SceneCameraHandler::sharedInstance = nullptr;
 
-SceneCameraHandler::SceneCameraHandler()
+SceneCameraHandler::SceneCameraHandler(float width, float height)
 {
-	sceneCamera = new Camera("Scene Camera");
-	sceneCamera->setPosition(0.0f, 0.0f, -2.0f);
+	m_scene_camera = new Camera("Scene Camera", width, height);
+    m_scene_camera->setPosition(0.0f, 0.0f, -5.0f);
 }
 
 SceneCameraHandler::~SceneCameraHandler() 
 {
-	delete sceneCamera;
+	delete m_scene_camera;
 }
 
 SceneCameraHandler* SceneCameraHandler::getInstance()
@@ -18,11 +18,11 @@ SceneCameraHandler* SceneCameraHandler::getInstance()
 	return sharedInstance;
 }
 
-void SceneCameraHandler::initialize()
+void SceneCameraHandler::initialize(float width, float height)
 {
 	try
 	{
-		sharedInstance = new SceneCameraHandler();
+		sharedInstance = new SceneCameraHandler(width, height);
 	}
 	catch (...)
 	{
@@ -38,25 +38,25 @@ void SceneCameraHandler::destroy()
 void SceneCameraHandler::update()
 {
 	float deltaTime = static_cast<float>(EngineTime::getFixedDeltaTime());
-	sharedInstance->sceneCamera->update(deltaTime);
+	sharedInstance->m_scene_camera->update(deltaTime);
 }
 
 XMMATRIX SceneCameraHandler::getSceneCameraViewMatrix()
 {
-	return sharedInstance->sceneCamera->getViewMatrix();
+	return sharedInstance->m_scene_camera->getViewMatrix();
 }
 
 XMMATRIX SceneCameraHandler::getSceneCameraProjMatrix()
 {
-	return sharedInstance->sceneCamera->getProjectionMatrix();
+	return sharedInstance->m_scene_camera->getProjectionMatrix();
 }
 
 void SceneCameraHandler::setScreenSize(float width, float height)
 {
-	this->sceneCamera->setScreenParams(width, height);
+	this->m_scene_camera->setScreenParams(width, height);
 }
 
 Camera* SceneCameraHandler::getCamera()
 {
-	return sharedInstance->sceneCamera;
+	return sharedInstance->m_scene_camera;
 }

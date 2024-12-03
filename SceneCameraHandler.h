@@ -6,7 +6,7 @@ class SceneCameraHandler
 {
 public:
 	static SceneCameraHandler* getInstance();
-	static void initialize();
+	static void initialize(float width, float height);
 	static void destroy();
 
 	void update();
@@ -16,12 +16,12 @@ public:
 	Camera* getCamera();
 
 private:
-	SceneCameraHandler();
+	SceneCameraHandler(float width, float height);
 	~SceneCameraHandler();
 	SceneCameraHandler(SceneCameraHandler const&) {}
 	SceneCameraHandler& operator=(SceneCameraHandler const&) {}
 
 	static SceneCameraHandler* sharedInstance;
 
-	Camera* sceneCamera = nullptr;
+	Camera* m_scene_camera = nullptr;
 };
