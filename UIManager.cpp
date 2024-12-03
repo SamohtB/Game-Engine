@@ -37,6 +37,10 @@ UIManager::UIManager(HWND windowHandle)
     Hierarchy* hierarchy = new Hierarchy();
     this->uiTable[uiNames.HIERARCHY] = hierarchy;
     this->uiList.push_back(hierarchy);
+
+    Inspector* inspector = new Inspector();
+    this->uiTable[uiNames.INSPECTOR] = inspector;
+    this->uiList.push_back(inspector);
 }
 
 UIManager::~UIManager()

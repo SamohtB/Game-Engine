@@ -57,5 +57,18 @@ void Hierarchy::drawGameObjectNode(AGameObject* game_object)
         }
     }
 
+    if (is_selected)
+    {
+        ImVec2 cursorPos = ImGui::GetCursorPos();
+        ImGui::SameLine(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("Delete").x - ImGui::GetStyle().ItemSpacing.x * 2);
+        ImGui::SetCursorPosY(cursorPos.y + ImGui::GetStyle().ItemSpacing.y / 2);
+
+        if (ImGui::Button("Delete"))
+        {
+            GameObjectManager::getInstance()->deleteObject(game_object);
+            GameObjectManager::getInstance()->setSelectedObject(nullptr);
+        }
+    }
+
     ImGui::PopStyleColor(2);
 }
