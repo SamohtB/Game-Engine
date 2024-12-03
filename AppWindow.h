@@ -11,6 +11,7 @@
 #include "UIManager.h"
 #include "GameObjectManager.h"
 #include "ShaderLibrary.h"
+#include "BaseComponentSystem.h"
 #include "PhysicsSystem.h"
 
 #include "SwapChain.h"

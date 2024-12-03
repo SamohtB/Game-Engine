@@ -15,11 +15,11 @@ void AppWindow::onCreate()
 	/* Engine Component Initialization */
 	EngineTime::initialize();
 	InputSystem::initialize();
-	
 	GraphicsEngine::initialize();
     UIManager::initialize(this->m_hwnd);
     GameObjectManager::initialize();
     ShaderLibrary::initialize();
+    BaseComponentSystem::initialize();
 
     this->m_physics_system = new PhysicsSystem();
 
@@ -48,6 +48,8 @@ void AppWindow::onUpdate()
 
 	/* Updates */
     GameObjectManager::getInstance()->updateAll();
+    BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+    
 
 	/* Draws */
     GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height);
@@ -88,6 +90,7 @@ void AppWindow::onDestroy()
 	SceneCameraHandler::destroy();
     UIManager::destroy();
     ShaderLibrary::destroy();
+    BaseComponentSystem::destroy();
 }
 
 void AppWindow::onFocus()

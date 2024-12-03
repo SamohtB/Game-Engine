@@ -12,6 +12,7 @@ Cube::~Cube() {}
 
 void Cube::update(float deltaTime)
 {
+
 }
 
 void Cube::draw(int width, int height)
