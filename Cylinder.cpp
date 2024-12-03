@@ -63,63 +63,63 @@ void Cylinder::buildShape(float radius, float height)
     std::vector<vertex> vertex_list;
     std::vector<UINT> index_list;
 
-    float stackHeight = height / NUM_STACKS;
-    float ringCount = NUM_STACKS + 1;
-    float dTheta = 2.0f * XM_PI / NUM_SLICES;
+    const int numSlicesPlusOne = NUM_SLICES + 1;
+    const int ringCount = NUM_STACKS + 1;
+    const float stackHeight = height / NUM_STACKS;
+    const float dTheta = 2.0f * XM_PI / NUM_SLICES;
+
+    positions.reserve(ringCount * numSlicesPlusOne + 2 * (numSlicesPlusOne + 1) + 2);
+    texcoords.reserve(ringCount * numSlicesPlusOne + 2 * (numSlicesPlusOne + 1) + 2);
+    vertex_list.reserve(positions.capacity());
+    index_list.reserve(NUM_STACKS * NUM_SLICES * 6 + NUM_SLICES * 6);
 
     /* main body */
-    for (int i = 0; i < ringCount; i++)
+    for (int i = 0; i < ringCount; ++i)
     {
-        float y = -0.5f * height + i * stackHeight;
-
-        for (int j = 0; j <= NUM_SLICES; j++)
+        const float y = -0.5f * height + i * stackHeight;
+        for (int j = 0; j <= NUM_SLICES; ++j)
         {
-            float c = cos(j * dTheta);
-            float s = sin(j * dTheta);
-
-            positions.push_back(XMFLOAT3(radius * c, y, radius * s));
-            texcoords.push_back(XMFLOAT2((float)j / NUM_SLICES, 1.0f - (float)i / NUM_STACKS));
+            const float c = cos(j * dTheta);
+            const float s = sin(j * dTheta);
+            positions.emplace_back(radius * c, y, radius * s);
+            texcoords.emplace_back(static_cast<float>(j) / NUM_SLICES, 1.0f - static_cast<float>(i) / NUM_STACKS);
         }
     }
 
-    float ringVertexCount = NUM_SLICES + 1;
-    for (int i = 0; i < NUM_STACKS; i++)
+    const int ringVertexCount = NUM_SLICES + 1;
+    for (int i = 0; i < NUM_STACKS; ++i)
     {
-        for (int j = 0; j < NUM_SLICES; j++)
+        for (int j = 0; j < NUM_SLICES; ++j)
         {
-            index_list.push_back(i * ringVertexCount + j);
-            index_list.push_back((i + 1) * ringVertexCount + j);
-            index_list.push_back((i + 1) * ringVertexCount + j + 1);
-
-            index_list.push_back(i * ringVertexCount + j);
-            index_list.push_back((i + 1) * ringVertexCount + j + 1);
-            index_list.push_back(i * ringVertexCount + j + 1);
+            const int baseIndex = i * ringVertexCount + j;
+            const int nextBaseIndex = (i + 1) * ringVertexCount + j;
+            index_list.push_back(baseIndex);
+            index_list.push_back(nextBaseIndex);
+            index_list.push_back(nextBaseIndex + 1);
+            index_list.push_back(baseIndex);
+            index_list.push_back(nextBaseIndex + 1);
+            index_list.push_back(baseIndex + 1);
         }
     }
 
     /* top cap */
-    int baseIndex = positions.size();
+    int baseIndex = static_cast<int>(positions.size());
+    const float topY = 0.5f * height;
 
-    float y = 0.5f * height;
-
-    for (int i = 0; i <= NUM_SLICES; i++)
+    for (int i = 0; i <= NUM_SLICES; ++i)
     {
-        float x = radius * cos(i * dTheta);
-        float z = radius * sin(i * dTheta);
-
-        float u = x / height + 0.5f;
-        float v = z / height + 0.5f;
-
-        positions.push_back(XMFLOAT3(x, y, z));
-        texcoords.push_back(XMFLOAT2(u, v));
+        const float x = radius * cos(i * dTheta);
+        const float z = radius * sin(i * dTheta);
+        positions.emplace_back(x, topY, z);
+        texcoords.emplace_back(x / height + 0.5f, z / height + 0.5f);
     }
 
     /* top cap center */
-    positions.push_back(XMFLOAT3(0, y, 0));
-    texcoords.push_back(XMFLOAT2(0.5f, 0.5f));
+    positions.emplace_back(0, topY, 0);
+    texcoords.emplace_back(0.5f, 0.5f);
 
-    int centerIndex = positions.size() - 1;
-    for (int i = 0; i < NUM_SLICES; i++)
+    int centerIndex = static_cast<int>(positions.size()) - 1;
+    for (int i = 0; i < NUM_SLICES; ++i)
     {
         index_list.push_back(centerIndex);
         index_list.push_back(baseIndex + i + 1);
@@ -127,28 +127,23 @@ void Cylinder::buildShape(float radius, float height)
     }
 
     /* bottom cap */
-    baseIndex = positions.size();
+    baseIndex = static_cast<int>(positions.size());
+    const float bottomY = -0.5f * height;
 
-    y = -0.5f * height;
-
-    for (int i = 0; i <= NUM_SLICES; i++)
+    for (int i = 0; i <= NUM_SLICES; ++i)
     {
-        float x = radius * cos(i * dTheta);
-        float z = radius * sin(i * dTheta);
-
-        float u = x / height + 0.5f;
-        float v = z / height + 0.5f;
-
-        positions.push_back(XMFLOAT3(x, y, z));
-        texcoords.push_back(XMFLOAT2(u, v));
+        const float x = radius * cos(i * dTheta);
+        const float z = radius * sin(i * dTheta);
+        positions.emplace_back(x, bottomY, z);
+        texcoords.emplace_back(x / height + 0.5f, z / height + 0.5f);
     }
 
     /* bottom cap center */
-    positions.push_back(XMFLOAT3(0, y, 0));
-    texcoords.push_back(XMFLOAT2(0.5f, 0.5f));
+    positions.emplace_back(0, bottomY, 0);
+    texcoords.emplace_back(0.5f, 0.5f);
 
-    centerIndex = positions.size() - 1;
-    for (int i = 0; i < NUM_SLICES; i++)
+    centerIndex = static_cast<int>(positions.size()) - 1;
+    for (int i = 0; i < NUM_SLICES; ++i)
     {
         index_list.push_back(centerIndex);
         index_list.push_back(baseIndex + i);
@@ -157,7 +152,7 @@ void Cylinder::buildShape(float radius, float height)
 
     for (size_t i = 0; i < positions.size(); ++i)
     {
-        vertex_list.push_back({ positions[i], texcoords[i] });
+        vertex_list.emplace_back(positions[i], texcoords[i]);
     }
 
     ShaderNames shaderNames;
