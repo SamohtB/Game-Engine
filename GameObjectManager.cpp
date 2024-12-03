@@ -210,4 +210,15 @@ AGameObject* GameObjectManager::getSelectedObject()
     return this->m_selected_object;
 }
 
+void GameObjectManager::clearAllObjects()
+{
+    for (AGameObject* object : this->m_object_list)
+    {
+        m_name_registry->releaseName(object->getName());
+        delete object;
+    }
+
+    this->m_object_table.clear();
+}
+
 

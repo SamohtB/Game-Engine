@@ -21,8 +21,6 @@ void AppWindow::onCreate()
     ShaderLibrary::initialize();
     BaseComponentSystem::initialize();
 
-    this->m_physics_system = new PhysicsSystem();
-
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
 	this->m_window_height = rc.bottom - rc.top;

@@ -31,6 +31,8 @@ public:
     void setSelectedObject(AGameObject* game_object);
     AGameObject* getSelectedObject();
 
+    void clearAllObjects();
+
 private:
 	GameObjectManager();
 	~GameObjectManager();

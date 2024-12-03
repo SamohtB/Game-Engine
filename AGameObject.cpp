@@ -95,6 +95,11 @@ AGameObject::String AGameObject::getName()
     return this->m_name;
 }
 
+void AGameObject::setName(String name)
+{
+    this->m_name = name;
+}
+
 void AGameObject::setObjectType(PrimitiveType type)
 {
     this->m_type = type;

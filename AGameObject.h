@@ -72,6 +72,7 @@ public:
 	XMVECTOR getLocalScale();
 
     String getName();
+    void setName(String name);
     void setObjectType(PrimitiveType type);
     PrimitiveType getObjectType();
     
