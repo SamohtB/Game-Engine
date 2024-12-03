@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Plane.h"
 #include "Sphere.h"
+#include "Cylinder.h"
 #include "MeshObject.h"
 
 typedef std::string String;
@@ -128,6 +129,12 @@ AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
         spawned_object = static_cast<AGameObject*>(new Sphere("Sphere_" + std::to_string(this->m_sphere_count)));
         std::cout << "Spawned Sphere" << std::endl;
         this->m_sphere_count++;
+        break;
+
+    case AGameObject::CYLINDER:
+        spawned_object = static_cast<AGameObject*>(new Cylinder("Cylinder_" + std::to_string(this->m_cylinder_count)));
+        std::cout << "Spawned Cylinder" << std::endl;
+        this->m_cylinder_count++;
         break;
 
     case AGameObject::MESH:

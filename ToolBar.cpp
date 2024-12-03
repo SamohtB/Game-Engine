@@ -24,6 +24,7 @@ void ToolBar::drawUI()
             if (ImGui::MenuItem("Cube")) { GameObjectManager::getInstance()->createObject(AGameObject::CUBE); }
             if (ImGui::MenuItem("Plane")) { GameObjectManager::getInstance()->createObject(AGameObject::PLANE); }
             if (ImGui::MenuItem("Sphere")) { GameObjectManager::getInstance()->createObject(AGameObject::SPHERE); }
+            if (ImGui::MenuItem("Cylinder")) { GameObjectManager::getInstance()->createObject(AGameObject::CYLINDER); }
             if (ImGui::MenuItem("Teapot")) { GameObjectManager::getInstance()->createObject(AGameObject::MESH); }
             ImGui::EndMenu();
         }

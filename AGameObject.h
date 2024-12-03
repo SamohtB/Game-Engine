@@ -44,7 +44,7 @@ public:
         PLANE,
         MESH,
         SPHERE,
-        CAPSULE
+        CYLINDER
     };
 
 	AGameObject(String name);

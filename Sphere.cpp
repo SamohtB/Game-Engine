@@ -6,7 +6,6 @@ Sphere::Sphere(String name, float radius) : AGameObject(name)
     this->setActive(true);
     this->setObjectType(AGameObject::SPHERE);
     this->buildShape(radius);
-    this->setScale(10.0f, 10.0f, 10.0f);
 }
 
 Sphere::~Sphere()

@@ -231,6 +231,9 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="Cylinder.cpp">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -375,6 +378,9 @@
       <Filter>Engine\UI\MainScreens</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Cylinder.h">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClInclude>
   </ItemGroup>

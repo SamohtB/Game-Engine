@@ -4,16 +4,19 @@
 
 using namespace DirectX;
 
-class Cube : public AGameObject
+class Cylinder : public AGameObject
 {
 public:
-     Cube(String name, float width = 1, float height = 1);
-    ~Cube();
+    Cylinder(String name, float width = 1, float height = 2);
+    ~Cylinder();
 
     virtual void update(float deltaTime) override;
-    virtual void draw(int width, int height) override;
+    virtual void draw(int radius, int height) override;
 
 protected:
+    static const int NUM_SLICES = 20;
+    static const int NUM_STACKS = 20;
+
     VertexBufferPtr m_vertex_buffer = nullptr;
     ConstantBufferPtr m_constant_buffer = nullptr;
     IndexBufferPtr m_index_buffer = nullptr;
@@ -21,3 +24,4 @@ protected:
 private:
     void buildShape(float width, float height);
 };
+
