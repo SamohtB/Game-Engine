@@ -42,7 +42,9 @@ public:
         CAMERA = 0,
         CUBE,
         PLANE,
-        MESH
+        MESH,
+        SPHERE,
+        CAPSULE
     };
 
 	AGameObject(String name);

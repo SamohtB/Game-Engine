@@ -215,6 +215,7 @@
     <ClCompile Include="AResourceManager.cpp" />
     <ClCompile Include="SceneCameraHandler.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -258,12 +259,12 @@
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Prerequisites.h" />
-    <ClInclude Include="Quads.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AResourceManager.h" />
     <ClInclude Include="SceneCameraHandler.h" />
     <ClInclude Include="ShaderLibrary.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />

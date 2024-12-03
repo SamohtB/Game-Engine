@@ -3,6 +3,7 @@
 
 #include "Cube.h"
 #include "Plane.h"
+#include "Sphere.h"
 #include "MeshObject.h"
 
 typedef std::string String;
@@ -121,6 +122,12 @@ AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
         spawned_object = static_cast<AGameObject*>(new Plane("Plane_" + std::to_string(this->m_plane_count)));
         std::cout << "Spawned Plane" << std::endl;
         this->m_plane_count++;
+        break;
+
+    case AGameObject::SPHERE:
+        spawned_object = static_cast<AGameObject*>(new Sphere("Sphere_" + std::to_string(this->m_sphere_count)));
+        std::cout << "Spawned Sphere" << std::endl;
+        this->m_sphere_count++;
         break;
 
     case AGameObject::MESH:

@@ -44,6 +44,8 @@ private:
 
     int m_cube_count = 0;
     int m_plane_count = 0;
+    int m_sphere_count = 0;
+    int m_capsule_count = 0;
     int m_mesh_count = 0;
 };
 

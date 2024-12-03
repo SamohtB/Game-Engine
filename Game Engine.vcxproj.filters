@@ -228,6 +228,9 @@
     <ClCompile Include="Inspector.cpp">
       <Filter>Engine\UI\MainScreens</Filter>
     </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -267,9 +270,6 @@
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
-      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="Quads.h">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="InputSystem.h">
@@ -373,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Inspector.h">
       <Filter>Engine\UI\MainScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
