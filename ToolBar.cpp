@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "SceneWriter.h"
 #include "SceneReader.h"
+#include "ActionHistory.h"
 
 ToolBar::ToolBar() : AUIScreen("Tool Bar") {}
 
@@ -44,8 +45,26 @@ void ToolBar::drawUI()
             if (ImGui::MenuItem("Plane")) { GameObjectManager::getInstance()->createObject(AGameObject::PLANE); }
             if (ImGui::MenuItem("Sphere")) { GameObjectManager::getInstance()->createObject(AGameObject::SPHERE); }
             if (ImGui::MenuItem("Cylinder")) { GameObjectManager::getInstance()->createObject(AGameObject::CYLINDER); }
+            if (ImGui::MenuItem("Capsule")) { GameObjectManager::getInstance()->createObject(AGameObject::CAPSULE); }
             if (ImGui::MenuItem("Teapot")) { GameObjectManager::getInstance()->createObject(AGameObject::MESH); }
             ImGui::EndMenu();
+        }
+
+        if (ImGui::Button("Undo"))
+        {
+            if (ActionHistory::getInstance()->hasRemainingUndoActions())
+            {
+                GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->undoAction());
+            }
+
+        }
+
+        if (ImGui::Button("Redo"))
+        {
+            if (ActionHistory::getInstance()->hasRemainingRedoActions())
+            {
+                GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->redoAction());
+            }
         }
 
     }

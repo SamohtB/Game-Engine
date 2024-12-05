@@ -1,5 +1,6 @@
 #include "Cube.h"
 #include "ShaderLibrary.h"
+#include "GraphicsEngine.h"
 
 Cube::Cube(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {

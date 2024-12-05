@@ -1,4 +1,5 @@
 #include "AGameObject.h"
+#include "EditorAction.h"
 
 typedef std::string String;
 typedef std::vector<AComponent*> ComponentList;
@@ -251,6 +252,36 @@ void AGameObject::setLocalMatrix(float* matrix)
     XMMATRIX translationMatrix = XMMatrixTranslationFromVector(XMLoadFloat3(&this->m_local_position));
 
     this->m_local_matrix = scaleMatrix * rotationMatrix * newMatrix * translationMatrix;
+}
+
+void AGameObject::setLocalMatrix(XMMATRIX matrix)
+{
+    this->m_local_matrix = matrix;
+}
+
+void AGameObject::saveEditState()
+{
+    if (this->m_last_edit_state == NULL)
+    {
+        this->m_last_edit_state = new EditorAction(this);
+    }
+}
+
+void AGameObject::restoreEditState()
+{
+    if (this->m_last_edit_state != NULL)
+    {
+        XMStoreFloat3(&this->m_local_position, this->m_last_edit_state->getStorePos());
+        XMStoreFloat3(&this->m_local_scale, this->m_last_edit_state->getStoredScale());
+        XMStoreFloat3(&this->m_local_rotation, this->m_last_edit_state->getStoredOrientation());
+        this->m_local_matrix = this->m_last_edit_state->getStoredMatrix();
+
+        this->m_last_edit_state = NULL;
+    }
+    else
+    {
+        std::cout << "Edit state is null. Cannot restore." << std::endl;
+    }
 }
 
 void AGameObject::awake()

@@ -1,4 +1,5 @@
 #pragma once
+#include "AComponent.h"
 #include "GraphicsEngine.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
@@ -6,15 +7,16 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "AComponent.h"
-
+#include <string>
 #include <vector>
 #include <DirectXMath.h>
 
 using namespace DirectX;
 
-class GraphicsEngine;
-class DeviceContext;
+class GameObjectManager;
+class VertexShader;
+class PixelShader;
+class EditorAction;
 
 class AGameObject
 {
@@ -29,9 +31,10 @@ public:
         CAMERA = 0,
         CUBE,
         PLANE,
-        MESH,
         SPHERE,
-        CYLINDER
+        CYLINDER,
+        CAPSULE,
+        MESH
     };
 
     struct vertex
@@ -90,13 +93,15 @@ public:
     float* getPhysicsLocalMatrix();
     XMMATRIX getLocalMatrix();
     void setLocalMatrix(float* matrix);
+    void setLocalMatrix(XMMATRIX matrix);
 
-
+    virtual void saveEditState();
+    virtual void restoreEditState();
 
 protected:
     String m_name;
 	XMFLOAT3 m_local_position;
-	XMFLOAT3 m_local_rotation;
+    XMFLOAT3 m_local_rotation;
 	XMFLOAT3 m_local_scale;
 	XMMATRIX m_local_matrix;
 
@@ -108,5 +113,7 @@ protected:
 	
 private:
     bool active = true;
+    EditorAction* m_last_edit_state = nullptr;
+
     friend class GameObjectManager;
 };

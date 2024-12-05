@@ -1,5 +1,6 @@
 #include "Sphere.h"
 #include "ShaderLibrary.h"
+#include "GraphicsEngine.h"
 
 Sphere::Sphere(String name, float radius, XMFLOAT3 color) : AGameObject(name)
 {

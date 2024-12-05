@@ -20,6 +20,8 @@ void AppWindow::onCreate()
     GameObjectManager::initialize();
     ShaderLibrary::initialize();
     BaseComponentSystem::initialize();
+    StateManager::initialize();
+    ActionHistory::initialize();
 
 	RECT rc = this->getClientWindowRect();
 	this->m_window_width = rc.right - rc.left;
@@ -48,7 +50,6 @@ void AppWindow::onUpdate()
     GameObjectManager::getInstance()->updateAll();
     BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
     
-
 	/* Draws */
     GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height);
     UIManager::getInstance()->drawAllUI();
@@ -89,6 +90,8 @@ void AppWindow::onDestroy()
     UIManager::destroy();
     ShaderLibrary::destroy();
     BaseComponentSystem::destroy();
+    StateManager::destroy();
+    ActionHistory::destroy();
 }
 
 void AppWindow::onFocus()

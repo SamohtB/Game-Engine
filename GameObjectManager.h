@@ -30,8 +30,10 @@ public:
     void setSelectedObject(String name);
     void setSelectedObject(AGameObject* game_object);
     AGameObject* getSelectedObject();
-
     void clearAllObjects();
+    void saveEditStates();
+    void restoreEditStates();
+    void applyEditorAction(EditorAction* action);
 
 private:
 	GameObjectManager();

@@ -1,4 +1,5 @@
 #include "Inspector.h"
+#include "ActionHistory.h"
 
 Inspector::Inspector() : AUIScreen("Inspector")
 {
@@ -63,14 +64,17 @@ void Inspector::drawTransformTab(AGameObject* object)
         if (ImGui::DragFloat3("Position", position, 0.1f, -180.0f, 180.0f))
         {
             object->setPosition(XMVectorSet(position[0], position[1], position[2], 0.0f));
+            ActionHistory::getInstance()->recordAction(object);
         }
         if (ImGui::DragFloat3("Rotation", rotation, 0.1f))
         {
             object->setRotation(XMVectorSet(rotation[0], rotation[1], rotation[2], 0.0f));
+            ActionHistory::getInstance()->recordAction(object);
         }
         if (ImGui::DragFloat3("Scale", scale, 0.1f))
         {
             object->setScale(XMVectorSet(scale[0], scale[1], scale[2], 0.0f));
+            ActionHistory::getInstance()->recordAction(object);
         }
         ImGui::TreePop();
     }
@@ -78,8 +82,8 @@ void Inspector::drawTransformTab(AGameObject* object)
 
 void Inspector::drawPhysicsTab(AGameObject* object)
 {
-    int BUTTON_WIDTH = 225;
-    int BUTTON_HEIGHT = 20;
+    float BUTTON_WIDTH = 225.0f;
+    float BUTTON_HEIGHT = 20.0f;
 
     AGameObject::ComponentList physics_components = object->getComponentsOfType(AComponent::Physics);
 

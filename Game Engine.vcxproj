@@ -180,11 +180,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AComponent.cpp" />
+    <ClCompile Include="ActionHistory.cpp" />
     <ClCompile Include="AppWindow.cpp" />
     <ClCompile Include="AUIScreen.cpp" />
     <ClCompile Include="BaseComponentSystem.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Capsule.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="EditorAction.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="SceneReader.cpp" />
     <ClCompile Include="SceneWriter.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -232,11 +236,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AComponent.h" />
+    <ClInclude Include="ActionHistory.h" />
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="AUIScreen.h" />
     <ClInclude Include="BaseComponentSystem.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Capsule.h" />
     <ClInclude Include="Cylinder.h" />
+    <ClInclude Include="EditorAction.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="SceneReader.h" />
     <ClInclude Include="SceneWriter.h" />
     <ClInclude Include="GameObjectManager.h" />

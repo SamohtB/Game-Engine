@@ -1,5 +1,6 @@
 #include "Plane.h"
 #include "ShaderLibrary.h"
+#include "GraphicsEngine.h"
 
 Plane::Plane(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {

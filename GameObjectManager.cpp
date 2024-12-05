@@ -5,7 +5,10 @@
 #include "Plane.h"
 #include "Sphere.h"
 #include "Cylinder.h"
+#include "Capsule.h"
 #include "MeshObject.h"
+
+#include "EditorAction.h"
 
 typedef std::string String;
 typedef std::vector<AGameObject*> List;
@@ -138,6 +141,11 @@ AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
         spawned_object = new Cylinder(unique_name);
         break;
 
+    case AGameObject::CAPSULE:
+        unique_name = m_name_registry->getUniqueName("Capsule");
+        spawned_object = new Capsule(unique_name);
+        break;
+
     case AGameObject::MESH:
         unique_name = m_name_registry->getUniqueName("Mesh");
         spawned_object = new MeshObject(unique_name);
@@ -219,6 +227,35 @@ void GameObjectManager::clearAllObjects()
     }
 
     this->m_object_table.clear();
+}
+
+void GameObjectManager::saveEditStates()
+{
+    for (int i = 0; i < this->m_object_list.size(); i++)
+    {
+        this->m_object_list[i]->saveEditState();
+    }
+}
+
+void GameObjectManager::restoreEditStates()
+{
+    for (int i = 0; i < this->m_object_list.size(); i++)
+    {
+        this->m_object_list[i]->restoreEditState();
+    }
+}
+
+void GameObjectManager::applyEditorAction(EditorAction* action)
+{
+    AGameObject* object = this->findObjectByName(action->getOwnerName());
+
+    if (object != NULL)
+    {
+        object->setLocalMatrix(action->getStoredMatrix());
+        object->setPosition(action->getStorePos());
+        object->setRotation(action->getStoredOrientation());
+        object->setScale(action->getStoredScale());
+    }
 }
 
 
