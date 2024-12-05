@@ -1,14 +1,13 @@
 #pragma once
 #include "AGameObject.h"
 #include "SceneCameraHandler.h"
+#include "ObjectRenderer.h"
 
-using namespace DirectX;
-
-class Cylinder : public AGameObject
+class Capsule : public AGameObject
 {
 public:
-    Cylinder(String name, float radius = 1, float height = 2, XMFLOAT3 color = XMFLOAT3(1.0f, 1.0f, 1.0f));
-    ~Cylinder();
+    Capsule(String name, float radius = 1, float height = 2, XMFLOAT3 color = XMFLOAT3(1.0f, 1.0f, 1.0f));
+    ~Capsule();
 
     virtual void update(float deltaTime) override;
     virtual void draw(int radius, int height) override;
@@ -22,6 +21,6 @@ protected:
     IndexBufferPtr m_index_buffer = nullptr;
 
 private:
-    void buildShape(float width, float height, XMFLOAT3 color);
+    void buildShape(float radius, float height, XMFLOAT3 color);
 };
 

@@ -94,6 +94,12 @@
     <Filter Include="App\Objects\ObjectClasses\GameObjects">
       <UniqueIdentifier>{29233ddf-b1f6-46d2-81a4-d907234ef047}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\SceneManagement">
+      <UniqueIdentifier>{b56e89c8-818d-4189-b677-48dcb9941b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\StateManager">
+      <UniqueIdentifier>{7f792c53-fa57-4b73-9c46-63431f9e6c82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -233,6 +239,28 @@
     </ClCompile>
     <ClCompile Include="Cylinder.cpp">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectRenderer.cpp" />
+    <ClCompile Include="Capsule.cpp">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="NameRegistry.cpp">
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneReader.cpp">
+      <Filter>Engine\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWriter.cpp">
+      <Filter>Engine\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Engine\StateManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorAction.cpp">
+      <Filter>Engine\StateManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHistory.cpp">
+      <Filter>Engine\StateManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +410,31 @@
     </ClInclude>
     <ClInclude Include="Cylinder.h">
       <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectRenderer.h" />
+    <ClInclude Include="Capsule.h">
+      <Filter>App\Objects\ObjectClasses\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="NameRegistry.h">
+      <Filter>App\Objects\ObjectClasses\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneReader.h">
+      <Filter>Engine\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWriter.h">
+      <Filter>Engine\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Engine\StateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorAction.h">
+      <Filter>Engine\StateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHistory.h">
+      <Filter>Engine\StateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="imfilebrowser.h">
+      <Filter>Engine\IMGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

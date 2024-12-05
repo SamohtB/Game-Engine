@@ -5,7 +5,10 @@
 #include "Plane.h"
 #include "Sphere.h"
 #include "Cylinder.h"
+#include "Capsule.h"
 #include "MeshObject.h"
+
+#include "EditorAction.h"
 
 typedef std::string String;
 typedef std::vector<AGameObject*> List;
@@ -35,7 +38,10 @@ void GameObjectManager::destroy()
     delete sharedInstance;
 }
 
-GameObjectManager::GameObjectManager() {}
+GameObjectManager::GameObjectManager()
+{
+    m_name_registry = new NameRegistry();
+}
 
 GameObjectManager::~GameObjectManager()
 {
@@ -110,51 +116,53 @@ void GameObjectManager::addGameObject(AGameObject* game_object)
 AGameObject* GameObjectManager::createObject(AGameObject::PrimitiveType type)
 {
     AGameObject* spawned_object = nullptr;
+    String unique_name;
 
+    // Generate a unique name based on the object type
     switch (type)
     {
     case AGameObject::CUBE:
-        spawned_object = static_cast<AGameObject*>(new Cube("Cube_" + std::to_string(this->m_cube_count)));
-        std::cout << "Spawned Cube" << std::endl;
-        this->m_cube_count++;
+        unique_name = m_name_registry->getUniqueName("Cube");
+        spawned_object = new Cube(unique_name);
         break;
 
     case AGameObject::PLANE:
-        spawned_object = static_cast<AGameObject*>(new Plane("Plane_" + std::to_string(this->m_plane_count)));
-        std::cout << "Spawned Plane" << std::endl;
-        this->m_plane_count++;
+        unique_name = m_name_registry->getUniqueName("Plane");
+        spawned_object = new Plane(unique_name);
         break;
 
     case AGameObject::SPHERE:
-        spawned_object = static_cast<AGameObject*>(new Sphere("Sphere_" + std::to_string(this->m_sphere_count)));
-        std::cout << "Spawned Sphere" << std::endl;
-        this->m_sphere_count++;
+        unique_name = m_name_registry->getUniqueName("Sphere");
+        spawned_object = new Sphere(unique_name);
         break;
 
     case AGameObject::CYLINDER:
-        spawned_object = static_cast<AGameObject*>(new Cylinder("Cylinder_" + std::to_string(this->m_cylinder_count)));
-        std::cout << "Spawned Cylinder" << std::endl;
-        this->m_cylinder_count++;
+        unique_name = m_name_registry->getUniqueName("Cylinder");
+        spawned_object = new Cylinder(unique_name);
+        break;
+
+    case AGameObject::CAPSULE:
+        unique_name = m_name_registry->getUniqueName("Capsule");
+        spawned_object = new Capsule(unique_name);
         break;
 
     case AGameObject::MESH:
-        spawned_object = static_cast<AGameObject*>(new MeshObject("Teapot_" + std::to_string(this->m_mesh_count)));
-        std::cout << "Spawned Mesh" << std::endl;
-        this->m_mesh_count++;
+        unique_name = m_name_registry->getUniqueName("Mesh");
+        spawned_object = new MeshObject(unique_name);
         break;
 
     default:
         std::cout << "INVALID OBJECT TYPE" << std::endl;
-        break;
+        return nullptr;
     }
 
     if (spawned_object != nullptr)
     {
+        std::cout << "Spawned " << unique_name << std::endl;
         this->addGameObject(spawned_object);
-        return spawned_object;
     }
 
-    return nullptr;
+    return spawned_object;
 
 }
 
@@ -163,6 +171,7 @@ void GameObjectManager::deleteObject(AGameObject* game_object)
     if (this->m_object_table[game_object->getName()] != nullptr)
     {
         this->m_object_table.erase(game_object->getName());
+        m_name_registry->releaseName(game_object->getName());
 
         int index = -1;
         for (int i = 0; i < this->m_object_list.size(); i++)
@@ -187,28 +196,10 @@ void GameObjectManager::deleteObject(AGameObject* game_object)
 
 void GameObjectManager::deleteObjectByName(String name)
 {
-    if (this->m_object_table[name] != nullptr)
+    if (m_object_table[name] != nullptr)
     {
-        this->m_object_table.erase(name);
-
-        int index = -1;
-        for (int i = 0; i < this->m_object_list.size(); i++)
-        {
-            if (this->m_object_list[i]->getName() == name)
-            {
-                index = i;
-                break;
-            }
-        }
-
-        if (index != -1)
-        {
-            this->m_object_list.erase(this->m_object_list.begin() + index);
-        }
-        else
-        {
-            std::cout << "Component " << name << " not registered in physics component" << std::endl;
-        }
+        AGameObject* game_object = m_object_table[name];
+        deleteObject(game_object);
     }
 }
 
@@ -225,6 +216,46 @@ void GameObjectManager::setSelectedObject(AGameObject* game_object)
 AGameObject* GameObjectManager::getSelectedObject()
 {
     return this->m_selected_object;
+}
+
+void GameObjectManager::clearAllObjects()
+{
+    for (AGameObject* object : this->m_object_list)
+    {
+        m_name_registry->releaseName(object->getName());
+        delete object;
+    }
+
+    this->m_object_table.clear();
+}
+
+void GameObjectManager::saveEditStates()
+{
+    for (int i = 0; i < this->m_object_list.size(); i++)
+    {
+        this->m_object_list[i]->saveEditState();
+    }
+}
+
+void GameObjectManager::restoreEditStates()
+{
+    for (int i = 0; i < this->m_object_list.size(); i++)
+    {
+        this->m_object_list[i]->restoreEditState();
+    }
+}
+
+void GameObjectManager::applyEditorAction(EditorAction* action)
+{
+    AGameObject* object = this->findObjectByName(action->getOwnerName());
+
+    if (object != NULL)
+    {
+        object->setLocalMatrix(action->getStoredMatrix());
+        object->setPosition(action->getStorePos());
+        object->setRotation(action->getStoredOrientation());
+        object->setScale(action->getStoredScale());
+    }
 }
 
 

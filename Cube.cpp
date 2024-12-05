@@ -1,24 +1,27 @@
 #include "Cube.h"
 #include "ShaderLibrary.h"
+#include "GraphicsEngine.h"
 
-Cube::Cube(String name, float width, float height) : AGameObject(name)
+Cube::Cube(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
     this->setObjectType(AGameObject::CUBE);
-    this->buildShape(width, height);
+    this->buildShape(width, height, color);
+    this->setTextureType(TextureManager::BRICK);
 }
 
 Cube::~Cube() {}
 
 void Cube::update(float deltaTime)
 {
+
 }
 
 void Cube::draw(int width, int height)
 {
     ShaderNames shaderNames;
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
-    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\wood.jpg");
+    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(this->getTextureType());
     constant cc;
 
     XMVECTOR position = this->getLocalPosition();
@@ -54,7 +57,7 @@ void Cube::draw(int width, int height)
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);
 }
 
-void Cube::buildShape(float width, float height)
+void Cube::buildShape(float width, float height, XMFLOAT3 color)
 {
     XMFLOAT3 vertex_data[8] =
     {
@@ -79,36 +82,37 @@ void Cube::buildShape(float width, float height)
 
     vertex vertex_list[24] =
     {
-        { vertex_data[0], texcoord_data[1] },
-        { vertex_data[1], texcoord_data[0] },
-        { vertex_data[2], texcoord_data[2] },
-        { vertex_data[3], texcoord_data[3] },
+        { vertex_data[0], texcoord_data[1], color },
+        { vertex_data[1], texcoord_data[0], color },
+        { vertex_data[2], texcoord_data[2], color },
+        { vertex_data[3], texcoord_data[3], color },
 
-        { vertex_data[4], texcoord_data[1] },
-        { vertex_data[5], texcoord_data[0] },
-        { vertex_data[6], texcoord_data[2] },
-        { vertex_data[7], texcoord_data[3] },
+        { vertex_data[4], texcoord_data[1], color },
+        { vertex_data[5], texcoord_data[0], color },
+        { vertex_data[6], texcoord_data[2], color },
+        { vertex_data[7], texcoord_data[3], color },
 
-        { vertex_data[1], texcoord_data[1] },
-        { vertex_data[6], texcoord_data[0] },
-        { vertex_data[5], texcoord_data[2] },
-        { vertex_data[2], texcoord_data[3] },
+        { vertex_data[1], texcoord_data[1], color },
+        { vertex_data[6], texcoord_data[0], color },
+        { vertex_data[5], texcoord_data[2], color },
+        { vertex_data[2], texcoord_data[3], color },
 
-        { vertex_data[7], texcoord_data[1] },
-        { vertex_data[0], texcoord_data[0] },
-        { vertex_data[3], texcoord_data[2] },
-        { vertex_data[4], texcoord_data[3] },
+        { vertex_data[7], texcoord_data[1], color },
+        { vertex_data[0], texcoord_data[0], color },
+        { vertex_data[3], texcoord_data[2], color },
+        { vertex_data[4], texcoord_data[3], color },
 
-        { vertex_data[3], texcoord_data[1] },
-        { vertex_data[2], texcoord_data[0] },
-        { vertex_data[5], texcoord_data[2] },
-        { vertex_data[4], texcoord_data[3] },
+        { vertex_data[3], texcoord_data[1], color },
+        { vertex_data[2], texcoord_data[0], color },
+        { vertex_data[5], texcoord_data[2], color },
+        { vertex_data[4], texcoord_data[3], color },
 
-        { vertex_data[7], texcoord_data[1] },
-        { vertex_data[6], texcoord_data[0] },
-        { vertex_data[1], texcoord_data[2] },
-        { vertex_data[0], texcoord_data[3] },
+        { vertex_data[7], texcoord_data[1], color },
+        { vertex_data[6], texcoord_data[0], color },
+        { vertex_data[1], texcoord_data[2], color },
+        { vertex_data[0], texcoord_data[3], color },
     };
+
 
     unsigned int index_data[] =
     {

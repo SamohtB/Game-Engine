@@ -11,7 +11,10 @@
 #include "UIManager.h"
 #include "GameObjectManager.h"
 #include "ShaderLibrary.h"
+#include "BaseComponentSystem.h"
 #include "PhysicsSystem.h"
+#include "StateManager.h"
+#include "ActionHistory.h"
 
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -21,10 +24,6 @@
 
 #include "GameObjectManager.h"
 #include "InputListener.h"
-
-#include "Cube.h"
-#include "Plane.h"
-#include "MeshObject.h"
 
 class AppWindow : public Window, public InputListener
 {
@@ -40,7 +39,6 @@ public:
 
 private:
 	SwapChainPtr m_swap_chain = nullptr;
-    PhysicsSystem* m_physics_system = nullptr;
 
 	LONG m_window_width = 0;
 	LONG m_window_height = 0;

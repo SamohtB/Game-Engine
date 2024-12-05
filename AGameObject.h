@@ -1,4 +1,5 @@
 #pragma once
+#include "AComponent.h"
 #include "GraphicsEngine.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
@@ -6,28 +7,17 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "AComponent.h"
-
+#include "PhysicsComponent.h"
+#include <string>
 #include <vector>
 #include <DirectXMath.h>
 
 using namespace DirectX;
 
-class GraphicsEngine;
-class DeviceContext;
-
-struct vertex
-{
-    XMFLOAT3 position;
-    XMFLOAT2 texcoord;
-};
-
-struct alignas(16) constant
-{
-    XMMATRIX m_world;
-    XMMATRIX m_view;
-    XMMATRIX m_projection_matrix;
-};
+class GameObjectManager;
+class VertexShader;
+class PixelShader;
+class EditorAction;
 
 class AGameObject
 {
@@ -42,9 +32,24 @@ public:
         CAMERA = 0,
         CUBE,
         PLANE,
-        MESH,
         SPHERE,
-        CYLINDER
+        CYLINDER,
+        CAPSULE,
+        MESH
+    };
+
+    struct vertex
+    {
+        XMFLOAT3 position;
+        XMFLOAT2 texcoord;
+        XMFLOAT3 color;
+    };
+
+    struct alignas(16) constant
+    {
+        XMMATRIX m_world;
+        XMMATRIX m_view;
+        XMMATRIX m_projection_matrix;
     };
 
 	AGameObject(String name);
@@ -71,8 +76,11 @@ public:
 	XMVECTOR getLocalScale();
 
     String getName();
+    void setName(String name);
     void setObjectType(PrimitiveType type);
     PrimitiveType getObjectType();
+    TextureManager::TextureType getTextureType();
+    void setTextureType(TextureManager::TextureType type);
     
     void attachComponent(AComponent* component);
     void detachComponent(AComponent* component);
@@ -88,17 +96,22 @@ public:
     float* getPhysicsLocalMatrix();
     XMMATRIX getLocalMatrix();
     void setLocalMatrix(float* matrix);
+    void setLocalMatrix(XMMATRIX matrix);
 
+    virtual void saveEditState();
+    virtual void restoreEditState();
 
+    rp3d::Quaternion eulerToQuaternion(float pitch, float yaw, float roll);
 
 protected:
     String m_name;
 	XMFLOAT3 m_local_position;
-	XMFLOAT3 m_local_rotation;
+    XMFLOAT3 m_local_rotation;
 	XMFLOAT3 m_local_scale;
 	XMMATRIX m_local_matrix;
 
-    PrimitiveType m_type = NOTSET;
+    PrimitiveType m_primitive_type = NOTSET;
+    TextureManager::TextureType m_texture_type = TextureManager::NONE;
 
     ComponentList m_component_list;
 
@@ -106,5 +119,7 @@ protected:
 	
 private:
     bool active = true;
+    EditorAction* m_last_edit_state = nullptr;
+
     friend class GameObjectManager;
 };

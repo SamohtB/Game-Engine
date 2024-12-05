@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <exception>
 
+#include "NameRegistry.h" 
 #include "AGameObject.h"
 
 class GameObjectManager
@@ -29,6 +30,10 @@ public:
     void setSelectedObject(String name);
     void setSelectedObject(AGameObject* game_object);
     AGameObject* getSelectedObject();
+    void clearAllObjects();
+    void saveEditStates();
+    void restoreEditStates();
+    void applyEditorAction(EditorAction* action);
 
 private:
 	GameObjectManager();
@@ -42,11 +47,7 @@ private:
     HashTable m_object_table;
     AGameObject* m_selected_object = nullptr;
 
-    int m_cube_count = 0;
-    int m_plane_count = 0;
-    int m_sphere_count = 0;
-    int m_cylinder_count = 0;
-    int m_mesh_count = 0;
+    NameRegistry* m_name_registry = nullptr;
 };
 
 

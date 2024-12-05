@@ -7,7 +7,7 @@ using namespace DirectX;
 class Sphere : public AGameObject
 {
 public:
-    Sphere(String name, float radius = 1);
+    Sphere(String name, float radius = 1, XMFLOAT3 color = XMFLOAT3(1.0f, 1.0f, 1.0f));
     ~Sphere();
 
     virtual void update(float deltaTime) override;
@@ -22,6 +22,6 @@ protected:
     IndexBufferPtr m_index_buffer = nullptr;
 
 private:
-    virtual void buildShape(float radius);
+    virtual void buildShape(float radius, XMFLOAT3 color);
 };
 

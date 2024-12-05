@@ -1,23 +1,23 @@
-#include "Cylinder.h"
+#include "Capsule.h"
 #include "ShaderLibrary.h"
 #include "GraphicsEngine.h"
 
-Cylinder::Cylinder(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
+Capsule::Capsule(String name, float radius, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
-    this->setObjectType(AGameObject::CYLINDER);
-    this->buildShape(width, height, color);
+    this->setObjectType(AGameObject::CAPSULE);
+    this->buildShape(radius, height, color);
 }
 
-Cylinder::~Cylinder()
+Capsule::~Capsule()
 {
 }
 
-void Cylinder::update(float deltaTime)
+void Capsule::update(float deltaTime)
 {
 }
 
-void Cylinder::draw(int width, int height)
+void Capsule::draw(int radius, int height)
 {
     ShaderNames shaderNames;
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
@@ -57,7 +57,7 @@ void Cylinder::draw(int width, int height)
     context->drawIndexedTriangle(this->m_index_buffer->getSizeIndexList(), 0, 0);
 }
 
-void Cylinder::buildShape(float radius, float height, XMFLOAT3 color)
+void Capsule::buildShape(float radius, float height, XMFLOAT3 color)
 {
     std::vector<XMFLOAT3> positions;
     std::vector<XMFLOAT2> texcoords;
@@ -69,8 +69,8 @@ void Cylinder::buildShape(float radius, float height, XMFLOAT3 color)
     const float stackHeight = height / NUM_STACKS;
     const float dTheta = 2.0f * XM_PI / NUM_SLICES;
 
-    positions.reserve(ringCount * numSlicesPlusOne + 2 * (numSlicesPlusOne + 1) + 2);
-    texcoords.reserve(ringCount * numSlicesPlusOne + 2 * (numSlicesPlusOne + 1) + 2);
+    positions.reserve(ringCount * numSlicesPlusOne + 2 * (numSlicesPlusOne + 1) + 2 * (NUM_SLICES + 1));
+    texcoords.reserve(positions.capacity());
     vertex_list.reserve(positions.capacity());
     index_list.reserve(NUM_STACKS * NUM_SLICES * 6 + NUM_SLICES * 6);
 
@@ -80,13 +80,14 @@ void Cylinder::buildShape(float radius, float height, XMFLOAT3 color)
         const float y = -0.5f * height + i * stackHeight;
         for (int j = 0; j <= NUM_SLICES; ++j)
         {
-            const float c = cos(j * dTheta);
-            const float s = sin(j * dTheta);
+            const float c = radius * cos(j * dTheta);
+            const float s = radius * sin(j * dTheta);
             positions.emplace_back(radius * c, y, radius * s);
             texcoords.emplace_back(static_cast<float>(j) / NUM_SLICES, 1.0f - static_cast<float>(i) / NUM_STACKS);
         }
     }
 
+    /* main body indices */
     const int ringVertexCount = NUM_SLICES + 1;
     for (int i = 0; i < NUM_STACKS; ++i)
     {
@@ -105,50 +106,69 @@ void Cylinder::buildShape(float radius, float height, XMFLOAT3 color)
 
     /* top cap */
     int baseIndex = static_cast<int>(positions.size());
-    const float topY = 0.5f * height;
-
-    for (int i = 0; i <= NUM_SLICES; ++i)
+    const int numStacksHemisphere = NUM_STACKS / 2;
+    for (int i = 0; i <= numStacksHemisphere; ++i)
     {
-        const float x = radius * cos(i * dTheta);
-        const float z = radius * sin(i * dTheta);
-        positions.emplace_back(x, topY, z);
-        texcoords.emplace_back(x / height + 0.5f, z / height + 0.5f);
+        const float phi = XM_PIDIV2 * (static_cast<float>(i) / numStacksHemisphere);
+        const float y = 0.5f * height + radius * sin(phi);
+        const float r = radius * cos(phi);
+        for (int j = 0; j <= NUM_SLICES; ++j)
+        {
+            const float theta = j * dTheta;
+            const float x = r * cos(theta);
+            const float z = r * sin(theta);
+            positions.emplace_back(x, y, z);
+            texcoords.emplace_back((x / radius) * 0.5f + 0.5f, (z / radius) * 0.5f + 0.5f);
+        }
     }
 
-    /* top cap center */
-    positions.emplace_back(0, topY, 0);
-    texcoords.emplace_back(0.5f, 0.5f);
-
-    int centerIndex = static_cast<int>(positions.size()) - 1;
-    for (int i = 0; i < NUM_SLICES; ++i)
+    /* top cap indices */
+    for (int i = 0; i < numStacksHemisphere; ++i)
     {
-        index_list.push_back(centerIndex);
-        index_list.push_back(baseIndex + i + 1);
-        index_list.push_back(baseIndex + i);
+        for (int j = 0; j < NUM_SLICES; ++j)
+        {
+            const int baseIndex = ringCount * ringVertexCount + i * ringVertexCount + j;
+            const int nextBaseIndex = baseIndex + ringVertexCount;
+            index_list.push_back(baseIndex);
+            index_list.push_back(nextBaseIndex);
+            index_list.push_back(nextBaseIndex + 1);
+            index_list.push_back(baseIndex);
+            index_list.push_back(nextBaseIndex + 1);
+            index_list.push_back(baseIndex + 1);
+        }
     }
 
     /* bottom cap */
     baseIndex = static_cast<int>(positions.size());
-    const float bottomY = -0.5f * height;
-
-    for (int i = 0; i <= NUM_SLICES; ++i)
+    for (int i = 0; i <= numStacksHemisphere; ++i)
     {
-        const float x = radius * cos(i * dTheta);
-        const float z = radius * sin(i * dTheta);
-        positions.emplace_back(x, bottomY, z);
-        texcoords.emplace_back(x / height + 0.5f, z / height + 0.5f);
+        const float phi = XM_PIDIV2 * (static_cast<float>(i) / numStacksHemisphere); // From 0 to PI/2
+        const float y = -0.5f * height - radius * sin(phi);
+        const float r = radius * cos(phi);
+        for (int j = 0; j <= NUM_SLICES; ++j)
+        {
+            const float theta = j * dTheta;
+            const float x = r * cos(theta);
+            const float z = r * sin(theta);
+            positions.emplace_back(x, y, z);
+            texcoords.emplace_back((x / radius) * 0.5f + 0.5f, (z / radius) * 0.5f + 0.5f);
+        }
     }
 
-    /* bottom cap center */
-    positions.emplace_back(0, bottomY, 0);
-    texcoords.emplace_back(0.5f, 0.5f);
-
-    centerIndex = static_cast<int>(positions.size()) - 1;
-    for (int i = 0; i < NUM_SLICES; ++i)
+    /* bottom cap indices */
+    for (int i = 0; i < numStacksHemisphere; ++i)
     {
-        index_list.push_back(centerIndex);
-        index_list.push_back(baseIndex + i);
-        index_list.push_back(baseIndex + i + 1);
+        for (int j = 0; j < NUM_SLICES; ++j)
+        {
+            const int baseIndex = static_cast<int>(positions.size()) - (numStacksHemisphere + 1) * ringVertexCount + i * ringVertexCount + j;
+            const int nextBaseIndex = baseIndex + ringVertexCount;
+            index_list.push_back(baseIndex);
+            index_list.push_back(nextBaseIndex + 1);
+            index_list.push_back(nextBaseIndex);
+            index_list.push_back(baseIndex);
+            index_list.push_back(baseIndex + 1);
+            index_list.push_back(nextBaseIndex + 1);
+        }
     }
 
     for (size_t i = 0; i < positions.size(); ++i)

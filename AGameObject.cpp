@@ -1,4 +1,5 @@
 #include "AGameObject.h"
+#include "EditorAction.h"
 
 typedef std::string String;
 typedef std::vector<AComponent*> ComponentList;
@@ -95,14 +96,29 @@ AGameObject::String AGameObject::getName()
     return this->m_name;
 }
 
+void AGameObject::setName(String name)
+{
+    this->m_name = name;
+}
+
 void AGameObject::setObjectType(PrimitiveType type)
 {
-    this->m_type = type;
+    this->m_primitive_type = type;
 }
 
 AGameObject::PrimitiveType AGameObject::getObjectType()
 {
-    return this->m_type;
+    return this->m_primitive_type;
+}
+
+TextureManager::TextureType AGameObject::getTextureType()
+{
+    return this->m_texture_type;
+}
+
+void AGameObject::setTextureType(TextureManager::TextureType type)
+{
+    this->m_texture_type = type;
 }
 
 void AGameObject::attachComponent(AComponent* component)
@@ -248,7 +264,78 @@ void AGameObject::setLocalMatrix(float* matrix)
     this->m_local_matrix = scaleMatrix * rotationMatrix * newMatrix * translationMatrix;
 }
 
+void AGameObject::setLocalMatrix(XMMATRIX matrix)
+{
+    this->m_local_matrix = matrix;
+}
+
+void AGameObject::saveEditState()
+{
+    if (this->m_last_edit_state == NULL)
+    {
+        this->m_last_edit_state = new EditorAction(this);
+    }
+}
+
+void AGameObject::restoreEditState()
+{
+    if (this->getObjectType() == CAMERA) return;
+
+    if (this->m_last_edit_state != NULL)
+    {
+        XMStoreFloat3(&this->m_local_position, this->m_last_edit_state->getStorePos());
+        XMStoreFloat3(&this->m_local_scale, this->m_last_edit_state->getStoredScale());
+        XMStoreFloat3(&this->m_local_rotation, this->m_last_edit_state->getStoredOrientation());
+        this->m_local_matrix = this->m_last_edit_state->getStoredMatrix();
+
+        /* reset rigidbody */
+        ComponentList physics = this->getComponentsOfType(AComponent::Physics);
+
+        if (!physics.empty())
+        {
+            PhysicsComponent* c_physics = static_cast<PhysicsComponent*>(physics[0]);
+            rp3d::Transform transform = c_physics->getRigidBody()->getTransform();
+
+            rp3d::Vector3 newPosition(this->m_local_position.x, this->m_local_position.y, this->m_local_position.z);
+            transform.setPosition(newPosition);
+
+            rp3d::Quaternion newOrientation = eulerToQuaternion(this->m_local_rotation.x, this->m_local_rotation.y, this->m_local_rotation.z);
+            transform.setOrientation(newOrientation);
+
+            c_physics->getRigidBody()->setTransform(transform);
+        }
+
+        this->m_last_edit_state = NULL;
+    }
+    else
+    {
+        std::cout << "Edit state is null. Cannot restore." << std::endl;
+    }
+}
+
 void AGameObject::awake()
 {
 
+}
+
+rp3d::Quaternion AGameObject::eulerToQuaternion(float pitch, float yaw, float roll)
+{
+    float pitchRad = XMConvertToRadians(pitch);
+    float yawRad = XMConvertToRadians(yaw);
+    float rollRad = XMConvertToRadians(roll);
+
+    float cy = cosf(yawRad * 0.5f);
+    float sy = sinf(yawRad * 0.5f);
+    float cp = cosf(pitchRad * 0.5f);
+    float sp = sinf(pitchRad * 0.5f);
+    float cr = cosf(rollRad * 0.5f);
+    float sr = sinf(rollRad * 0.5f);
+
+    rp3d::Quaternion q;
+    q.w = cr * cp * cy + sr * sp * sy;
+    q.x = sr * cp * cy - cr * sp * sy;
+    q.y = cr * sp * cy + sr * cp * sy;
+    q.z = cr * cp * sy - sr * sp * cy;
+
+    return q;
 }
