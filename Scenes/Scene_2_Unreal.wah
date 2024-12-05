@@ -1,0 +1,36 @@
+Plane_0
+Type: 2
+Position: 0 0 0
+Rotation: 90 0 0
+Scale: 15 15 15
+Rigidbody: 0
+Cube_0
+Type: 1
+Position: 0 5 7.5
+Rotation: 0 0 0
+Scale: 15 10 0.5
+Rigidbody: 0
+Cube_1
+Type: 1
+Position: 7.5 5 0
+Rotation: 0 0 0
+Scale: 0.5 10 15
+Rigidbody: 0
+Cube_2
+Type: 1
+Position: -7.5 4 0
+Rotation: 0 0 0
+Scale: 0.5 8 15
+Rigidbody: 0
+Cube_3
+Type: 1
+Position: 0 4 -7.5
+Rotation: 0 0 0
+Scale: 15 8 0.5
+Rigidbody: 0
+Capsule_0
+Type: 5
+Position: 0 4.6 0
+Rotation: 0 0 0
+Scale: 1 1 1
+Rigidbody: 0

@@ -11,6 +11,7 @@ public:
     ~PhysicsComponent();
     void perform(float deltaTime) override;
     RigidBody* getRigidBody();
+    void setBodyType(BodyType type);
 
 private:
     float m_mass = 1000.0f;

@@ -71,3 +71,8 @@ RigidBody* PhysicsComponent::getRigidBody()
 {
     return this->m_rigidbody;
 }
+
+void PhysicsComponent::setBodyType(BodyType type)
+{
+    this->m_rigidbody->setType(type);
+}
