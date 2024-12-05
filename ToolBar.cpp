@@ -3,6 +3,7 @@
 #include "SceneWriter.h"
 #include "SceneReader.h"
 #include "ActionHistory.h"
+#include "StateManager.h"
 
 ToolBar::ToolBar() : AUIScreen("Tool Bar") {}
 
@@ -50,23 +51,64 @@ void ToolBar::drawUI()
             ImGui::EndMenu();
         }
 
-        if (ImGui::Button("Undo"))
-        {
-            if (ActionHistory::getInstance()->hasRemainingUndoActions())
-            {
-                GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->undoAction());
-            }
+        float window_width = ImGui::GetWindowSize().x;
+        float text_width = ImGui::CalcTextSize("Play").x + ImGui::CalcTextSize("Pause").x + ImGui::CalcTextSize("Stop").x + ImGui::CalcTextSize("Resume").x;
+        float available_width = window_width - text_width;
 
-        }
+        ImGui::SameLine(available_width / 2);
 
-        if (ImGui::Button("Redo"))
+        if (StateManager::getInstance()->getMode() == StateManager::EDITOR)
         {
-            if (ActionHistory::getInstance()->hasRemainingRedoActions())
+            if (ImGui::Button("Play"))
             {
-                GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->redoAction());
+                StateManager::getInstance()->setMode(StateManager::PLAY);
             }
         }
+        else if (StateManager::getInstance()->getMode() != StateManager::EDITOR)
+        {
+            if (ImGui::Button("Stop"))
+            {
+                StateManager::getInstance()->setMode(StateManager::EDITOR);
+            }
+        }
 
+
+        if (StateManager::getInstance()->getMode() == StateManager::PLAY)
+        {
+            if (ImGui::Button("Pause"))
+            {
+                StateManager::getInstance()->setMode(StateManager::PAUSED);
+            }
+        }
+        else if (StateManager::getInstance()->getMode() == StateManager::PAUSED)
+        {
+            if (ImGui::Button("Resume"))
+            {
+                StateManager::getInstance()->setMode(StateManager::PLAY);
+            }
+        }
+
+        if (StateManager::getInstance()->getMode() == StateManager::EDITOR)
+        {
+            ImGui::SameLine(0, window_width - available_width / 2 - text_width);
+
+            if (ImGui::Button("Undo"))
+            {
+                if (ActionHistory::getInstance()->hasRemainingUndoActions())
+                {
+                    GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->undoAction());
+                }
+
+            }
+
+            if (ImGui::Button("Redo"))
+            {
+                if (ActionHistory::getInstance()->hasRemainingRedoActions())
+                {
+                    GameObjectManager::getInstance()->applyEditorAction(ActionHistory::getInstance()->redoAction());
+                }
+            }
+        }
     }
 
     ImGui::EndMainMenuBar();

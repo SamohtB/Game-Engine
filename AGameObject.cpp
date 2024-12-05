@@ -1,5 +1,6 @@
 #include "AGameObject.h"
 #include "EditorAction.h"
+#include "PhysicsComponent.h"
 
 typedef std::string String;
 typedef std::vector<AComponent*> ComponentList;
@@ -276,6 +277,25 @@ void AGameObject::restoreEditState()
         XMStoreFloat3(&this->m_local_rotation, this->m_last_edit_state->getStoredOrientation());
         this->m_local_matrix = this->m_last_edit_state->getStoredMatrix();
 
+        /* reset rigidbody */
+        PhysicsComponent* physics = static_cast<PhysicsComponent*>(this->getComponentsOfType(AComponent::Physics)[0]);
+
+        if (physics != nullptr)
+        {
+            rp3d::Transform transform = physics->getRigidBody()->getTransform();
+
+            // Reset the position
+            rp3d::Vector3 newPosition(this->m_local_position.x, this->m_local_position.y, this->m_local_position.z);
+            transform.setPosition(newPosition);
+
+            // Reset the orientation
+            rp3d::Quaternion newOrientation = eulerToQuaternion(this->m_local_rotation.x, this->m_local_rotation.y, this->m_local_rotation.z);
+            transform.setOrientation(newOrientation);
+
+            // Apply the updated transform back to the rigidbody
+            physics->getRigidBody()->setTransform(transform);
+        }
+
         this->m_last_edit_state = NULL;
     }
     else
@@ -287,4 +307,27 @@ void AGameObject::restoreEditState()
 void AGameObject::awake()
 {
 
+}
+
+inline rp3d::Quaternion eulerToQuaternion(float pitch, float yaw, float roll)
+{
+    // Convert to radians
+    float pitchRad = XMConvertToRadians(pitch);
+    float yawRad = XMConvertToRadians(yaw);
+    float rollRad = XMConvertToRadians(roll);
+
+    float cy = cosf(yawRad * 0.5f);
+    float sy = sinf(yawRad * 0.5f);
+    float cp = cosf(pitchRad * 0.5f);
+    float sp = sinf(pitchRad * 0.5f);
+    float cr = cosf(rollRad * 0.5f);
+    float sr = sinf(rollRad * 0.5f);
+
+    rp3d::Quaternion q;
+    q.w = cr * cp * cy + sr * sp * sy;
+    q.x = sr * cp * cy - cr * sp * sy;
+    q.y = cr * sp * cy + sr * cp * sy;
+    q.z = cr * cp * sy - sr * sp * cy;
+
+    return q;
 }

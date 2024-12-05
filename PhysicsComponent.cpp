@@ -33,15 +33,39 @@ PhysicsComponent::PhysicsComponent(String name, AGameObject* owner) : AComponent
 
 PhysicsComponent::~PhysicsComponent()
 {
+    BaseComponentSystem::getInstance()->getPhysicsSystem()->unregisterComponent(this);
+
+    if (this->m_rigidbody)
+    {
+        PhysicsWorld* physicsWorld = BaseComponentSystem::getInstance()->getPhysicsSystem()->getPhysicsWorld();
+        if (physicsWorld)
+        {
+            physicsWorld->destroyRigidBody(this->m_rigidbody);
+        }
+        this->m_rigidbody = nullptr;
+    }
 }
 
 void PhysicsComponent::perform(float deltaTime)
 {
+    std::cout << "Updating p6" << std::endl;
+
     const Transform transform = this->m_rigidbody->getTransform();
     float matrix[16];
     transform.getOpenGLMatrix(matrix);
 
     this->getOwner()->setLocalMatrix(matrix);
+
+    rp3d::Vector3 position = transform.getPosition();
+    this->getOwner()->setPosition(position.x , position.y, position.z);
+
+    rp3d::Quaternion orientation = transform.getOrientation();
+    XMVECTOR quat = XMVectorSet(orientation.x, orientation.y, orientation.z, orientation.w);
+
+    XMFLOAT3 euler;
+    XMStoreFloat3(&euler, XMQuaternionRotationRollPitchYawFromVector(quat));
+
+    this->getOwner()->setRotation(euler.x, euler.y, euler.z);
 }
 
 RigidBody* PhysicsComponent::getRigidBody()

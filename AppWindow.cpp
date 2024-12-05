@@ -47,8 +47,13 @@ void AppWindow::onUpdate()
 	InputSystem::getInstance()->update();
 
 	/* Updates */
+    if (StateManager::getInstance()->getMode() == StateManager::EditorMode::PLAY)
+    {
+        BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+    }
+
     GameObjectManager::getInstance()->updateAll();
-    BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+    
     
 	/* Draws */
     GameObjectManager::getInstance()->renderAll(this->m_window_width, this->m_window_height);
