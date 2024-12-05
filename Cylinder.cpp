@@ -5,7 +5,7 @@
 Cylinder::Cylinder(String name, float width, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
-    this->setObjectType(AGameObject::PLANE);
+    this->setObjectType(AGameObject::CYLINDER);
     this->buildShape(width, height, color);
 }
 

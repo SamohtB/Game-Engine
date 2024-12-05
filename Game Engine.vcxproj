@@ -244,6 +244,7 @@
     <ClInclude Include="Capsule.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="EditorAction.h" />
+    <ClInclude Include="imfilebrowser.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="SceneReader.h" />
     <ClInclude Include="SceneWriter.h" />

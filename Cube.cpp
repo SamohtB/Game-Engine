@@ -7,6 +7,7 @@ Cube::Cube(String name, float width, float height, XMFLOAT3 color) : AGameObject
     this->setActive(true);
     this->setObjectType(AGameObject::CUBE);
     this->buildShape(width, height, color);
+    this->setTextureType(TextureManager::BRICK);
 }
 
 Cube::~Cube() {}
@@ -20,7 +21,7 @@ void Cube::draw(int width, int height)
 {
     ShaderNames shaderNames;
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
-    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\wood.jpg");
+    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(this->getTextureType());
     constant cc;
 
     XMVECTOR position = this->getLocalPosition();

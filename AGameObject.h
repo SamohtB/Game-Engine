@@ -7,6 +7,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "PhysicsComponent.h"
 #include <string>
 #include <vector>
 #include <DirectXMath.h>
@@ -78,6 +79,8 @@ public:
     void setName(String name);
     void setObjectType(PrimitiveType type);
     PrimitiveType getObjectType();
+    TextureManager::TextureType getTextureType();
+    void setTextureType(TextureManager::TextureType type);
     
     void attachComponent(AComponent* component);
     void detachComponent(AComponent* component);
@@ -98,6 +101,8 @@ public:
     virtual void saveEditState();
     virtual void restoreEditState();
 
+    rp3d::Quaternion eulerToQuaternion(float pitch, float yaw, float roll);
+
 protected:
     String m_name;
 	XMFLOAT3 m_local_position;
@@ -105,7 +110,8 @@ protected:
 	XMFLOAT3 m_local_scale;
 	XMMATRIX m_local_matrix;
 
-    PrimitiveType m_type = NOTSET;
+    PrimitiveType m_primitive_type = NOTSET;
+    TextureManager::TextureType m_texture_type = TextureManager::NONE;
 
     ComponentList m_component_list;
 

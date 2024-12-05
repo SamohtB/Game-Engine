@@ -1,5 +1,6 @@
 #pragma once
 #include "AUIScreen.h"
+#include "imfilebrowser.h"
 
 class ToolBar : public AUIScreen
 {
@@ -22,7 +23,7 @@ private:
     char saveFileName[128] = "Test_Scene";
     char loadFileName[128] = "Test_Scene";
 
-    bool m_save_window = false;
-    bool m_load_window = false;
+    ImGui::FileBrowser* m_save_scene_browser;
+    ImGui::FileBrowser* m_load_scene_browser;
 };
 

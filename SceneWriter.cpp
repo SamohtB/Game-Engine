@@ -37,11 +37,19 @@ void SceneWriter::WriteToFile()
         XMVECTOR rotation = allObjects[i]->getLocalRotation();
         XMVECTOR scale = allObjects[i]->getLocalScale();
 
+        bool hasRigidbody = false;
+        AGameObject::ComponentList physics_list = allObjects[i]->getComponentsOfType(AComponent::Physics);
+
+        if (!physics_list.empty())
+        {
+            hasRigidbody = true;
+        }
 
         sceneFile << "Type: " << allObjects[i]->getObjectType() << std::endl;
         sceneFile << "Position: " << XMVectorGetX(position) << " " << XMVectorGetY(position) << " " << XMVectorGetZ(position) << std::endl;
         sceneFile << "Rotation: " << XMVectorGetX(rotation) << " " << XMVectorGetY(rotation) << " " << XMVectorGetZ(rotation) << std::endl;
         sceneFile << "Scale: " << XMVectorGetX(scale) << " " << XMVectorGetY(scale) << " " << XMVectorGetZ(scale) << std::endl;
+        sceneFile << "Rigidbody: " << hasRigidbody << std::endl;
     }
     sceneFile.close();
 }

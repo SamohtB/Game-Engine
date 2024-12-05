@@ -1,6 +1,5 @@
 #include "AGameObject.h"
 #include "EditorAction.h"
-#include "PhysicsComponent.h"
 
 typedef std::string String;
 typedef std::vector<AComponent*> ComponentList;
@@ -104,12 +103,22 @@ void AGameObject::setName(String name)
 
 void AGameObject::setObjectType(PrimitiveType type)
 {
-    this->m_type = type;
+    this->m_primitive_type = type;
 }
 
 AGameObject::PrimitiveType AGameObject::getObjectType()
 {
-    return this->m_type;
+    return this->m_primitive_type;
+}
+
+TextureManager::TextureType AGameObject::getTextureType()
+{
+    return this->m_texture_type;
+}
+
+void AGameObject::setTextureType(TextureManager::TextureType type)
+{
+    this->m_texture_type = type;
 }
 
 void AGameObject::attachComponent(AComponent* component)
@@ -270,6 +279,8 @@ void AGameObject::saveEditState()
 
 void AGameObject::restoreEditState()
 {
+    if (this->getObjectType() == CAMERA) return;
+
     if (this->m_last_edit_state != NULL)
     {
         XMStoreFloat3(&this->m_local_position, this->m_last_edit_state->getStorePos());
@@ -278,22 +289,20 @@ void AGameObject::restoreEditState()
         this->m_local_matrix = this->m_last_edit_state->getStoredMatrix();
 
         /* reset rigidbody */
-        PhysicsComponent* physics = static_cast<PhysicsComponent*>(this->getComponentsOfType(AComponent::Physics)[0]);
+        ComponentList physics = this->getComponentsOfType(AComponent::Physics);
 
-        if (physics != nullptr)
+        if (!physics.empty())
         {
-            rp3d::Transform transform = physics->getRigidBody()->getTransform();
+            PhysicsComponent* c_physics = static_cast<PhysicsComponent*>(physics[0]);
+            rp3d::Transform transform = c_physics->getRigidBody()->getTransform();
 
-            // Reset the position
             rp3d::Vector3 newPosition(this->m_local_position.x, this->m_local_position.y, this->m_local_position.z);
             transform.setPosition(newPosition);
 
-            // Reset the orientation
             rp3d::Quaternion newOrientation = eulerToQuaternion(this->m_local_rotation.x, this->m_local_rotation.y, this->m_local_rotation.z);
             transform.setOrientation(newOrientation);
 
-            // Apply the updated transform back to the rigidbody
-            physics->getRigidBody()->setTransform(transform);
+            c_physics->getRigidBody()->setTransform(transform);
         }
 
         this->m_last_edit_state = NULL;
@@ -309,9 +318,8 @@ void AGameObject::awake()
 
 }
 
-inline rp3d::Quaternion eulerToQuaternion(float pitch, float yaw, float roll)
+rp3d::Quaternion AGameObject::eulerToQuaternion(float pitch, float yaw, float roll)
 {
-    // Convert to radians
     float pitchRad = XMConvertToRadians(pitch);
     float yawRad = XMConvertToRadians(yaw);
     float rollRad = XMConvertToRadians(roll);

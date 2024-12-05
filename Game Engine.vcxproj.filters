@@ -433,6 +433,9 @@
     <ClInclude Include="ActionHistory.h">
       <Filter>Engine\StateManager</Filter>
     </ClInclude>
+    <ClInclude Include="imfilebrowser.h">
+      <Filter>Engine\IMGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">

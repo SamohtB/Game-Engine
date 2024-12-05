@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "PhysicsComponent.h"
 
 SceneReader::SceneReader(String directory) : directory(directory)
 {
@@ -63,13 +64,26 @@ void SceneReader::ReadFromFile()
         {
             std::vector stringSplit = SplitString(readLine, ' ');
             data.scale = XMVectorSet(std::stof(stringSplit[1]), std::stof(stringSplit[2]), std::stof(stringSplit[3]), 0.0f);
+            index++;
+        }
+
+        else if (index == 5)
+        {
             index = 0;
+            std::vector stringSplit = SplitString(readLine, ' ');
+            data.hasRigidbody = std::stof(stringSplit[1]);
 
             AGameObject* object = GameObjectManager::getInstance()->createObject(data.objectType);
             object->setName(data.objectName);
             object->setPosition(data.position);
             object->setRotation(data.rotation);
             object->setScale(data.scale);
+
+            if (data.hasRigidbody)
+            {
+                PhysicsComponent* physics = new PhysicsComponent(object->getName() + " Physics", object);
+                object->attachComponent(physics);
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
 Capsule::Capsule(String name, float radius, float height, XMFLOAT3 color) : AGameObject(name)
 {
     this->setActive(true);
-    this->setObjectType(AGameObject::CUBE);
+    this->setObjectType(AGameObject::CAPSULE);
     this->buildShape(radius, height, color);
 }
 

@@ -25,8 +25,6 @@ void ActionHistory::recordAction(AGameObject* gameObject)
     {
         EditorAction* editorAction = new EditorAction(gameObject);
         this->m_actions_performed.push(editorAction);
-
-        std::cout << "Stored action " << gameObject->getName() << "\n";
     }
 }
 

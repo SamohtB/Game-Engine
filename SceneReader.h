@@ -21,6 +21,7 @@ private:
         XMVECTOR position;
         XMVECTOR rotation;
         XMVECTOR scale;
+        bool hasRigidbody;
     };
 
     std::vector<String> SplitString(const String& s, char delim);

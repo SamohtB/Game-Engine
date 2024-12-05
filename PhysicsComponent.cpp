@@ -17,6 +17,7 @@ PhysicsComponent::PhysicsComponent(String name, AGameObject* owner) : AComponent
     XMVECTOR scale = this->m_owner->getLocalScale();
     Transform transform;
     transform.setFromOpenGL(this->getOwner()->getPhysicsLocalMatrix());
+
     BoxShape* boxShape = physics_common->createBoxShape(Vector3(XMVectorGetX(scale) / 2, XMVectorGetY(scale) / 2, XMVectorGetZ(scale) / 2));
     this->m_rigidbody = physics_world->createRigidBody(transform);
     this->m_rigidbody->addCollider(boxShape, transform);
@@ -48,8 +49,6 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::perform(float deltaTime)
 {
-    std::cout << "Updating p6" << std::endl;
-
     const Transform transform = this->m_rigidbody->getTransform();
     float matrix[16];
     transform.getOpenGLMatrix(matrix);
