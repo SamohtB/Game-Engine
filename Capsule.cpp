@@ -21,7 +21,7 @@ void Capsule::draw(int radius, int height)
 {
     ShaderNames shaderNames;
     DeviceContextPtr context = GraphicsEngine::getInstance()->getRenderSystem()->getImmediateDeviceContext();
-    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\wood.jpg");
+    TexturePtr texture = GraphicsEngine::getInstance()->getTextureManager()->createTextureFromFile(L"Assets\\Textures\\brick.png");
     constant cc;
 
     XMVECTOR position = this->getLocalPosition();
@@ -31,9 +31,9 @@ void Capsule::draw(int radius, int height)
     XMMATRIX translationMatrix = XMMatrixTranslationFromVector(position);
     XMMATRIX scaleMatrix = XMMatrixScalingFromVector(scale);
 
-    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMVectorGetX(rotation));
-    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMVectorGetY(rotation));
-    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMVectorGetZ(rotation));
+    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMConvertToRadians(XMVectorGetX(rotation)));
+    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMConvertToRadians(XMVectorGetY(rotation)));
+    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMConvertToRadians(XMVectorGetZ(rotation)));
 
     XMMATRIX rotationMatrix = XMMatrixMultiply(rotationMatrixX, XMMatrixMultiply(rotationMatrixY, rotationMatrixZ));
     XMMATRIX worldMatrix = XMMatrixMultiply(scaleMatrix, XMMatrixMultiply(rotationMatrix, translationMatrix));

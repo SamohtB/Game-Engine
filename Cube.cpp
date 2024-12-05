@@ -31,9 +31,9 @@ void Cube::draw(int width, int height)
     XMMATRIX translationMatrix = XMMatrixTranslationFromVector(position);
     XMMATRIX scaleMatrix = XMMatrixScalingFromVector(scale);
 
-    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMVectorGetX(rotation));
-    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMVectorGetY(rotation));
-    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMVectorGetZ(rotation));
+    XMMATRIX rotationMatrixX = XMMatrixRotationX(XMConvertToRadians(XMVectorGetX(rotation)));
+    XMMATRIX rotationMatrixY = XMMatrixRotationY(XMConvertToRadians(XMVectorGetY(rotation)));
+    XMMATRIX rotationMatrixZ = XMMatrixRotationZ(XMConvertToRadians(XMVectorGetZ(rotation)));
 
     XMMATRIX rotationMatrix = XMMatrixMultiply(rotationMatrixX, XMMatrixMultiply(rotationMatrixY, rotationMatrixZ));
     XMMATRIX worldMatrix = XMMatrixMultiply(scaleMatrix, XMMatrixMultiply(rotationMatrix, translationMatrix));
@@ -59,16 +59,19 @@ void Cube::draw(int width, int height)
 
 void Cube::buildShape(float width, float height, XMFLOAT3 color)
 {
+    float halfWidth = width / 2.0f;
+    float halfHeight = height / 2.0f;
+
     XMFLOAT3 vertex_data[8] =
     {
-        { XMFLOAT3(-width, -height, -width) },
-        { XMFLOAT3(-width,  height, -width) },
-        { XMFLOAT3(width,  height, -width) },
-        { XMFLOAT3(width, -height, -width) },
-        { XMFLOAT3(width, -height,  width) },
-        { XMFLOAT3(width,  height,  width) },
-        { XMFLOAT3(-width,  height,  width) },
-        { XMFLOAT3(-width, -height,  width) }
+        { XMFLOAT3(-halfWidth, -halfHeight, -halfWidth) },
+        { XMFLOAT3(-halfWidth,  halfHeight, -halfWidth) },
+        { XMFLOAT3(halfWidth,  halfHeight, -halfWidth) },
+        { XMFLOAT3(halfWidth, -halfHeight, -halfWidth) },
+        { XMFLOAT3(halfWidth, -halfHeight,  halfWidth) },
+        { XMFLOAT3(halfWidth,  halfHeight,  halfWidth) },
+        { XMFLOAT3(-halfWidth,  halfHeight,  halfWidth) },
+        { XMFLOAT3(-halfWidth, -halfHeight,  halfWidth) }
     };
 
 
