@@ -24,12 +24,12 @@ public:
 private:
 	DeviceContextPtr m_imm_device_context = nullptr;
 
-	ID3D11Device* m_d3d_device = nullptr;
-	D3D_FEATURE_LEVEL m_feature_levels = D3D_FEATURE_LEVEL_11_0;
+	ID3D11Device* m_d3dDevice = nullptr;
+	D3D_FEATURE_LEVEL m_featureLevels = D3D_FEATURE_LEVEL_11_0;
 
-	IDXGIDevice* m_dxgi_device = nullptr;
-	IDXGIAdapter* m_dxgi_adapter = nullptr;
-	IDXGIFactory* m_dxgi_factory = nullptr;
+	IDXGIDevice* m_dxgiDevice = nullptr;
+	IDXGIAdapter* m_dxgiAdapter = nullptr;
+	IDXGIFactory* m_dxgiFactory = nullptr;
 	ID3D11DeviceContext* m_imm_context = nullptr;
 
 	ID3DBlob* m_blob = nullptr;

@@ -50,19 +50,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 Window::Window() 
 {
-	WNDCLASSEX wc;
-	wc.cbClsExtra = NULL;
-	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.cbWndExtra = NULL;
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.hCursor = LoadCursor(NULL, IDI_APPLICATION);
-	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
-	wc.hInstance = NULL;
-	wc.lpszClassName = "MyWindowClass";
-	wc.lpszMenuName = "";
-	wc.style = NULL;
-	wc.lpfnWndProc = &WndProc;
+    auto registerWindowClassFunction = []()
+        {
+            WNDCLASSEX wc;
+            wc.cbClsExtra = NULL;
+            wc.cbSize = sizeof(WNDCLASSEX);
+            wc.cbWndExtra = NULL;
+            wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+            wc.hCursor = LoadCursor(NULL, IDI_APPLICATION);
+            wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+            wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+            wc.hInstance = NULL;
+            wc.lpszClassName = "MyWindowClass";
+            wc.lpszMenuName = "";
+            wc.style = NULL;
+            wc.lpfnWndProc = &WndProc;
+        }
+
+	
 
 	//Register
 	if (!::RegisterClassEx(&wc))

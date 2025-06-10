@@ -1,6 +1,5 @@
 #include "AppWindow.h"
 
-
 int main()
 {
 	try

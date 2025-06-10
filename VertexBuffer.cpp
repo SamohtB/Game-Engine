@@ -17,7 +17,6 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 	m_size_vertex = size_vertex;
 	m_size_list = size_list;
 
-
 	if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
 	{
 		throw std::exception("VertexBuffer not created successfully");

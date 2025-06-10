@@ -2,11 +2,11 @@
 #include <Windows.h>
 #include <unordered_map>
 
-class Window
+class ABaseWindow
 {
 public:
-	Window();
-	~Window();
+	ABaseWindow();
+	~ABaseWindow();
 	
 	bool isRun();
 

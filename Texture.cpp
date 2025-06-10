@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Texture.h"
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
 #include <DirectXTex.h>

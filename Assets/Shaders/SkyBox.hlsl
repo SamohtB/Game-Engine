@@ -67,7 +67,7 @@ struct PS_INPUT
 };
 
 Texture2D Color: register(t0);
-sampler ColorSampler: register(s0);
+SamplerState ColorSampler: register(s0);
 
 float4 psmain(PS_INPUT input) : SV_TARGET
 {

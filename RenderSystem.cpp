@@ -33,7 +33,7 @@ RenderSystem::RenderSystem()
 	for (UINT driver_type_index = 0; driver_type_index < num_driver_types;)
 	{
 		res = D3D11CreateDevice(NULL, driver_types[driver_type_index], NULL, NULL, feature_levels, num_feature_levels,
-			D3D11_SDK_VERSION, &m_d3d_device, &m_feature_levels, &m_imm_context);
+			D3D11_SDK_VERSION, &m_d3dDevice, &m_featureLevels, &m_imm_context);
 
 		if (SUCCEEDED(res))
 		{
@@ -50,9 +50,9 @@ RenderSystem::RenderSystem()
 
 	m_imm_device_context = std::make_shared<DeviceContext>(this, m_imm_context);
 
-	m_d3d_device->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgi_device);
-	m_dxgi_device->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgi_adapter);
-	m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
+	m_d3dDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_dxgiDevice);
+	m_dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&m_dxgiAdapter);
+	m_dxgiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgiFactory);
 }
 
 RenderSystem::~RenderSystem()
@@ -60,11 +60,11 @@ RenderSystem::~RenderSystem()
 	if (m_vsblob)m_vsblob->Release();
 	if (m_psblob)m_psblob->Release();
 
-	m_dxgi_device->Release();
-	m_dxgi_adapter->Release();
-	m_dxgi_factory->Release();
+	m_dxgiDevice->Release();
+	m_dxgiAdapter->Release();
+	m_dxgiFactory->Release();
 
-	m_d3d_device->Release();
+	m_d3dDevice->Release();
 }
 
 SwapChainPtr RenderSystem::createSwapChain(HWND hwnd, UINT width, UINT height)
@@ -88,7 +88,7 @@ DeviceContextPtr RenderSystem::getImmediateDeviceContext()
 
 ID3D11Device* RenderSystem::getDirectXDevice()
 {
-    return this->m_d3d_device;
+    return this->m_d3dDevice;
 }
 
 VertexBufferPtr RenderSystem::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
